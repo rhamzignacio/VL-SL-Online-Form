@@ -233,6 +233,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\App.js" />
+    <Content Include="App\Controller\Login.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\build\css\custom.css" />
@@ -3409,9 +3410,9 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\Controller\" />
     <Folder Include="App_Data\" />
     <Folder Include="Content\vendors\Flot\examples\annotating\" />
     <Folder Include="Content\vendors\Flot\examples\axes-interacting\" />
@@ -3425,7 +3426,6 @@
     <Folder Include="Content\vendors\Flot\examples\series-types\" />
     <Folder Include="Content\vendors\Flot\examples\symbols\" />
     <Folder Include="Content\vendors\Flot\examples\threshold\" />
-    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

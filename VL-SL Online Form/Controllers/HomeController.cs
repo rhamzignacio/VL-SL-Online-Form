@@ -26,7 +26,14 @@ namespace VL_SL_Online_Form.Controllers
         {
             string serverResponse = "";
 
-            return Json("");
+            UserModel user = AccountService.ValidateLogin(username, password, out serverResponse);
+
+            if(user != null)
+            {
+                AccountService.LoginToSession(user);
+            }
+
+            return Json(serverResponse);
         }
     }
 }
