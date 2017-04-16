@@ -41,5 +41,5 @@ namespace VL_SL_Online_Form
         public string Status { get; set; }
         public string SessionID { get; set; }
     }
-    }
+    
 }

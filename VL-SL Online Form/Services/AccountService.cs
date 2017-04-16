@@ -20,9 +20,9 @@ namespace VL_SL_Online_Form.Services
                 {
                     var user = db.UserAccount.FirstOrDefault(r => r.Username == username);
 
-                    if(user != null)
+                    if (user != null)
                     {
-                        if(user.Password == password)
+                        if (user.Password == password)
                         {
                             if (user.Status == "N")
                                 message = "User is deactivated";
@@ -53,11 +53,23 @@ namespace VL_SL_Online_Form.Services
                                     SecondApprover = user.SecondApprover
                                 };
 
-                                
+                                return userModel;
                             }
                         }
+                        else
+                            message = "Invalid Password";
                     }
+                    else
+                        message = "Invalid Username";
+
+                    return null;
                 }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
             }
         }
 

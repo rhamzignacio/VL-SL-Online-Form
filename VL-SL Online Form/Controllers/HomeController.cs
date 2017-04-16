@@ -26,7 +26,7 @@ namespace VL_SL_Online_Form.Controllers
         {
             string serverResponse = "";
 
-            UserModel user = 
+            return Json("");
         }
     }
 }
