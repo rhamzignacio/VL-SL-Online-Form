@@ -1,6 +1,6 @@
 /**
- * @license AngularJS v1.6.3
- * (c) 2010-2017 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.0
+ * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular) {'use strict';
@@ -179,7 +179,7 @@ function shallowClearAndCopy(src, dst) {
  *     set `transformResponse` to an empty array: `transformResponse: []`
  *   - **`cache`** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
  *     GET request, otherwise if a cache instance built with
- *     {@link ng.$cacheFactory $cacheFactory} is supplied, this cache will be used for
+ *     {@link ng.$cacheFactory $cacheFactory}, this cache will be used for
  *     caching.
  *   - **`timeout`** – `{number}` – timeout in milliseconds.<br />
  *     **Note:** In contrast to {@link ng.$http#usage $http.config}, {@link ng.$q promises} are
@@ -434,7 +434,6 @@ function shallowClearAndCopy(src, dst) {
  *
  */
 angular.module('ngResource', ['ng']).
-  info({ angularVersion: '1.6.3' }).
   provider('$resource', function ResourceProvider() {
     var PROTOCOL_AND_IPV6_REGEX = /^https?:\/\/\[[^\]]*][^/]*/;
 
@@ -596,12 +595,11 @@ angular.module('ngResource', ['ng']).
             url = url.replace(/\/+$/, '') || '/';
           }
 
-          // Collapse `/.` if found in the last URL path segment before the query.
-          // E.g. `http://url.com/id/.format?q=x` becomes `http://url.com/id.format?q=x`.
+          // then replace collapse `/.` if found in the last URL path segment before the query
+          // E.g. `http://url.com/id./format?q=x` becomes `http://url.com/id.format?q=x`
           url = url.replace(/\/\.(?=\w+($|\?))/, '.');
-          // Replace escaped `/\.` with `/.`.
-          // (If `\.` comes from a param value, it will be encoded as `%5C.`.)
-          config.url = protocolAndIpv6 + url.replace(/\/(\\|%5C)\./, '/.');
+          // replace escaped `/\.` with `/.`
+          config.url = protocolAndIpv6 + url.replace(/\/\\\./, '/.');
 
 
           // set params - delegate param encoding to $http
@@ -643,7 +641,6 @@ angular.module('ngResource', ['ng']).
           var data = extend({}, this);
           delete data.$promise;
           delete data.$resolved;
-          delete data.$cancelRequest;
           return data;
         };
 
@@ -791,18 +788,18 @@ angular.module('ngResource', ['ng']).
                 return value;
               },
               (hasError || hasResponseErrorInterceptor) ?
-                function(response) {
-                  if (hasError && !hasResponseErrorInterceptor) {
-                    // Avoid `Possibly Unhandled Rejection` error,
-                    // but still fulfill the returned promise with a rejection
-                    promise.catch(noop);
-                  }
-                  if (hasError) error(response);
-                  return hasResponseErrorInterceptor ?
+              function(response) {
+                if (hasError) error(response);
+                return hasResponseErrorInterceptor ?
                     responseErrorInterceptor(response) :
                     $q.reject(response);
-                } :
-                undefined);
+              } :
+              undefined);
+            if (hasError && !hasResponseErrorInterceptor) {
+              // Avoid `Possibly Unhandled Rejection` error,
+              // but still fulfill the returned promise with a rejection
+              promise.catch(noop);
+            }
 
             if (!isInstanceCall) {
               // we are creating instance / collection

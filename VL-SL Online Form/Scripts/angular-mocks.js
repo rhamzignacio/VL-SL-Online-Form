@@ -1,6 +1,6 @@
 /**
- * @license AngularJS v1.6.3
- * (c) 2010-2017 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.0
+ * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular) {
@@ -44,30 +44,10 @@ angular.mock.$Browser = function() {
   self.$$lastUrl = self.$$url; // used by url polling fn
   self.pollFns = [];
 
-  // Testability API
+  // TODO(vojta): remove this temporary api
+  self.$$completeOutstandingRequest = angular.noop;
+  self.$$incOutstandingRequestCount = angular.noop;
 
-  var outstandingRequestCount = 0;
-  var outstandingRequestCallbacks = [];
-  self.$$incOutstandingRequestCount = function() { outstandingRequestCount++; };
-  self.$$completeOutstandingRequest = function(fn) {
-    try {
-      fn();
-    } finally {
-      outstandingRequestCount--;
-      if (!outstandingRequestCount) {
-        while (outstandingRequestCallbacks.length) {
-          outstandingRequestCallbacks.pop()();
-        }
-      }
-    }
-  };
-  self.notifyWhenNoOutstandingRequests = function(callback) {
-    if (outstandingRequestCount) {
-      outstandingRequestCallbacks.push(callback);
-    } else {
-      callback();
-    }
-  };
 
   // register url polling fn
 
@@ -92,8 +72,6 @@ angular.mock.$Browser = function() {
   self.deferredNextId = 0;
 
   self.defer = function(fn, delay) {
-    // Note that we do not use `$$incOutstandingRequestCount` or `$$completeOutstandingRequest`
-    // in this mock implementation.
     delay = delay || 0;
     self.deferredFns.push({time:(self.defer.now + delay), fn:fn, id: self.deferredNextId});
     self.deferredFns.sort(function(a, b) { return a.time - b.time;});
@@ -195,6 +173,10 @@ angular.mock.$Browser.prototype = {
 
   state: function() {
     return this.$$state;
+  },
+
+  notifyWhenNoOutstandingRequests: function(fn) {
+    fn();
   }
 };
 
@@ -797,7 +779,6 @@ angular.mock.TzDate.prototype = Date.prototype;
  * You need to require the `ngAnimateMock` module in your test suite for instance `beforeEach(module('ngAnimateMock'))`
  */
 angular.mock.animate = angular.module('ngAnimateMock', ['ng'])
-  .info({ angularVersion: '1.6.3' })
 
   .config(['$provide', function($provide) {
 
@@ -1321,8 +1302,9 @@ angular.mock.dump = function(object) {
       });
   ```
  */
-angular.mock.$httpBackendDecorator =
-  ['$rootScope', '$timeout', '$delegate', createHttpBackendMock];
+angular.mock.$HttpBackendProvider = function() {
+  this.$get = ['$rootScope', '$timeout', createHttpBackendMock];
+};
 
 /**
  * General factory function for $httpBackend mock.
@@ -1343,10 +1325,7 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
       expectations = [],
       responses = [],
       responsesPush = angular.bind(responses, responses.push),
-      copy = angular.copy,
-      // We cache the original backend so that if both ngMock and ngMockE2E override the
-      // service the ngMockE2E version can pass through to the real backend
-      originalHttpBackend = $delegate.$$originalHttpBackend || $delegate;
+      copy = angular.copy;
 
   function createResponse(status, data, headers, statusText) {
     if (angular.isFunction(status)) return status;
@@ -1431,7 +1410,7 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
           // if $browser specified, we do auto flush all requests
           ($browser ? $browser.defer : responsesPush)(wrapResponse(definition));
         } else if (definition.passThrough) {
-          originalHttpBackend(method, url, data, callback, headers, timeout, withCredentials, responseType, eventHandlers, uploadEventHandlers);
+          $delegate(method, url, data, callback, headers, timeout, withCredentials, responseType, eventHandlers, uploadEventHandlers);
         } else throw new Error('No response defined !');
         return;
       }
@@ -1906,8 +1885,6 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
     expectations.length = 0;
     responses.length = 0;
   };
-
-  $httpBackend.$$originalHttpBackend = originalHttpBackend;
 
   return $httpBackend;
 
@@ -2406,6 +2383,7 @@ angular.module('ngMock', ['ng']).provider({
   $exceptionHandler: angular.mock.$ExceptionHandlerProvider,
   $log: angular.mock.$LogProvider,
   $interval: angular.mock.$IntervalProvider,
+  $httpBackend: angular.mock.$HttpBackendProvider,
   $rootElement: angular.mock.$RootElementProvider,
   $componentController: angular.mock.$ComponentControllerProvider
 }).config(['$provide', '$compileProvider', function($provide, $compileProvider) {
@@ -2413,8 +2391,7 @@ angular.module('ngMock', ['ng']).provider({
   $provide.decorator('$$rAF', angular.mock.$RAFDecorator);
   $provide.decorator('$rootScope', angular.mock.$RootScopeDecorator);
   $provide.decorator('$controller', createControllerDecorator($compileProvider));
-  $provide.decorator('$httpBackend', angular.mock.$httpBackendDecorator);
-}]).info({ angularVersion: '1.6.3' });
+}]);
 
 /**
  * @ngdoc module
@@ -2428,8 +2405,9 @@ angular.module('ngMock', ['ng']).provider({
  * the {@link ngMockE2E.$httpBackend e2e $httpBackend} mock.
  */
 angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
+  $provide.value('$httpBackend', angular.injector(['ng']).get('$httpBackend'));
   $provide.decorator('$httpBackend', angular.mock.e2e.$httpBackendDecorator);
-}]).info({ angularVersion: '1.6.3' });
+}]);
 
 /**
  * @ngdoc service
@@ -2556,8 +2534,7 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  * @param {string} method HTTP method.
  * @param {string|RegExp|function(string)=} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
- * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
- *   data string and returns true if the data is as expected.
+ * @param {(string|RegExp)=} data HTTP request body.
  * @param {(Object|function(Object))=} headers HTTP headers or function that receives http header
  *   object and returns true if the headers match the current definition.
  * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
@@ -2640,8 +2617,7 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *
  * @param {string|RegExp|function(string)=} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
- * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
- *   data string and returns true if the data is as expected.
+ * @param {(string|RegExp)=} data HTTP request body.
  * @param {(Object|function(Object))=} headers HTTP headers.
  * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
@@ -2659,8 +2635,7 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *
  * @param {string|RegExp|function(string)=} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
- * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
- *   data string and returns true if the data is as expected.
+ * @param {(string|RegExp)=} data HTTP request body.
  * @param {(Object|function(Object))=} headers HTTP headers.
  * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
@@ -2678,8 +2653,7 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  *
  * @param {string|RegExp|function(string)=} url HTTP url or function that receives a url
  *   and returns true if the url matches the current definition.
- * @param {(string|RegExp|function(string))=} data HTTP request body or function that receives
- *   data string and returns true if the data is as expected.
+ * @param {(string|RegExp)=} data HTTP request body.
  * @param {(Object|function(Object))=} headers HTTP headers.
  * @param {(Array)=} keys Array of keys to assign to regex matches in request url described on
  *   {@link ngMock.$httpBackend $httpBackend mock}.
@@ -2991,6 +2965,12 @@ angular.mock.$RootScopeDecorator = ['$delegate', function($delegate) {
 
     annotatedFunctions.forEach(function(fn) {
       delete fn.$inject;
+    });
+
+    angular.forEach(currentSpec.$modules, function(module) {
+      if (module && module.$$hashKey) {
+        module.$$hashKey = undefined;
+      }
     });
 
     currentSpec.$injector = null;
