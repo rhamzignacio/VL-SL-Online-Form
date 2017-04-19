@@ -12,9 +12,9 @@ namespace VL_SL_Online_Form.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class EmailNotification
+    public partial class EmailCredential
     {
-        public System.Guid id { get; set; }
+        public System.Guid ID { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }

@@ -21,7 +21,6 @@ namespace VL_SL_Online_Form.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
         public string Reason { get; set; }
-        public Nullable<System.TimeSpan> StartTime { get; set; }
         public string Status { get; set; }
     }
 }

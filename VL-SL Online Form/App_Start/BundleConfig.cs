@@ -55,7 +55,8 @@ namespace VL_SL_Online_Form
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/App/App.js",
-                "~/App/Controller/Login.js"
+                "~/App/Controller/Login.js",
+                "~/App/Controller/HRModule.js"
             ));
 
         }
