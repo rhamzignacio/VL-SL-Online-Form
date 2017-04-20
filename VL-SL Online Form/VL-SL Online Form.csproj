@@ -199,6 +199,7 @@
     <Compile Include="App_Start\Principal.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -210,6 +211,7 @@
     <Compile Include="Models\LeaveForm.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LeaveFormModel.cs" />
     <Compile Include="Models\SLVLOnlineEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -232,6 +234,7 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\LeaveService.cs" />
     <Compile Include="Services\UniversalService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
@@ -3462,6 +3465,7 @@
     <Folder Include="Content\vendors\Flot\examples\series-types\" />
     <Folder Include="Content\vendors\Flot\examples\symbols\" />
     <Folder Include="Content\vendors\Flot\examples\threshold\" />
+    <Folder Include="Views\Leave\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
