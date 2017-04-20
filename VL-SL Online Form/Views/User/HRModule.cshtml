@@ -11,7 +11,7 @@
             <thead>
                 <tr>
                     <th>
-                        <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-success btn-xs" data-target="#userModal" data-toggle="modal"><i class="fa fa-plus"></i></button>
                     </th>
                     <th>Name</th>
                     <th>Username</th>
@@ -20,9 +20,10 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="user in vm.Users | filter {Status: '!X'}">
+                <tr ng-repeat="user in vm.Users | filter: {Status: '!X'}">
                     <td>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-primary btn-xs" data-target="#userModal" data-toggle="modal"
+                                ng-click="OpenModal(user)"><i class="fa fa-pencil"></i></button>
                         <button class="btn btn-danger btn-xs"><i class="fa fa-close"></i></button>
                     </td>
                     <td>{{user.FirstName}} {{user.LastName}}</td>
@@ -42,6 +43,21 @@
                 </div>
 
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" ng-model="vm.Modal.Username"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" ng-model="vm.Modal.Password" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" ng-model="vm.Modal.ConfirmPassword" />
+                    </div>
+
                     <div class="form-group">
                         <label>First Name</label>
                         <input type="text" class="form-control" maxlength="150" ng-model="vm.Modal.FirstName" />
@@ -70,10 +86,19 @@
 
                     <div class="form-group">
                         <label>1st Approver</label>
+                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.FirstApprover"
+                                ng-options="item.ID as item.Name for item in vm.UserDropdown"></select>
                     </div>
 
                     <div class="form-group">
                         <label>2nd Approver</label>
+                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.SecondApprover"
+                                ng-options="item.ID as item.Name for item in vm.UserDropdown"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-success" ng-click="SaveUser(vm.Modal)">Save</button>
+                        <button class="btn btn-danger" ng-click="ClearModal()" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>

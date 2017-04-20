@@ -35,5 +35,21 @@ namespace VL_SL_Online_Form.Controllers
 
             return Json(serverResponse);
         }
+
+        [HttpPost]
+        public JsonResult GetCurrentUser()
+        {
+            return Json(new { currentUser = UniversalHelpers.CurrentUser });
+        }
+
+        [HttpPost]
+        public JsonResult Logout()
+        {
+            string serverResponse = "";
+
+            AccountService.LogoutFromSession(out serverResponse);
+
+            return Json(serverResponse);
+        }
     }
 }

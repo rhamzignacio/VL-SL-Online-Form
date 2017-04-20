@@ -45,14 +45,14 @@ namespace VL_SL_Online_Form.Services
                     return query.ToList();
                 }
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 message = error.Message;
 
                 return null;
             }
         }
-        public static void Save (UserModel _user, out string message)
+        public static void Save(UserModel _user, out string message)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace VL_SL_Online_Form.Services
 
                 using (var db = new SLVLOnlineEntities())
                 {
-                    if(_user.ID == Guid.Empty || _user.ID == null)//NEW
+                    if (_user.ID == Guid.Empty || _user.ID == null)//NEW
                     {
                         UserAccount newUser = new UserAccount
                         {
@@ -127,9 +127,10 @@ namespace VL_SL_Online_Form.Services
                     db.SaveChanges();
                 }
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 message = error.Message;
             }
+        }
     }
 }

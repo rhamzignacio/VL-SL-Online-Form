@@ -16,13 +16,15 @@ namespace VL_SL_Online_Form.Controllers
             return View();
         }
 
-        public JsonResult GetAllUser()
+        public JsonResult Init()
         {
             string serverResponse = "";
 
             var users = UserService.GetAll(out serverResponse);
 
-            return Json(new { message = serverResponse, users = users });
+            var userDropdown = UniversalService.GetUserDropDown(out serverResponse);
+
+            return Json(new { message = serverResponse, users = users, userDropdown = userDropdown });
         }
 
         public JsonResult SaveUser(UserModel user)

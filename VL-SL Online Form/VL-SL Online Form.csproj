@@ -203,6 +203,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\UniversalHelpers.cs" />
     <Compile Include="Models\EmailCredential.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
@@ -224,12 +225,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SLVLOnlineEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\UniversalModel.cs" />
     <Compile Include="Models\UserAccount.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\UniversalService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

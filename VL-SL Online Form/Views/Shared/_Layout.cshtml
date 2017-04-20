@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
 
     <title>Elmer | @ViewBag.Title</title>
 </head>
-<body class="nav-md" ng-controller="mainController as main">
+<body class="nav-md" ng-controller="mainController as main" ng-init="Init()">
   <div class="container body">
 
       <div growl class="fading"></div>
@@ -43,7 +43,7 @@
                               <li><a href="#"><i class="fa fa-edit"></i>Quick File</a></li>
                               <li><a href="#"><i class="fa fa-check"></i>For Approval</a></li>
                               <li><a href="#"><i class="fa fa-calendar"></i>Calendar</a></li>
-                              <li><a href="#"><i class="fa fa-users"></i> HR Module</a></li>
+                              <li><a href="/User/HRModule"><i class="fa fa-users"></i> HR Module</a></li>
                           </ul>
                       </div>
                   </div>
@@ -71,5 +71,15 @@
 
     @Scripts.Render("~/bundles/scripts")
     @Scripts.Render("~/bundles/angular")
+
+
+    <script>
+        $(document).ready(function () {
+            $(".select2_single").select2({
+                placeholder: "Please Select",
+                allowClear: true,
+            });
+        });
+    </script>
 </body>
 </html>
