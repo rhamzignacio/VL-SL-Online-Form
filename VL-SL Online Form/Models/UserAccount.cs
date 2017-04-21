@@ -37,5 +37,7 @@ namespace VL_SL_Online_Form.Models
         public string ContactNo { get; set; }
         public Nullable<System.Guid> FirstApprover { get; set; }
         public Nullable<System.Guid> SecondApprover { get; set; }
+        public string TimeIn { get; set; }
+        public string TimeOut { get; set; }
     }
 }

@@ -208,10 +208,16 @@
     <Compile Include="Models\EmailCredential.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Holiday.cs">
+      <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LeaveForm.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LeaveFormModel.cs" />
+    <Compile Include="Models\OvertimeForm.cs">
+      <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SLVLOnlineEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +248,7 @@
   <ItemGroup>
     <Content Include="App\App.js" />
     <Content Include="App\Controller\HRModule.js" />
+    <Content Include="App\Controller\LeaveForm.js" />
     <Content Include="App\Controller\Login.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -3450,6 +3457,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\HRModule.cshtml" />
+    <Content Include="Views\Leave\FileForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3465,7 +3473,6 @@
     <Folder Include="Content\vendors\Flot\examples\series-types\" />
     <Folder Include="Content\vendors\Flot\examples\symbols\" />
     <Folder Include="Content\vendors\Flot\examples\threshold\" />
-    <Folder Include="Views\Leave\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

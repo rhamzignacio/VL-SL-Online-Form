@@ -13,6 +13,17 @@
           <Property Name="Email" Type="varchar" MaxLength="500" />
           <Property Name="Password" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Description" Type="varchar" MaxLength="300" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="LeaveForm">
           <Key>
             <PropertyRef Name="ID" />
@@ -25,6 +36,19 @@
           <Property Name="CreatedBy" Type="uniqueidentifier" />
           <Property Name="Reason" Type="varchar(max)" />
           <Property Name="Status" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="OvertimeForm">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="EffectiveDate" Type="date" />
+          <Property Name="StartTime" Type="varchar" MaxLength="5" />
+          <Property Name="EndTime" Type="varchar" MaxLength="5" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="Reason" Type="varchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -53,10 +77,14 @@
           <Property Name="ContactNo" Type="varchar" MaxLength="100" />
           <Property Name="FirstApprover" Type="uniqueidentifier" />
           <Property Name="SecondApprover" Type="uniqueidentifier" />
+          <Property Name="TimeIn" Type="varchar" MaxLength="10" />
+          <Property Name="TimeOut" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityContainer Name="SLVLOnlineModelStoreContainer">
           <EntitySet Name="EmailCredential" EntityType="Self.EmailCredential" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Holiday" EntityType="Self.Holiday" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeaveForm" EntityType="Self.LeaveForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OvertimeForm" EntityType="Self.OvertimeForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -67,6 +95,8 @@
           <EntitySet Name="EmailCredential" EntityType="SLVLOnlineModel.EmailCredential" />
           <EntitySet Name="LeaveForm" EntityType="SLVLOnlineModel.LeaveForm" />
           <EntitySet Name="UserAccount" EntityType="SLVLOnlineModel.UserAccount" />
+          <EntitySet Name="Holiday" EntityType="SLVLOnlineModel.Holiday" />
+          <EntitySet Name="OvertimeForm" EntityType="SLVLOnlineModel.OvertimeForm" />
         </EntityContainer>
         <EntityType Name="EmailCredential">
           <Key>
@@ -116,6 +146,32 @@
           <Property Name="ContactNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FirstApprover" Type="Guid" />
           <Property Name="SecondApprover" Type="Guid" />
+          <Property Name="TimeIn" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TimeOut" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="OvertimeForm">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="0" />
+          <Property Name="StartTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EndTime" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -149,6 +205,8 @@
           <EntitySetMapping Name="UserAccount">
             <EntityTypeMapping TypeName="SLVLOnlineModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
+                <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
                 <ScalarProperty Name="SecondApprover" ColumnName="SecondApprover" />
                 <ScalarProperty Name="FirstApprover" ColumnName="FirstApprover" />
                 <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
@@ -171,6 +229,32 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Holiday">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.Holiday">
+              <MappingFragment StoreEntitySet="Holiday">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OvertimeForm">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.OvertimeForm">
+              <MappingFragment StoreEntitySet="OvertimeForm">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
