@@ -198,6 +198,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\Principal.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -3430,6 +3431,7 @@
       <DependentUpon>SLVLOnlineEntities.edmx</DependentUpon>
     </Content>
     <Content Include="DatabaseBackup\SLVLOnline_LogBackup_2017-04-19_10-19-22.rar" />
+    <Content Include="DatabaseBackup\SLVL Online DB 4.25.2017.rar" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -3458,6 +3460,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\HRModule.cshtml" />
     <Content Include="Views\Leave\FileForm.cshtml" />
+    <Content Include="Views\Calendar\Schedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
