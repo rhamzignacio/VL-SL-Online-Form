@@ -4,5 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Schedule</h2>
+<div role="main" ng-controller="calendarController as vm" ng-init="Init()">
+    <h3>Calendar</h3>
 
+    <div class="clearfix"></div>
+
+    <div id="calendar"></div>
+</div>

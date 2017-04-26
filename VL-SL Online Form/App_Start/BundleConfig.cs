@@ -18,7 +18,9 @@ namespace VL_SL_Online_Form
                 "~/Content/vendors/switchery/dist/switchery.min.css",
                 "~/Content/vendors/starrr/dist/starrr.cs",
                 "~/Content/vendors/growl/angular-growl.min.css",
-                "~/Content/vendors/iCheck/skins/flat/green.css"
+                "~/Content/vendors/iCheck/skins/flat/green.css",
+                "~/Content/vendors/fullcalendar/dist/fullcalendar.min.css",
+                "~/Content/vendors/fullcalendar/dist/fullcalendar.print.css"
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
@@ -50,13 +52,15 @@ namespace VL_SL_Online_Form
                 "~/Content/vendors/starrr/dist/starrr.js",
                 "~/Content/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js",
                 "~/Content/vendors/jquery.hotkeys/jquery.hotkeys.js",
-                "~/Content/angular-file-upload.js"
+                "~/Content/angular-file-upload.js",
+                "~/Content/vendors/fullcalendar/dist/fullcalendar.min.js"
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/App/App.js",
                 "~/App/Controller/Login.js",
-                "~/App/Controller/HRModule.js"
+                "~/App/Controller/HRModule.js",
+                "~/App/Controller/Calendar.js"
             ));
 
         }

@@ -248,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\App.js" />
+    <Content Include="App\Controller\Calendar.js" />
     <Content Include="App\Controller\HRModule.js" />
     <Content Include="App\Controller\LeaveForm.js" />
     <Content Include="App\Controller\Login.js" />
