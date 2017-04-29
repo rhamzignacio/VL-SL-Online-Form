@@ -9,7 +9,7 @@ namespace VL_SL_Online_Form.Services
 {
     public class LeaveService
     {
-        public static void ChangeStatus(Guid _ID, string _status, out string message)
+        public static List<LeaveFormModel> GetLeavePerUser(out string message)
         {
             try
             {
@@ -17,25 +17,32 @@ namespace VL_SL_Online_Form.Services
 
                 using (var db = new SLVLOnlineEntities())
                 {
-                    var leave = db.LeaveForm.FirstOrDefault(r => r.ID == _ID);
+                    var leave = from l in db.LeaveForm
+                                where l.CreatedBy == UniversalHelpers.CurrentUser.ID
+                                orderby l.StartDate descending
+                                select new LeaveFormModel
+                                {
+                                    ID = l.ID,
+                                    StartDate = l.StartDate,
+                                    EndDate = l.EndDate,
+                                    CreatedBy = l.CreatedBy,
+                                    CreatedDate = l.CreatedDate,
+                                    Reason = l.Reason,
+                                    Status = l.Status,
+                                    Type = l.Type
+                                };
 
-                    if(leave != null)
-                    {
-                        leave.Status = _status;
-
-                        db.Entry(leave).State = EntityState.Modified;
-
-                        db.SaveChanges();
-                    }
+                    return leave.ToList();
                 }
             }
             catch(Exception error)
             {
                 message = error.Message;
+
+                return null;
             }
         }
-
-        public static void Save(LeaveFormModel _leave, out string message)
+        public static void SaveUpdate(LeaveFormModel _leave, out string message)
         {
             try
             {
@@ -65,19 +72,9 @@ namespace VL_SL_Online_Form.Services
 
                         if(leave != null)
                         {
-                            if (_leave.Status == "X")
-                                db.Entry(leave).State = EntityState.Deleted;
-                            else
-                            {
-                                leave.CreatedBy = UniversalHelpers.CurrentUser.ID;
-                                leave.CreatedDate = DateTime.Now;
-                                leave.Reason = _leave.Reason;
-                                leave.StartDate = _leave.StartDate;
-                                leave.EndDate = _leave.EndDate;
-                                leave.Type = _leave.Type;
+                            leave.Status = _leave.Status;
 
-                                db.Entry(leave).State = EntityState.Modified;
-                            }
+                            db.Entry(leave).State = EntityState.Modified;
                         }
                     }
 

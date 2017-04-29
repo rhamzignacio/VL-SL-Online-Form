@@ -6,10 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="fc2486901f574a868dfb588d462a9fab" Name="Diagram1">
         <EntityTypeShape EntityType="SLVLOnlineModel.EmailCredential" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SLVLOnlineModel.LeaveForm" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SLVLOnlineModel.UserAccount" Width="1.5" PointX="0.75" PointY="2.625" />
-        <EntityTypeShape EntityType="SLVLOnlineModel.Holiday" Width="1.5" PointX="3.375" PointY="4.75" />
-        <EntityTypeShape EntityType="SLVLOnlineModel.OvertimeForm" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SLVLOnlineModel.Holiday" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SLVLOnlineModel.LeaveForm" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="SLVLOnlineModel.OvertimeForm" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="SLVLOnlineModel.UserAccount" Width="1.5" PointX="4.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -23,11 +23,58 @@
         { value: "WL", label: "Leave without Pay" }
     ];
 
-    $scope.Save = function (value) {
+    $scope.Clear = function (value) {
+        value = {};
+    }
+
+    $scope.SaveLeave = function (value) {
+        var noError = "Y";
+
+        if (value.Type == "" || value.Type == null) {
+            noError = "N";
+
+            ErrorMessage("Leave type is required");
+        }
+
+        if (value.StartDate == "" || value.StartDate == null) {
+            noError = "N";
+
+            ErrorMessage("Start date is required");
+        }
+
+        if (value.EndDate == "" || value.EndDate == null) {
+            noError = "N";
+
+            ErrorMessage("End date is required");
+        }
+
+        if (value.Reason == "" || value.Reason == null) {
+            noError = "N";
+
+            ErrorMessage("Reason is required");
+        }
+
+        if (noError == "Y") {
+            $http({
+                method: "POST",
+                url: "/Leave/SaveLeave",
+                data: { leave: value }
+            }).then(function (data) {
+                if (data.data.errorMessage == "") {
+                    SuccessMessage("Successfully Saved");
+                }
+                else {
+                    ErrorMessage(data.data.errorMessage);
+                }
+            });
+        }
+    }
+
+    $scope.SaveOvertime = function (value) {
         $http({
             method: "POST",
-            url: "/Leave/SaveLeave",
-            data: { leave: value }
+            url: "/Leave/SaveOvertime",
+            data: { overtime: value }
         }).then(function (data) {
             if (data.data.errorMessage == "") {
                 SuccessMessage("Successfully Saved");
@@ -35,6 +82,6 @@
             else {
                 ErrorMessage(data.data.errorMessage);
             }
-        });
+        })
     }
 });

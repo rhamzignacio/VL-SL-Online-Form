@@ -21,7 +21,18 @@ namespace VL_SL_Online_Form.Controllers
             string serverResponse = "";
 
             if (leave != null)
-                LeaveService.Save(leave, out serverResponse);
+                LeaveService.SaveUpdate(leave, out serverResponse);
+
+            return Json(new { errorMessage = serverResponse });
+        }
+
+        [HttpPost]
+        public JsonResult SaveOvertime (OvertimeFormModel overtime)
+        {
+            string serverResponse = "";
+
+            if (overtime != null)
+                OvertimeService.SaveUpdate(overtime, out serverResponse);
 
             return Json(new { errorMessage = serverResponse });
         }

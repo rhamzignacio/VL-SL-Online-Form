@@ -219,6 +219,7 @@
     <Compile Include="Models\OvertimeForm.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OvertimeFormModel.cs" />
     <Compile Include="Models\SLVLOnlineEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +243,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\LeaveService.cs" />
+    <Compile Include="Services\OvertimeService.cs" />
     <Compile Include="Services\UniversalService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
