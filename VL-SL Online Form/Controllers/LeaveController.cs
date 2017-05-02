@@ -15,6 +15,23 @@ namespace VL_SL_Online_Form.Controllers
             return View();
         }
 
+        public ActionResult FiledForms()
+        {
+            return View();  
+        }
+
+        [HttpPost]
+        public JsonResult GetFiledForms()
+        {
+            string serverResponse = "";
+
+            var filedLeave = LeaveService.GetLeavePerUser(out serverResponse);
+
+            var filedOvertime = OvertimeService.GetOverTimePerUser(out serverResponse);
+
+            return Json(new { leave = filedLeave, overtime = filedOvertime, errorMessage = serverResponse });
+        }
+
         [HttpPost]
         public JsonResult SaveLeave(LeaveFormModel leave)
         {

@@ -15,5 +15,16 @@ namespace VL_SL_Online_Form.Models
         public Guid? CreatedBy { get; set; }
         public string Reason { get; set; }
         public string Status { get; set; }
+
+        public string ShowCreatedDate
+        {
+            get
+            {
+                if (CreatedDate != null)
+                    return DateTime.Parse(CreatedDate.ToString()).ToShortDateString();
+                else
+                    return "";
+            }
+        }
     }
 }

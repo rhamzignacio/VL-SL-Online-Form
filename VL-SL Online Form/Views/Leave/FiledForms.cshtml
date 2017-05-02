@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "FiledForms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div role="main" ng-controller="leaveFormController as vm" ng-init="InitFiledForms()">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Filed Leave</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <table id="filedLeave" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="leave in vm.FiledLeave">
+                            <td><button class="btn btn-danger">Cancel</button></td>
+                            <td>{{leave.ShowCreatedDate}}</td>
+                            <td>{{leave.ShowStatus}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Filed Overtime</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <table id="filedOvertime" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                <button class="btn btn-danger">Cancel</button>
+                            </th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

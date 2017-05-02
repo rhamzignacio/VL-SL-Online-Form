@@ -9,7 +9,7 @@ namespace VL_SL_Online_Form.Services
 {
     public class OvertimeService
     {
-        public List<OvertimeFormModel> GetOverTimePerUser(out string message)
+        public static List<OvertimeFormModel> GetOverTimePerUser(out string message)
         {
             try
             {

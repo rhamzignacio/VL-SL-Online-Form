@@ -27,6 +27,23 @@
         value = {};
     }
 
+    $scope.InitFiledForms = function () {
+        $http({
+            method: "POST",
+            url: "/Leave/GetFiledForms",
+            arguments: { "Content-Type": "application/json" }
+        }).then(function (data) {
+            if (data.data.errorMessage == "") {
+                vm.FiledLeave = data.data.leave;
+
+                vm.FiledOvertime = data.data.overtime;
+            }
+            else {
+                ErrorMessage(data.data.errorMessage);
+            }
+        });
+    }
+
     $scope.SaveLeave = function (value) {
         var noError = "Y";
 
