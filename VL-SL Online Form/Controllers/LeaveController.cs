@@ -53,5 +53,31 @@ namespace VL_SL_Online_Form.Controllers
 
             return Json(new { errorMessage = serverResponse });
         }
+
+        [HttpPost]
+        public JsonResult CancelOvertime(OvertimeFormModel overtime)
+        {
+            string serverResponse = "";
+
+            overtime.Status = "X";
+
+            if (overtime != null)
+                OvertimeService.SaveUpdate(overtime, out serverResponse);
+
+            return Json(new { errorMessage = serverResponse });
+        }
+
+        [HttpPost]
+        public JsonResult CancelLeave(LeaveFormModel leave)
+        {
+            string serverResponse = "";
+
+            leave.Status = "X";
+
+            if (leave != null)
+                LeaveService.SaveUpdate(leave, out serverResponse);
+
+            return Json(new { errorMessage = serverResponse });
+        }
     }
 }

@@ -60,7 +60,8 @@ namespace VL_SL_Online_Form
                 "~/App/App.js",
                 "~/App/Controller/Login.js",
                 "~/App/Controller/HRModule.js",
-                "~/App/Controller/Calendar.js"
+                "~/App/Controller/Calendar.js",
+                "~/App/Controller/LeaveForm.js"
             ));
 
         }

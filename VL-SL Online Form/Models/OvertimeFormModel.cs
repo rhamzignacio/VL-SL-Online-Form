@@ -31,5 +31,16 @@ namespace VL_SL_Online_Form.Models
                     return Status;
             }
         }
+
+        public string ShowEffectiveDate
+        {
+            get
+            {
+                if (EffectiveDate != null)
+                    return DateTime.Parse(EffectiveDate.ToString()).ToShortDateString();
+                else
+                    return "";
+            }
+        }
     }
 }

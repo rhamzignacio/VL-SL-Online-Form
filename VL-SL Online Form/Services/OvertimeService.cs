@@ -18,7 +18,7 @@ namespace VL_SL_Online_Form.Services
                 using (var db = new SLVLOnlineEntities())
                 {
                     var ot = from o in db.OvertimeForm
-                             where o.CreatedBy == UniversalHelpers.CurrentUser.ID
+                             where o.CreatedBy == UniversalHelpers.CurrentUser.ID && o.Status != "X"
                              orderby o.EffectiveDate descending
                              select new OvertimeFormModel
                              {

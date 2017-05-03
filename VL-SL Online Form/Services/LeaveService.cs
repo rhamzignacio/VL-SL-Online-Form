@@ -18,7 +18,7 @@ namespace VL_SL_Online_Form.Services
                 using (var db = new SLVLOnlineEntities())
                 {
                     var leave = from l in db.LeaveForm
-                                where l.CreatedBy == UniversalHelpers.CurrentUser.ID
+                                where l.CreatedBy == UniversalHelpers.CurrentUser.ID && l.Status != "X"
                                 orderby l.StartDate descending
                                 select new LeaveFormModel
                                 {
@@ -60,7 +60,7 @@ namespace VL_SL_Online_Form.Services
                             EndDate = _leave.EndDate,
                             Reason = _leave.Reason,
                             StartDate = _leave.StartDate,
-                            Status = _leave.Status,
+                            Status = "P",
                             Type = _leave.Type
                         };
 

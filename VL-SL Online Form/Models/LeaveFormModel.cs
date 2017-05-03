@@ -26,5 +26,22 @@ namespace VL_SL_Online_Form.Models
                     return "";
             }
         }
+
+        public string ShowStatus
+        {
+            get
+            {
+                if (Status == "P")
+                    return "Pending";
+                else if (Status == "A")
+                    return "Approved";
+                else if (Status == "D")
+                    return "Declined";
+                else if (Status == "X")
+                    return "Canceled";
+                else
+                    return Status;
+            }
+        }
     }
 }

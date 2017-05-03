@@ -101,4 +101,11 @@
             }
         })
     }
+
+    $scope.CancelOvertime = function (value) {
+        $http({
+            method: "POST",
+            url: "/Leave"
+        })
+    }
 });
