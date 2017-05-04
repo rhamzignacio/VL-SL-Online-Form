@@ -20,6 +20,11 @@ namespace VL_SL_Online_Form.Controllers
             return View();  
         }
 
+        public ActionResult ForApproval()
+        {
+            return View();
+        }
+
         [HttpPost]
         public JsonResult GetFiledForms()
         {

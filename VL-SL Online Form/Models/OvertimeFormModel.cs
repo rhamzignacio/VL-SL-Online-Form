@@ -9,8 +9,8 @@ namespace VL_SL_Online_Form.Models
     {
         public Guid ID { get; set; }
         public DateTime? EffectiveDate { get; set; }
-        public TimeSpan? StartTime { get; set; }
-        public TimeSpan? EndTime { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
         public DateTime? CreatedDate { get; set; }
         public Guid? CreatedBy { get; set; }
         public string Reason { get; set; }
@@ -38,6 +38,28 @@ namespace VL_SL_Online_Form.Models
             {
                 if (EffectiveDate != null)
                     return DateTime.Parse(EffectiveDate.ToString()).ToShortDateString();
+                else
+                    return "";
+            }
+        }
+
+        public string ShowStartTime
+        {
+            get
+            {
+                if (StartTime != null)
+                    return DateTime.Parse(StartTime.ToString()).ToShortTimeString();
+                else
+                    return "";
+            }
+        }
+
+        public string ShowEndTime
+        {
+            get
+            {
+                if (EndTime != null)
+                    return DateTime.Parse(EndTime.ToString()).ToShortTimeString();
                 else
                     return "";
             }

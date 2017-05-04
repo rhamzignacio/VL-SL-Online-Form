@@ -16,8 +16,8 @@ namespace VL_SL_Online_Form.Models
     {
         public System.Guid ID { get; set; }
         public Nullable<System.DateTime> EffectiveDate { get; set; }
-        public Nullable<System.TimeSpan> StartTime { get; set; }
-        public Nullable<System.TimeSpan> EndTime { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
         public string Reason { get; set; }

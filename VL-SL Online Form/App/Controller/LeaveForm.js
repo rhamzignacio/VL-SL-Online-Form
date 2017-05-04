@@ -87,25 +87,88 @@
         }
     }
 
+    $scope.LeaveToDelete = function (value) {
+        vm.DeleteLeave = value;
+    }
+
+    $scope.OvertimeToDelete = function (value) {
+        vm.DeleteOvertime = value;
+    }
+
     $scope.SaveOvertime = function (value) {
+        var noError = "Y";
+
+        if (value.EffectiveDate == "" || value.EffectiveDate == null) {
+            noError = "N";
+
+            ErrorMessage("Date is required");
+        }
+
+        if (value.StartTime == "" || value.StartTime == null) {
+            noError = "N";
+
+            ErrorMessage("Start time is required");
+        }
+
+        if (value.EndTime == "" || value.EndTime == null) {
+            noError = "N";
+
+            ErrorMessage("End time is required");
+        }
+
+        if (value.Reason == "" || value.Reason == null) {
+            noError = "N";
+
+            ErrorMessage("Particulars is required");
+        }
+
+        if (noError == "Y") {
+            $http({
+                method: "POST",
+                url: "/Leave/SaveOvertime",
+                data: { overtime: value }
+            }).then(function (data) {
+                if (data.data.errorMessage == "") {
+                    SuccessMessage("Successfully Saved");
+                }
+                else {
+                    ErrorMessage(data.data.errorMessage);
+                }
+            })
+        }
+    }
+
+    $scope.CancelOvertime = function () {
         $http({
             method: "POST",
-            url: "/Leave/SaveOvertime",
-            data: { overtime: value }
+            url: "/Leave/CancelOvertime",
+            data: { overtime: vm.DeleteOvertime }
         }).then(function (data) {
             if (data.data.errorMessage == "") {
-                SuccessMessage("Successfully Saved");
+                SuccessMessage("Successfully cancelled overtime");
+
+                vm.DeleteOvertime.Status = "X";
             }
             else {
                 ErrorMessage(data.data.errorMessage);
             }
-        })
+        });
     }
 
-    $scope.CancelOvertime = function (value) {
+    $scope.CancelLeave = function () {
         $http({
             method: "POST",
-            url: "/Leave"
-        })
+            url: "/Leave/CancelLeave",
+            data: { leave: vm.DeleteLeave }
+        }).then(function (data) {
+            if (data.data.errorMessage == "") {
+                SuccessMessage("Successfully cancelled leave");
+
+                vm.DeleteLeave.Status = "X";
+            }
+            else {
+                ErrorMessage(data.data.errorMessage);
+            }
+        });
     }
 });

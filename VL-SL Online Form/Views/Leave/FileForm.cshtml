@@ -71,12 +71,12 @@
 
                     <div class="form-group">
                         <label>Start Time</label>
-                        <input type="text" class="form-control" ng-model="vm.OT.StartTime" />
+                        <input type="time" class="form-control" ng-model="vm.OT.StartTime" />
                     </div>
 
                     <div class="form-group">
                         <label>End Time</label>
-                        <input type="text" class="form-control" ng-model="vm.OT.EndTime" />
+                        <input type="time" class="form-control" ng-model="vm.OT.EndTime" />
                     </div>
 
                     <div class="form-group">
@@ -92,7 +92,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary" ng-click="SaveOvertime(vm.OT)">Submit</button>
                         <button class="btn btn-default">Clear</button>
                     </div>
                 </div>
