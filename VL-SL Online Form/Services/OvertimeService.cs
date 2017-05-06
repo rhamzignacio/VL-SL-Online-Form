@@ -18,6 +18,8 @@ namespace VL_SL_Online_Form.Services
                 using (var db = new SLVLOnlineEntities())
                 {
                     var ot = from o in db.OvertimeForm
+                             join u in db.UserAccount
+                             on o.CreatedBy equals u.ID
                              where o.CreatedBy == UniversalHelpers.CurrentUser.ID && o.Status != "X"
                              orderby o.EffectiveDate descending
                              select new OvertimeFormModel
@@ -30,6 +32,7 @@ namespace VL_SL_Online_Form.Services
                                  CreatedBy = o.CreatedBy,
                                  CreatedDate = o.CreatedDate,
                                  Reason = o.Reason,
+                                 ShowCreatedBy = u.FirstName + " " + u.LastName
                              };
 
                     return ot.ToList();
