@@ -31,5 +31,6 @@ namespace VL_SL_Online_Form.Models
         public string ContactNo { get; set; }
         public Guid? FirstApprover { get; set; }
         public Guid? SecondApprover { get; set; }
+        public string IfApprover { get; set; }
     }
 }

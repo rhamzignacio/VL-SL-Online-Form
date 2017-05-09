@@ -5,9 +5,23 @@
 }
 
 <div role="main" ng-controller="calendarController as vm" ng-init="Init()">
-    <h3>Calendar</h3>
 
     <div class="clearfix"></div>
 
-    <div id="calendar"></div>
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Calendar</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <button type="button" class="btn btn-default"
+                        ng-click="AddMonth();"><i class="fa fa-arrow-left"></i></button>
+                <button type="button" class="btn btn-default"
+                        ng-click="MinusMonth()"><i class="fa fa-arrow-right"></i></button>
+                <div id='calendar'></div>
+            </div>
+        </div>
+    </div>
 </div>

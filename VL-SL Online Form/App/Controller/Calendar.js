@@ -3,13 +3,23 @@
 .controller("calendarController", function ($scope, $location, $http, growl) {
     var vm = this;
 
+    var date = new Date(),
+           d = date.getDate(),
+           m = date.getMonth(),
+           y = date.getFullYear(),
+           started,
+           categoryClass;
+
+    $scope.AddMonth = function () {
+        $("#calendar").fullCalendar('prev');
+    }
+
+    $scope.MinusMonth = function () {
+        $("#calendar").fullCalendar('next');
+    }
+
+
     $scope.Init = function () {
-        var date = new Date(),
-            d = date.getDate(),
-            m = date.getMonth(),
-            y = date.getFullYear(),
-            started,
-            categoryClass;
 
         var calendar = $('#calendar').fullCalendar({
             header: {
@@ -68,7 +78,7 @@
 
                 calendar.fullCalendar('unselect');
             },
-            editable: true,
+            editable: true
         });
     }
 });

@@ -9,6 +9,44 @@ namespace VL_SL_Online_Form.Services
 {
     public class LeaveService
     {
+        public static List<LeaveFormModel> GetForApproval (out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var leave = from l in db.LeaveForm
+                                join u in db.UserAccount
+                                on l.CreatedBy equals u.ID
+                                where u.FirstApprover == UniversalHelpers.CurrentUser.ID ||
+                                u.SecondApprover == UniversalHelpers.CurrentUser.ID
+                                orderby l.StartDate descending
+                                select new LeaveFormModel
+                                {
+                                    ID = l.ID,
+                                    StartDate = l.StartDate,
+                                    EndDate = l.EndDate,
+                                    CreatedBy = l.CreatedBy,
+                                    CreatedDate = l.CreatedDate,
+                                    Reason = l.Reason,
+                                    Status = l.Status,
+                                    Type = l.Type,
+                                    ShowCreatedBy = u.FirstName + " " + u.LastName
+                                };
+
+                    return leave.ToList();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
         public static List<LeaveFormModel> GetLeavePerUser(out string message)
         {
             try

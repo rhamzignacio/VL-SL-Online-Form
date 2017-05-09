@@ -171,4 +171,106 @@
             }
         });
     }
+
+    //=====================FOR APPROVAL=====================
+    $scope.InitForApproval = function () {
+        $http({
+            method: "POST",
+            url: "/Leave/GetForApproval",
+            arguments: { "Content-Type": "application/json" }
+        }).then(function (data) {
+            if (data.data.errorMessage == "") {
+                vm.FiledLeave = data.data.leave;
+
+                vm.FiledOvertime = data.data.ot;
+            }
+            else {
+                ErrorMessage(data.data.errorMessage);
+            }
+        });
+    }
+
+    $scope.DeclineOvertime = function () {
+        $http({
+            method: "POST",
+            url: "/Leave/DeclineOvertime",
+            data: { overtime: vm.ModalOvertime }
+        }).then(function (data) {
+            if (data.data.errorMessage == "") {
+                SuccessMessage("Successfully declined overtime")
+                
+                vm.ModalOvertime.Status = "D";
+
+                $("#declineLeave").modal('hide');
+            }
+            else {
+                ErrorMessage(data.data.errorMessage);
+            }
+        })
+    }
+
+    $scope.ApproveOvertime = function () {
+        $http({
+            method: "POST",
+            url: "/Leave/ApproveOvertime",
+            data: { overtime: vm.ModalOvertime }
+        }).then(function (data) {
+            if (data.data.errorMessage == "") {
+                SuccessMessage("Successfully approved overtime")
+
+                vm.ModalOvertime.Status = "A";
+
+                $("#approveOvertime").modal('hide');
+            }
+            else {
+                ErrorMessage(data.data.errorMessage);
+            }
+        })
+    }
+
+    $scope.AssignOvertime = function (value) {
+        vm.ModalOvertime = value;
+    }
+
+    $scope.AssignLeave = function (value) {
+        vm.ModalLeave = value;
+    }
+
+    $scope.ApproveLeave = function () {
+        $http({
+            method: "POST",
+            url: "/Leave/ApproveLeave",
+            data: { leave: vm.ModalLeave }
+        }).then(function (data) {
+            if (data.data.errorMessage == "") {
+                SuccessMessage("Successfully approved leave")
+
+                vm.ModalLeave.Status = "A";
+
+                $("#approveLeave").modal('hide');
+            }
+            else {
+                ErrorMessage(data.data.errorMessage);
+            }
+        })
+    }
+
+    $scope.DeclineLeave = function () {
+        $http({
+            method: "POST",
+            url: "/Leave/DeclineLeave",
+            data: { leave: vm.ModalLeave }
+        }).then(function (data) {
+            if (data.data.errorMessage == "") {
+                SuccessMessage("Successfully declined leave")
+
+                vm.ModalLeave.Status = "D";
+
+                $("#declineLeave").modal('hide');
+            }
+            else {
+                ErrorMessage(data.data.errorMessage);
+            }
+        })
+    }
 });

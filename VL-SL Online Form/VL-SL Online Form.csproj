@@ -206,6 +206,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\UniversalHelpers.cs" />
+    <Compile Include="Models\CalendarModel.cs" />
     <Compile Include="Models\EmailCredential.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
@@ -3435,6 +3436,7 @@
     </Content>
     <Content Include="DatabaseBackup\SLVLOnline_LogBackup_2017-04-19_10-19-22.rar" />
     <Content Include="DatabaseBackup\SLVL Online DB 4.25.2017.rar" />
+    <Content Include="DatabaseBackup\SLVLOnline DB 5.9.2017.rar" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

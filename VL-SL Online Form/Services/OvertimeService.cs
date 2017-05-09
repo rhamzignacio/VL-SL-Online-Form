@@ -9,6 +9,44 @@ namespace VL_SL_Online_Form.Services
 {
     public class OvertimeService
     {
+        public static List<OvertimeFormModel> GetForApproval(out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var ot = from o in db.OvertimeForm
+                             join u in db.UserAccount
+                             on o.CreatedBy equals u.ID
+                             where u.FirstApprover == UniversalHelpers.CurrentUser.ID ||
+                             u.SecondApprover == UniversalHelpers.CurrentUser.ID
+                             orderby o.EffectiveDate descending
+                             select new OvertimeFormModel
+                             {
+                                 ID = o.ID,
+                                 EffectiveDate = o.EffectiveDate,
+                                 Status = o.Status,
+                                 StartTime = o.StartTime,
+                                 EndTime = o.EndTime,
+                                 CreatedBy = o.CreatedBy,
+                                 CreatedDate = o.CreatedDate,
+                                 Reason = o.Reason,
+                                 ShowCreatedBy = u.FirstName + " " + u.LastName
+                             };
+
+                    return ot.ToList();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
         public static List<OvertimeFormModel> GetOverTimePerUser(out string message)
         {
             try

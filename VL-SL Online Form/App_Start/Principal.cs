@@ -24,6 +24,7 @@ namespace VL_SL_Online_Form
         public string Password { get; set; }
         public string Status { get; set; }
         public string SessionID { get; set; }
+        public string Approver { get; set; }
     }
 
     interface IPrincipal : secPrincipal.IPrincipal
@@ -32,6 +33,7 @@ namespace VL_SL_Online_Form
         string Password { get; set; }
         string Status { get; set; }
         string SessionID { get; set; }
+        string Approver { get; set; }
     }
 
     public class PrincipalSerializeModel
@@ -40,6 +42,7 @@ namespace VL_SL_Online_Form
         public string Password { get; set; }
         public string Status { get; set; }
         public string SessionID { get; set; }
+        public string Approver { get; set; }
     }
 
 }

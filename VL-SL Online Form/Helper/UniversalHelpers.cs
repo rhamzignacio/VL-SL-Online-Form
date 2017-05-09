@@ -67,6 +67,13 @@ namespace VL_SL_Online_Form
                                     };
 
                         user = query.FirstOrDefault();
+
+                        var app = db.UserAccount.FirstOrDefault(r => r.FirstApprover == user.ID || r.SecondApprover == user.ID);
+
+                        if (app != null)
+                            user.IfApprover = "Y";
+                        else
+                            user.IfApprover = "N";
                     }
                 }
 
