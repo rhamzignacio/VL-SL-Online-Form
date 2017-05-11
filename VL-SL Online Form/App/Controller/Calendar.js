@@ -30,7 +30,7 @@
             selectable: true,
             selectHelper: true,
             select: function(start, end, allDay) {
-                $('#fc_create').click();
+                $("#calendarModal").modal('show');
 
                 started = start;
                 ended = end;

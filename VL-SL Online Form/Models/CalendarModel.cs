@@ -7,11 +7,11 @@ namespace VL_SL_Online_Form.Models
 {
     public class CalendarModel
     {
-    }
-
-    public class CalendarEventModel
-    {
+        public Guid ID { get; set; }
+        public DateTime? start { get; set; }
+        public DateTime? end { get; set; }
         public string title { get; set; }
-        public DateTime start { get; set; }
+        public Guid? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

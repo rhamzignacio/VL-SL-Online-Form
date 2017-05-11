@@ -243,6 +243,7 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\LeaveService.cs" />
     <Compile Include="Services\OvertimeService.cs" />
     <Compile Include="Services\UniversalService.cs" />
