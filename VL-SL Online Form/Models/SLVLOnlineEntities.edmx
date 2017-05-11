@@ -18,9 +18,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="StartDate" Type="date" />
-          <Property Name="EndDate" Type="date" />
-          <Property Name="Description" Type="varchar" MaxLength="300" />
+          <Property Name="start" Type="date" />
+          <Property Name="end" Type="date" />
+          <Property Name="title" Type="varchar" MaxLength="300" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
@@ -111,9 +111,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Precision="0" />
-          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="start" Type="DateTime" Precision="0" />
+          <Property Name="end" Type="DateTime" Precision="0" />
+          <Property Name="title" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="Guid" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
         </EntityType>
@@ -193,9 +193,9 @@
               <MappingFragment StoreEntitySet="Holiday">
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="start" ColumnName="start" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

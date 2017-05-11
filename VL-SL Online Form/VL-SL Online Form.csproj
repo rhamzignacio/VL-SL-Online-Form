@@ -3469,6 +3469,7 @@
     <Content Include="Views\Calendar\Schedule.cshtml" />
     <Content Include="Views\Leave\FiledForms.cshtml" />
     <Content Include="Views\Leave\ForApproval.cshtml" />
+    <Content Include="Views\Calendar\CalendarSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

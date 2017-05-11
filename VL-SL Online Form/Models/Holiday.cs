@@ -15,9 +15,9 @@ namespace VL_SL_Online_Form.Models
     public partial class Holiday
     {
         public System.Guid ID { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
-        public string Description { get; set; }
+        public Nullable<System.DateTime> start { get; set; }
+        public Nullable<System.DateTime> end { get; set; }
+        public string title { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
     }
