@@ -243,7 +243,6 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
-    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\LeaveService.cs" />
     <Compile Include="Services\OvertimeService.cs" />
     <Compile Include="Services\UniversalService.cs" />
@@ -3469,6 +3468,7 @@
     <Content Include="Views\Calendar\Schedule.cshtml" />
     <Content Include="Views\Leave\FiledForms.cshtml" />
     <Content Include="Views\Leave\ForApproval.cshtml" />
+    <Content Include="Views\Calendar\CalendarSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
