@@ -79,6 +79,7 @@
           <Property Name="SecondApprover" Type="uniqueidentifier" />
           <Property Name="TimeIn" Type="varchar" MaxLength="10" />
           <Property Name="TimeOut" Type="varchar" MaxLength="10" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityContainer Name="SLVLOnlineModelStoreContainer">
           <EntitySet Name="EmailCredential" EntityType="Self.EmailCredential" Schema="dbo" store:Type="Tables" />
@@ -172,6 +173,7 @@
           <Property Name="SecondApprover" Type="Guid" />
           <Property Name="TimeIn" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TimeOut" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -231,6 +233,7 @@
           <EntitySetMapping Name="UserAccount">
             <EntityTypeMapping TypeName="SLVLOnlineModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
                 <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
                 <ScalarProperty Name="SecondApprover" ColumnName="SecondApprover" />

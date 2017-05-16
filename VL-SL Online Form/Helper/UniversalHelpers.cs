@@ -63,7 +63,8 @@ namespace VL_SL_Online_Form
                                         SecondApprover = a.SecondApprover,
                                         SSS = a.SSS,
                                         Status = a.Status,
-                                        TIN = a.TIN
+                                        TIN = a.TIN,
+                                        Email = a.Email
                                     };
 
                         user = query.FirstOrDefault();

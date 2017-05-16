@@ -106,6 +106,11 @@ namespace VL_SL_Online_Form.Services
                         };
 
                         db.Entry(newLeave).State = EntityState.Added;
+
+                        db.SaveChanges();
+
+                        EmailService.SendEmail("Leave For Approval", UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName + " filed " +
+                            _leave.ShowType + " and waiting for your approval", UniversalHelpers.CurrentUser.Email);
                     }
                     else
                     {
@@ -116,10 +121,11 @@ namespace VL_SL_Online_Form.Services
                             leave.Status = _leave.Status;
 
                             db.Entry(leave).State = EntityState.Modified;
+
+                            db.SaveChanges();
                         }
                     }
-
-                    db.SaveChanges();
+                   
                 }
             }
             catch(Exception error)

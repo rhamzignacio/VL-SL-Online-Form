@@ -39,7 +39,8 @@ namespace VL_SL_Online_Form.Services
                                     PHIC = u.PHIC,
                                     ContactNo = u.ContactNo,
                                     FirstApprover = u.FirstApprover,
-                                    SecondApprover = u.SecondApprover
+                                    SecondApprover = u.SecondApprover,
+                                    Email = u.Email
                                 };
 
                     return query.ToList();
@@ -86,7 +87,8 @@ namespace VL_SL_Online_Form.Services
                             PHIC = _user.PHIC,
                             ContactNo = _user.ContactNo,
                             FirstApprover = _user.FirstApprover,
-                            SecondApprover = _user.SecondApprover
+                            SecondApprover = _user.SecondApprover,
+                            Email = _user.Email
                         };
 
                         db.Entry(newUser).State = EntityState.Added;
@@ -119,6 +121,7 @@ namespace VL_SL_Online_Form.Services
                             user.ContactNo = _user.ContactNo;
                             user.FirstApprover = _user.FirstApprover;
                             user.SecondApprover = _user.SecondApprover;
+                            user.Email = _user.Email;
 
                             db.Entry(user).State = EntityState.Modified;
                         }

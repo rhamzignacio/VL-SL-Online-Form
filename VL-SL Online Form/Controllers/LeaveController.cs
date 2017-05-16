@@ -84,6 +84,11 @@ namespace VL_SL_Online_Form.Controllers
             if (overtime != null)
                 OvertimeService.SaveUpdate(overtime, out serverResponse);
 
+            if(serverResponse == "")
+            {
+
+            }
+
             return Json(new { errorMessage = serverResponse });
         }
 

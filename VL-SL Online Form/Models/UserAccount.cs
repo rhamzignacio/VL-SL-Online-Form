@@ -39,5 +39,6 @@ namespace VL_SL_Online_Form.Models
         public Nullable<System.Guid> SecondApprover { get; set; }
         public string TimeIn { get; set; }
         public string TimeOut { get; set; }
+        public string Email { get; set; }
     }
 }
