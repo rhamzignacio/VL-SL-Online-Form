@@ -9,6 +9,72 @@ namespace VL_SL_Online_Form.Services
 {
     public class UserService
     {
+        public static EmailAccountModel GetEmail(out string message)
+        {
+            try
+            {
+                message = "";
+
+                using(var db = new SLVLOnlineEntities())
+                {
+                    var email = from e in db.EmailCredential
+                                where e.ID != null && e.ID != Guid.Empty
+                                select new EmailAccountModel
+                                {
+                                    ID = e.ID,
+                                    Email = e.Email,
+                                };
+
+                    return email.FirstOrDefault();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return new EmailAccountModel();
+            }
+        }
+
+        public static void SaveEmail(EmailAccountModel _email, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var email = db.EmailCredential.FirstOrDefault(r => r.ID != null);
+
+                    if(email == null)
+                    {
+                        EmailCredential newEmail = new EmailCredential
+                        {
+                            ID = Guid.NewGuid(),
+                            Email = _email.Email,
+                            Password = _email.Password
+                        };
+
+                        db.Entry(newEmail).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        _email.Password = _email.Password;
+
+                        _email.Email = _email.Email;
+
+                        db.Entry(_email).State = EntityState.Modified;
+                    }
+
+                    db.SaveChanges();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+            }
+        }
+
         public static List<UserModel> GetAll(out string message)
         {
             try

@@ -46,7 +46,8 @@
                               <li ng-show="main.CurrentUser.IfApprover == 'Y'"><a href="/Leave/ForApproval"><i class="fa fa-check"></i>For Approval</a></li>
                               <li><a href="/Calendar/CalendarSchedule"><i class="fa fa-calendar-check-o"></i>Events</a></li>
                               <li><a href="/Calendar/Schedule"><i class="fa fa-calendar"></i>Calendar</a></li>
-                              <li><a href="/User/HRModule"><i class="fa fa-users"></i> HR Module</a></li>
+                              <li ng-show="main.CurrentUser.Type == 'ADM' || main.CurrentUser.Type == 'HR' "><a href="/User/HRModule"><i class="fa fa-users"></i> HR Module</a></li>
+                              <li ng-show="main.CurrentUser.Type == 'ADM'"><a href="/User/EmailNotificationAccount"><i class="fa fa-envelope"></i>Email Account</a></li>
                               <li><a href="#" ng-click="Logout()"><i class="fa fa-sign-out"></i>Log out</a></li>
                           </ul>
                       </div>

@@ -79,6 +79,8 @@
             }).then(function (data) {
                 if (data.data.errorMessage == "") {
                     SuccessMessage("Successfully Saved");
+
+                    vm.Leave = {};
                 }
                 else {
                     ErrorMessage(data.data.errorMessage);
@@ -130,6 +132,8 @@
             }).then(function (data) {
                 if (data.data.errorMessage == "") {
                     SuccessMessage("Successfully Saved");
+
+                    vm.Overtime = {};
                 }
                 else {
                     ErrorMessage(data.data.errorMessage);

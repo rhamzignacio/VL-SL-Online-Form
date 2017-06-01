@@ -33,5 +33,16 @@ namespace VL_SL_Online_Form.Models
         public Guid? SecondApprover { get; set; }
         public string IfApprover { get; set; }
         public string Email { get; set; }
+        public string Type { get; set; }
+
+        public string FirstApproverEmail { get; set; }
+        public string SecondApproverEmail { get; set; }
+    }
+
+    public class EmailAccountModel
+    {
+        public Guid ID { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

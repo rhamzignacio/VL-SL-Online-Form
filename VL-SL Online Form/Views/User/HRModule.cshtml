@@ -49,6 +49,12 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Type</label>
+                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Model.Type"
+                                ng-options="item.value as item.label for item in UserTypeDropDown"></select>
+                    </div>
+
+                    <div class="form-group">
                         <label>Password</label>
                         <input type="password" class="form-control" ng-model="vm.Modal.Password" />
                     </div>

@@ -17,6 +17,12 @@
         { value: "Human Resource", label: "Human Resource (HR)" },
     ];
 
+    $scope.UserTypeDropDown = [
+        { value: "US", label: "User", }
+        { value: "HR", label: "Human Resource", }
+        { value: "ADM", label: "Admin" }
+    ];
+
     $scope.Init = function () {
         $http({
             method: "POST",

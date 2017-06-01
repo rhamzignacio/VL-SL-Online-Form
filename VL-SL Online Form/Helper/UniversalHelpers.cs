@@ -39,6 +39,10 @@ namespace VL_SL_Online_Form
                     using (var db = new SLVLOnlineEntities())
                     {
                         var query = from a in db.UserAccount
+                                    join f in db.UserAccount on a.FirstApprover equals f.ID into qF
+                                    from first in qF.DefaultIfEmpty()
+                                    join s in db.UserAccount on a.SecondApprover equals s.ID into qS
+                                    from second in qS.DefaultIfEmpty()
                                     where a.Username == newUser.Username
                                     select new UserModel
                                     {
@@ -64,7 +68,10 @@ namespace VL_SL_Online_Form
                                         SSS = a.SSS,
                                         Status = a.Status,
                                         TIN = a.TIN,
-                                        Email = a.Email
+                                        Email = a.Email,
+                                        FirstApproverEmail = first.Email,
+                                        SecondApproverEmail = second.Email,
+                                        Type = a.Type
                                     };
 
                         user = query.FirstOrDefault();

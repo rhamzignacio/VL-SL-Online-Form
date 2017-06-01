@@ -18,9 +18,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="start" Type="date" />
-          <Property Name="end" Type="date" />
-          <Property Name="title" Type="varchar" MaxLength="300" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Description" Type="varchar" MaxLength="300" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
@@ -80,6 +80,7 @@
           <Property Name="TimeIn" Type="varchar" MaxLength="10" />
           <Property Name="TimeOut" Type="varchar" MaxLength="10" />
           <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="Type" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityContainer Name="SLVLOnlineModelStoreContainer">
           <EntitySet Name="EmailCredential" EntityType="Self.EmailCredential" Schema="dbo" store:Type="Tables" />
@@ -117,6 +118,9 @@
           <Property Name="title" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="Guid" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="LeaveForm">
           <Key>
@@ -174,6 +178,7 @@
           <Property Name="TimeIn" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TimeOut" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -193,11 +198,11 @@
           <EntitySetMapping Name="Holiday">
             <EntityTypeMapping TypeName="SLVLOnlineModel.Holiday">
               <MappingFragment StoreEntitySet="Holiday">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="end" ColumnName="end" />
-                <ScalarProperty Name="start" ColumnName="start" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -233,6 +238,7 @@
           <EntitySetMapping Name="UserAccount">
             <EntityTypeMapping TypeName="SLVLOnlineModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
                 <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />

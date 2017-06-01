@@ -22,6 +22,27 @@ namespace VL_SL_Online_Form.Controllers
         }
 
         [HttpPost]
+        public JsonResult GetEmail()
+        {
+            string serverResponse = "";
+
+            var email = UserService.GetEmail(out serverResponse);
+
+            return Json(new { email = email, errorMessage = serverResponse });
+        }
+
+        [HttpPost]
+        public JsonResult SaveEmail(EmailAccountModel email)
+        {
+            string serverResponse = "";
+
+            if (email != null)
+                UserService.SaveEmail(email, out serverResponse);
+
+            return Json(serverResponse);
+        }
+
+        [HttpPost]
         public JsonResult Login(string username, string password)
         {
             string serverResponse = "";

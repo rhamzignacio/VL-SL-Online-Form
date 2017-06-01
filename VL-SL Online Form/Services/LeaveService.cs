@@ -109,8 +109,13 @@ namespace VL_SL_Online_Form.Services
 
                         db.SaveChanges();
 
+                        //========FIRST APPROVER EMAIL==============
                         EmailService.SendEmail("Leave For Approval", UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName + " filed " +
-                            _leave.ShowType + " and waiting for your approval", UniversalHelpers.CurrentUser.Email);
+                            _leave.ShowType + " and waiting for your approval", UniversalHelpers.CurrentUser.FirstApproverEmail);
+
+                        //========SECOND APPROVER EMAIL=============
+                        EmailService.SendEmail("Leave For Approval", UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName + " filed " +
+                            _leave.ShowType + " and waiting for your approval", UniversalHelpers.CurrentUser.SecondApproverEmail);
                     }
                     else
                     {
@@ -118,7 +123,28 @@ namespace VL_SL_Online_Form.Services
 
                         if(leave != null)
                         {
+                            var user = db.UserAccount.FirstOrDefault(r => r.ID == leave.CreatedBy);
+
                             leave.Status = _leave.Status;
+
+                            if (_leave.Status == "D")
+                            {
+                                EmailService.SendEmail("Filed Leave Declined", "Your filed Leave has been declined by " + UniversalHelpers.CurrentUser.FirstName + " "
+                                    + UniversalHelpers.CurrentUser.LastName, user.Email);
+                            }
+                            else if (_leave.Status == "A")
+                            {
+                                EmailService.SendEmail("Filed Leave Approved", "Your filed Leave has been approved by " + UniversalHelpers.CurrentUser.FirstName + " "
+                                    + UniversalHelpers.CurrentUser.LastName, user.Email);
+                            }
+                            else if (_leave.Status == "X")
+                            {
+                                EmailService.SendEmail("Filed Leave of " + UniversalHelpers.CurrentUser.FirstName + " has been canceled", "Filed Leave of " +
+                                    UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName + " has been canceled for some reasons", UniversalHelpers.CurrentUser.FirstApproverEmail);
+
+                                EmailService.SendEmail("Filed Leave of " + UniversalHelpers.CurrentUser.FirstName + " has been canceled", "Filed Leave of " +
+                                   UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName + " has been canceled for some reasons", UniversalHelpers.CurrentUser.SecondApproverEmail);
+                            }
 
                             db.Entry(leave).State = EntityState.Modified;
 

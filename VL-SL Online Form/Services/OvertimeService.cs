@@ -107,6 +107,14 @@ namespace VL_SL_Online_Form.Services
                         };
 
                         db.Entry(newOvertime).State = EntityState.Added;
+
+                        //========FIRST APPROVER EMAIL==============
+                        EmailService.SendEmail("Overtime For Approval", UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName +
+                            " filed overtime and waiting for your approval", UniversalHelpers.CurrentUser.FirstApproverEmail);
+
+                        //========SECOND APPROVER EMAIL=============
+                        EmailService.SendEmail("Overtime For Approval", UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName +
+                            " filed overtime and waiting for your approval", UniversalHelpers.CurrentUser.SecondApproverEmail);
                     }
                     else
                     {
@@ -114,7 +122,28 @@ namespace VL_SL_Online_Form.Services
 
                         if (ot != null)
                         {
+                            var user = db.UserAccount.FirstOrDefault(r => r.ID == ot.CreatedBy);
+
                             ot.Status = _overtime.Status;
+
+                            if(_overtime.Status == "D")
+                            {
+                                EmailService.SendEmail("Filed Overtime Declined", "Your filed overtime has been declined by " + UniversalHelpers.CurrentUser.FirstName + " "
+                                    + UniversalHelpers.CurrentUser.LastName, user.Email);
+                            }
+                            else if (_overtime.Status == "A")
+                            {
+                                EmailService.SendEmail("Filed Overtime Approved", "Your filed overtime has been approved by " + UniversalHelpers.CurrentUser.FirstName + " "
+                                    + UniversalHelpers.CurrentUser.LastName, user.Email);
+                            }
+                            else if(_overtime.Status == "X")
+                            {
+                                EmailService.SendEmail("Filed Overtime of " + UniversalHelpers.CurrentUser.FirstName + " has been canceled", "Filed overtime of " +
+                                    UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName + " has been canceled for some reasons", UniversalHelpers.CurrentUser.FirstApproverEmail);
+
+                                EmailService.SendEmail("Filed Overtime of " + UniversalHelpers.CurrentUser.FirstName + " has been canceled", "Filed overtime of " +
+                                   UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName + " has been canceled for some reasons", UniversalHelpers.CurrentUser.SecondApproverEmail);
+                            }
 
                             db.Entry(ot).State = EntityState.Modified;
                         }

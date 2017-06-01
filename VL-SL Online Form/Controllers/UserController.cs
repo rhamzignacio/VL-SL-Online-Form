@@ -16,6 +16,12 @@ namespace VL_SL_Online_Form.Controllers
             return View();
         }
 
+        public ActionResult EmailNotificationAccount()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public JsonResult Init()
         {
             string serverResponse = "";
@@ -27,6 +33,7 @@ namespace VL_SL_Online_Form.Controllers
             return Json(new { message = serverResponse, users = users, userDropdown = userDropdown });
         }
 
+        [HttpPost]
         public JsonResult SaveUser(UserModel user)
         {
             string serverResponse = "";

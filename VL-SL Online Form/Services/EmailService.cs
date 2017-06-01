@@ -14,10 +14,9 @@ namespace VL_SL_Online_Form.Services
         {
             try
             {
-
                 _subject = "SLVL Online - " + _subject;
 
-                _content += "\n\n\n Please do not rpely on this email";
+                _content += "\n\n\n Please do not reply on this email . . . \n";
 
                 using (var db = new SLVLOnlineEntities())
                 {
