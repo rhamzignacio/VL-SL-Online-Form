@@ -27,28 +27,37 @@
         value = {};
     }
 
-    $scope.InitFileForm = function(){
-        var d = new Date();
+    var currentDate = new Date();
 
-        var day = d.getDay();
+    //day = 0;
 
-        var min = "";
+    //temp = Date.getDay();
 
-        if (day === 0 || day === 1 || day === 2 || day === 5) {
-            min = "+3D";
+    //if (temp == 0 || temp == 1 || temp == 2) {
+    //    day = 3;
+    //}
+    //else if (temp == 4) {
+    //    day = 2;
+    //}
+
+    $scope.LeaveEvent = function () {
+        if (vm.Leave.Type == "EL" || vm.Leave.Type == "EL-H") {
+            vm.MaxDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate())).slice(-2);
+
+            vm.MinDate = 0;
         }
-        else if (day === 3) {
-            min = "+5D";
-        }
-        else if (day === 4 || day === 6) {
-            min = "+4D";
+        else {
+            vm.MaxDate = (currentDate.getFullYear() + 1) + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
+
+            vm.MinDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
+
         }
 
-
-        $("#startDate").datepicker({
-            minDate: min
-        });
     }
+
+    vm.MaxDate = (currentDate.getFullYear() + 1) + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
+
+    vm.MinDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
 
     $scope.InitFiledForms = function () {
         $http({

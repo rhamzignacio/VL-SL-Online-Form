@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div role="main" ng-controller="leaveFormController as vm" ng-init="InitFileForm()">
+<div role="main" ng-controller="leaveFormController as vm">
 
     <div class="col-md-12">
         <div class="x_panel">
@@ -18,17 +18,17 @@
                     <div class="form-group">
                         <label>Leave Type</label>
                         <select class="form-control select2_single" style="width:100%" ng-model="vm.Leave.Type"
-                                ng-options="item.value as item.label for item in LeaveTypeDropdown"></select>
+                                ng-options="item.value as item.label for item in LeaveTypeDropdown" ng-change="LeaveEvent()"></select>
                     </div>
 
                     <div class="form-group">
                         <label>Start Date</label>
-                        <input type="date" class="form-control" ng-model="vm.Leave.StartDate" />
+                        <input type="date" class="form-control" ng-model="vm.Leave.StartDate" id="startDate"  min="{{vm.MinDate}}" max="{{vm.MaxDate}}"/>
                     </div>
 
                     <div class="form-group">
                         <label>End Date</label>
-                        <input type="date" class="form-control" ng-model="vm.Leave.EndDate" />
+                        <input type="date" class="form-control" ng-model="vm.Leave.EndDate" min="{{vm.MinDate}}" max="{{vm.MaxDate}}"/>
                     </div>
 
                     <div class="form-group">
@@ -71,7 +71,7 @@
 
                     <div class="form-group">
                         <label>Start Time</label>
-                        <input type="time" class="form-control" ng-model="vm.OT.StartTime"  id="startDate"/>
+                        <input type="time" class="form-control" ng-model="vm.OT.StartTime"/>
                     </div>
 
                     <div class="form-group">
@@ -100,3 +100,5 @@
         </div><!--/x_panel-->
     </div><!--/col-md-12-->
 </div>
+
+

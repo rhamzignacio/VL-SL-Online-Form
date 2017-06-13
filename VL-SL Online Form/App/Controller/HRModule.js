@@ -40,6 +40,7 @@
         });
     }
 
+
     $scope.ClearModal = function () {
         vm.Modal = {};
     }
