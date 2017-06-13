@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div role="main" ng-controller="leaveFormController as vm">
+<div role="main" ng-controller="leaveFormController as vm" ng-init="InitFileForm()">
 
     <div class="col-md-12">
         <div class="x_panel">
@@ -71,7 +71,7 @@
 
                     <div class="form-group">
                         <label>Start Time</label>
-                        <input type="time" class="form-control" ng-model="vm.OT.StartTime" />
+                        <input type="time" class="form-control" ng-model="vm.OT.StartTime"  id="startDate"/>
                     </div>
 
                     <div class="form-group">

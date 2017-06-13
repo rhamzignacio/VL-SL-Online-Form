@@ -18,8 +18,8 @@
     ];
 
     $scope.UserTypeDropDown = [
-        { value: "US", label: "User", }
-        { value: "HR", label: "Human Resource", }
+        { value: "US", label: "User" },
+        { value: "HR", label: "Human Resource" },
         { value: "ADM", label: "Admin" }
     ];
 

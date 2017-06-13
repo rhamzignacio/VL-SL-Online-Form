@@ -7,7 +7,7 @@
       <Diagram DiagramId="fc2486901f574a868dfb588d462a9fab" Name="Diagram1">
         <EntityTypeShape EntityType="SLVLOnlineModel.EmailCredential" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="SLVLOnlineModel.Holiday" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SLVLOnlineModel.LeaveForm" Width="1.5" PointX="0.875" PointY="2.5" />
+        <EntityTypeShape EntityType="SLVLOnlineModel.LeaveForm" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="SLVLOnlineModel.OvertimeForm" Width="1.5" PointX="2.75" PointY="3.75" />
         <EntityTypeShape EntityType="SLVLOnlineModel.UserAccount" Width="1.5" PointX="4.75" PointY="0.75" />
       </Diagram>

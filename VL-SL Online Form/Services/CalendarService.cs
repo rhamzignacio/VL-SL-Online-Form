@@ -23,9 +23,9 @@ namespace VL_SL_Online_Form.Services
                                       ID = h.ID,
                                       CreatedBy = h.CreatedBy,
                                       CreatedDate = h.CreatedDate,
-                                      start = h.start,
-                                      end = h.end,
-                                      title = h.title,
+                                      start = h.StartDate,
+                                      end = h.EndDate,
+                                      title = h.Description,
                                       Status = "Y"
                                   };
 
@@ -69,9 +69,9 @@ namespace VL_SL_Online_Form.Services
                     var holiday = from h in db.Holiday
                                   select new ScheduleModel
                                   {
-                                      title = h.title,
-                                      start = h.start,
-                                      end = h.end
+                                      title = h.Description,
+                                      start = h.StartDate,
+                                      end = h.EndDate
                                   };
 
                     returnSchedule.AddRange(holiday.ToList());
@@ -100,9 +100,9 @@ namespace VL_SL_Online_Form.Services
                         Holiday newHoliday = new Holiday
                         {
                             ID = Guid.NewGuid(),
-                            title = model.title,
-                            end = model.end,
-                            start = model.start,
+                            Description = model.title,
+                            StartDate = model.end,
+                            EndDate = model.start,
                             CreatedBy = UniversalHelpers.CurrentUser.ID,
                             CreatedDate = DateTime.Now
                         };
@@ -119,9 +119,9 @@ namespace VL_SL_Online_Form.Services
                                 db.Entry(holiday).State = EntityState.Deleted;
                             else
                             {
-                                holiday.title = model.title;
-                                holiday.end = model.end;
-                                holiday.start = model.start;
+                                holiday.Description = model.title;
+                                holiday.EndDate = model.end;
+                                holiday.StartDate = model.start;
                                 holiday.CreatedBy = UniversalHelpers.CurrentUser.ID;
                                 holiday.CreatedDate = DateTime.Now;
 

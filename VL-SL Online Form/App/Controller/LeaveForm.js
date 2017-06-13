@@ -27,6 +27,29 @@
         value = {};
     }
 
+    $scope.InitFileForm = function(){
+        var d = new Date();
+
+        var day = d.getDay();
+
+        var min = "";
+
+        if (day === 0 || day === 1 || day === 2 || day === 5) {
+            min = "+3D";
+        }
+        else if (day === 3) {
+            min = "+5D";
+        }
+        else if (day === 4 || day === 6) {
+            min = "+4D";
+        }
+
+
+        $("#startDate").datepicker({
+            minDate: min
+        });
+    }
+
     $scope.InitFiledForms = function () {
         $http({
             method: "POST",
