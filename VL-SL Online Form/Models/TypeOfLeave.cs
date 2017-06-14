@@ -16,5 +16,6 @@ namespace VL_SL_Online_Form.Models
     {
         public string Value { get; set; }
         public string Label { get; set; }
+        public Nullable<int> Arrangement { get; set; }
     }
 }

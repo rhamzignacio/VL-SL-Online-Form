@@ -18,7 +18,7 @@ namespace VL_SL_Online_Form.Services
                 using (var db = new SLVLOnlineEntities())
                 {
                     var query = from l in db.TypeOfLeave
-                                orderby l.Label ascending
+                                orderby l.Arrangement ascending
                                 select new LeaveTypeDropdownModel
                                 {
                                     Label = l.Label,

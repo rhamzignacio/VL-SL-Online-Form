@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div role="main" ng-controller="leaveFormController as vm">
+<div role="main" ng-controller="leaveFormController as vm" ng-init="InitFileForms()">
 
     <div class="col-md-12">
         <div class="x_panel">
@@ -18,7 +18,7 @@
                     <div class="form-group">
                         <label>Leave Type</label>
                         <select class="form-control select2_single" style="width:100%" ng-model="vm.Leave.Type"
-                                ng-options="item.value as item.label for item in LeaveTypeDropdown" ng-change="LeaveEvent()"></select>
+                                ng-options="item.Value as item.Label for item in vm.TypeOfLeaveDropDown" ng-change="LeaveEvent()"></select>
                     </div>
 
                     <div class="form-group">

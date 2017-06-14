@@ -5,6 +5,23 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SLVLOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ApproverGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" />
+          <Property Name="FirstApprover" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SecondApprover" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="ApproverGroupMember">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GroupID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="EmailCredential">
           <Key>
             <PropertyRef Name="ID" />
@@ -54,8 +71,9 @@
           <Key>
             <PropertyRef Name="Value" />
           </Key>
-          <Property Name="Value" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Label" Type="varchar" MaxLength="250" />
+          <Property Name="Value" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Label" Type="varchar" MaxLength="200" />
+          <Property Name="Arrangement" Type="int" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -87,9 +105,11 @@
           <Property Name="TimeIn" Type="varchar" MaxLength="10" />
           <Property Name="TimeOut" Type="varchar" MaxLength="10" />
           <Property Name="Email" Type="varchar" MaxLength="200" />
-          <Property Name="Type" Type="varchar" MaxLength="20" />
+          <Property Name="Type" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityContainer Name="SLVLOnlineModelStoreContainer">
+          <EntitySet Name="ApproverGroup" EntityType="Self.ApproverGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApproverGroupMember" EntityType="Self.ApproverGroupMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailCredential" EntityType="Self.EmailCredential" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Holiday" EntityType="Self.Holiday" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeaveForm" EntityType="Self.LeaveForm" Schema="dbo" store:Type="Tables" />
@@ -106,8 +126,10 @@
           <EntitySet Name="Holiday" EntityType="SLVLOnlineModel.Holiday" />
           <EntitySet Name="LeaveForm" EntityType="SLVLOnlineModel.LeaveForm" />
           <EntitySet Name="OvertimeForm" EntityType="SLVLOnlineModel.OvertimeForm" />
-          <EntitySet Name="UserAccount" EntityType="SLVLOnlineModel.UserAccount" />
           <EntitySet Name="TypeOfLeave" EntityType="SLVLOnlineModel.TypeOfLeave" />
+          <EntitySet Name="UserAccount" EntityType="SLVLOnlineModel.UserAccount" />
+          <EntitySet Name="ApproverGroup" EntityType="SLVLOnlineModel.ApproverGroup" />
+          <EntitySet Name="ApproverGroupMember" EntityType="SLVLOnlineModel.ApproverGroupMember" />
         </EntityContainer>
         <EntityType Name="EmailCredential">
           <Key>
@@ -154,6 +176,14 @@
           <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="TypeOfLeave">
+          <Key>
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Label" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Arrangement" Type="Int32" />
+        </EntityType>
         <EntityType Name="UserAccount">
           <Key>
             <PropertyRef Name="ID" />
@@ -184,14 +214,24 @@
           <Property Name="TimeIn" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TimeOut" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="TypeOfLeave">
+        <EntityType Name="ApproverGroup">
           <Key>
-            <PropertyRef Name="Value" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Value" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Label" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FirstApprover" Type="Guid" Nullable="false" />
+          <Property Name="SecondApprover" Type="Guid" />
+        </EntityType>
+        <EntityType Name="ApproverGroupMember">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="GroupID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -248,6 +288,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TypeOfLeave">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.TypeOfLeave">
+              <MappingFragment StoreEntitySet="TypeOfLeave">
+                <ScalarProperty Name="Arrangement" ColumnName="Arrangement" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserAccount">
             <EntityTypeMapping TypeName="SLVLOnlineModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
@@ -281,11 +330,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TypeOfLeave">
-            <EntityTypeMapping TypeName="SLVLOnlineModel.TypeOfLeave">
-              <MappingFragment StoreEntitySet="TypeOfLeave">
-                <ScalarProperty Name="Label" ColumnName="Label" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
+          <EntitySetMapping Name="ApproverGroup">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.ApproverGroup">
+              <MappingFragment StoreEntitySet="ApproverGroup">
+                <ScalarProperty Name="SecondApprover" ColumnName="SecondApprover" />
+                <ScalarProperty Name="FirstApprover" ColumnName="FirstApprover" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApproverGroupMember">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.ApproverGroupMember">
+              <MappingFragment StoreEntitySet="ApproverGroupMember">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
