@@ -50,6 +50,13 @@
           <Property Name="Reason" Type="varchar(max)" />
           <Property Name="Status" Type="varchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="TypeOfLeave">
+          <Key>
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Value" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Label" Type="varchar" MaxLength="250" />
+        </EntityType>
         <EntityType Name="UserAccount">
           <Key>
             <PropertyRef Name="ID" />
@@ -87,6 +94,7 @@
           <EntitySet Name="Holiday" EntityType="Self.Holiday" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeaveForm" EntityType="Self.LeaveForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OvertimeForm" EntityType="Self.OvertimeForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeOfLeave" EntityType="Self.TypeOfLeave" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -99,6 +107,7 @@
           <EntitySet Name="LeaveForm" EntityType="SLVLOnlineModel.LeaveForm" />
           <EntitySet Name="OvertimeForm" EntityType="SLVLOnlineModel.OvertimeForm" />
           <EntitySet Name="UserAccount" EntityType="SLVLOnlineModel.UserAccount" />
+          <EntitySet Name="TypeOfLeave" EntityType="SLVLOnlineModel.TypeOfLeave" />
         </EntityContainer>
         <EntityType Name="EmailCredential">
           <Key>
@@ -176,6 +185,13 @@
           <Property Name="TimeOut" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TypeOfLeave">
+          <Key>
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Label" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -262,6 +278,14 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeOfLeave">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.TypeOfLeave">
+              <MappingFragment StoreEntitySet="TypeOfLeave">
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

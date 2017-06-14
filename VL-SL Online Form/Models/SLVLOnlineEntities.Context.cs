@@ -30,5 +30,6 @@ namespace VL_SL_Online_Form.Models
         public virtual DbSet<LeaveForm> LeaveForm { get; set; }
         public virtual DbSet<OvertimeForm> OvertimeForm { get; set; }
         public virtual DbSet<UserAccount> UserAccount { get; set; }
+        public virtual DbSet<TypeOfLeave> TypeOfLeave { get; set; }
     }
 }

@@ -108,6 +108,15 @@ namespace VL_SL_Online_Form.Controllers
         #endregion
 
         #region Leave
+        [HttpPost]
+        public JsonResult GetLeaveTypeDropdown()
+        {
+            string serverResponse = "";
+
+            var type = LeaveService.GetLeaveType(out serverResponse);
+
+            return Json(new { errorMessage = serverResponse, leaveType = type });
+        }
 
         [HttpPost]
         public JsonResult SaveLeave(LeaveFormModel leave)

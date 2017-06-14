@@ -29,16 +29,12 @@
 
     var currentDate = new Date();
 
-    //day = 0;
-
-    //temp = Date.getDay();
-
-    //if (temp == 0 || temp == 1 || temp == 2) {
-    //    day = 3;
-    //}
-    //else if (temp == 4) {
-    //    day = 2;
-    //}
+    $scope.InitFileForms = function () {
+        $http({
+            method: "POST",
+            url:""
+        })
+    }
 
     $scope.LeaveEvent = function () {
         if (vm.Leave.Type == "EL" || vm.Leave.Type == "EL-H") {

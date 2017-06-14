@@ -236,6 +236,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SLVLOnlineEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\TypeOfLeave.cs">
+      <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UniversalModel.cs" />
     <Compile Include="Models\UserAccount.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
@@ -3436,9 +3439,6 @@
     <Content Include="Models\SLVLOnlineEntities.edmx.diagram">
       <DependentUpon>SLVLOnlineEntities.edmx</DependentUpon>
     </Content>
-    <Content Include="DatabaseBackup\SLVLOnline_LogBackup_2017-04-19_10-19-22.rar" />
-    <Content Include="DatabaseBackup\SLVL Online DB 4.25.2017.rar" />
-    <Content Include="DatabaseBackup\SLVLOnline DB 5.9.2017.rar" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -3487,6 +3487,7 @@
     <Folder Include="Content\vendors\Flot\examples\series-types\" />
     <Folder Include="Content\vendors\Flot\examples\symbols\" />
     <Folder Include="Content\vendors\Flot\examples\threshold\" />
+    <Folder Include="DatabaseBackup\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

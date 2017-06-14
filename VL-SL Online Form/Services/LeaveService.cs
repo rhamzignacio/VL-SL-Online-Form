@@ -9,6 +9,33 @@ namespace VL_SL_Online_Form.Services
 {
     public class LeaveService
     {
+        public static List<LeaveTypeDropdownModel> GetLeaveType(out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var query = from l in db.TypeOfLeave
+                                orderby l.Label ascending
+                                select new LeaveTypeDropdownModel
+                                {
+                                    Label = l.Label,
+                                    Value = l.Value
+                                };
+
+                    return query.ToList();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
         public static List<LeaveFormModel> GetForApproval (out string message)
         {
             try
