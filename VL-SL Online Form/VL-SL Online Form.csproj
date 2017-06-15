@@ -199,6 +199,7 @@
     <Compile Include="App_Start\Principal.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\GroupApproverController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Models\EmailCredential.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GroupApproverModel.cs" />
     <Compile Include="Models\Holiday.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
@@ -254,6 +256,7 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\EmailService.cs" />
+    <Compile Include="Services\GroupApproverService.cs" />
     <Compile Include="Services\LeaveService.cs" />
     <Compile Include="Services\OvertimeService.cs" />
     <Compile Include="Services\UniversalService.cs" />
@@ -263,6 +266,7 @@
   <ItemGroup>
     <Content Include="App\App.js" />
     <Content Include="App\Controller\Calendar.js" />
+    <Content Include="App\Controller\GroupApprover.js" />
     <Content Include="App\Controller\HRModule.js" />
     <Content Include="App\Controller\LeaveForm.js" />
     <Content Include="App\Controller\Login.js" />
@@ -3479,6 +3483,7 @@
     <Content Include="Views\Leave\ForApproval.cshtml" />
     <Content Include="Views\Calendar\CalendarSchedule.cshtml" />
     <Content Include="Views\User\EmailNotificationAccount.cshtml" />
+    <Content Include="Views\GroupApprover\GroupApprover.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
