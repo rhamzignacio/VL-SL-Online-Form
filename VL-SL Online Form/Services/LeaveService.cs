@@ -45,10 +45,11 @@ namespace VL_SL_Online_Form.Services
                 using (var db = new SLVLOnlineEntities())
                 {
                     var leave = from l in db.LeaveForm
-                                join u in db.UserAccount
-                                on l.CreatedBy equals u.ID
-                                where u.FirstApprover == UniversalHelpers.CurrentUser.ID ||
-                                u.SecondApprover == UniversalHelpers.CurrentUser.ID
+                                join m in db.ApproverGroupMember on l.CreatedBy equals m.UserID
+                                join g in db.ApproverGroup on m.GroupID equals g.ID
+                                join u in db.UserAccount on l.CreatedBy equals u.ID
+                                where g.FirstApprover == UniversalHelpers.CurrentUser.ID ||
+                                g.SecondApprover == UniversalHelpers.CurrentUser.ID
                                 orderby l.StartDate descending
                                 select new LeaveFormModel
                                 {

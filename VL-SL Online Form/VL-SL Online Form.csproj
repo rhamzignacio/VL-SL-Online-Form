@@ -3483,7 +3483,7 @@
     <Content Include="Views\Leave\ForApproval.cshtml" />
     <Content Include="Views\Calendar\CalendarSchedule.cshtml" />
     <Content Include="Views\User\EmailNotificationAccount.cshtml" />
-    <Content Include="Views\GroupApprover\GroupApprover.cshtml" />
+    <Content Include="Views\GroupApprover\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

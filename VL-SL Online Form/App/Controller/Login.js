@@ -16,7 +16,7 @@
                 growl.error(data.data, { ttl: 3000 });
             }
             else {
-                window.location.href = "/Home/Index";
+                window.location.href = "/Leave/FiledForms";
             }
         })
     }

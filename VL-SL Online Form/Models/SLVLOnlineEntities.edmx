@@ -106,6 +106,8 @@
           <Property Name="TimeOut" Type="varchar" MaxLength="10" />
           <Property Name="Email" Type="varchar" MaxLength="200" />
           <Property Name="Type" Type="varchar" MaxLength="200" />
+          <Property Name="SickLeaveCount" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="VacationLeavCount" Type="decimal" Precision="18" Scale="1" />
         </EntityType>
         <EntityContainer Name="SLVLOnlineModelStoreContainer">
           <EntitySet Name="ApproverGroup" EntityType="Self.ApproverGroup" Schema="dbo" store:Type="Tables" />
@@ -215,6 +217,8 @@
           <Property Name="TimeOut" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SickLeaveCount" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="VacationLeavCount" Type="Decimal" Precision="18" Scale="1" />
         </EntityType>
         <EntityType Name="ApproverGroup">
           <Key>
@@ -300,6 +304,8 @@
           <EntitySetMapping Name="UserAccount">
             <EntityTypeMapping TypeName="SLVLOnlineModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="VacationLeavCount" ColumnName="VacationLeavCount" />
+                <ScalarProperty Name="SickLeaveCount" ColumnName="SickLeaveCount" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />

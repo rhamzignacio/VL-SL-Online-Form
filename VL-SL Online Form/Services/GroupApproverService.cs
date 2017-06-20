@@ -9,6 +9,56 @@ namespace VL_SL_Online_Form.Services
 {
     public class GroupApproverService
     {
+        public static GroupApproverModel GetGroup(Guid _groupID, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var query = from g in db.ApproverGroup
+                                where g.ID == _groupID
+                                select new GroupApproverModel
+                                {
+                                    ID = g.ID,
+                                    FirstApprover = g.FirstApprover,
+                                    SecondApprover = g.SecondApprover,
+                                    Name = g.Name,
+                                    Status = "Y"
+                                };
+
+                    return query.FirstOrDefault();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
+        public static string GetGroupName(Guid _groudID, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var query = db.ApproverGroup.FirstOrDefault(r => r.ID == _groudID);
+
+                    return query.Name;
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return "";
+            }
+        }
         public static List<GroupApproverMemberModel> GetMembers(Guid _groupID, out string message)
         {
             try
@@ -116,14 +166,23 @@ namespace VL_SL_Online_Form.Services
                 {
                     if(_member.ID == Guid.Empty || _member.ID == null)//NEW
                     {
-                        ApproverGroupMember newMember = new ApproverGroupMember
-                        {
-                            ID = Guid.NewGuid(),
-                            GroupID = _member.GroupID,
-                            UserID = _member.UserID
-                        };
+                        var ifExist = db.ApproverGroupMember.FirstOrDefault(r => r.UserID == _member.UserID);
 
-                        db.Entry(newMember).State = EntityState.Added;  
+                        if (ifExist == null)
+                        {
+                            ApproverGroupMember newMember = new ApproverGroupMember
+                            {
+                                ID = Guid.NewGuid(),
+                                GroupID = _member.GroupID,
+                                UserID = _member.UserID
+                            };
+
+                            db.Entry(newMember).State = EntityState.Added;
+                        }
+                        else
+                        {
+                            message = "Employee is already a member";
+                        }
                     }
                     else //UPDATE
                     {
@@ -174,6 +233,16 @@ namespace VL_SL_Online_Form.Services
                             if (_group.Status == "X")
                             {
                                 db.Entry(group).State = EntityState.Deleted;
+
+                                var members = db.ApproverGroupMember.Where(r => r.GroupID == _group.ID);
+
+                                if(members != null)
+                                {
+                                    members.ToList().ForEach(item =>
+                                    {
+                                        db.Entry(item).State = EntityState.Deleted;
+                                    });
+                                }
                             }
                             else
                             {

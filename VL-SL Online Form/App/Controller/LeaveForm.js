@@ -45,7 +45,7 @@
     }
 
     $scope.LeaveEvent = function () {
-        if (vm.Leave.Type == "EL" || vm.Leave.Type == "EL-H") {
+        if (vm.Leave.Type == "EL" || vm.Leave.Type == "EL-H" || vm.Leave.Type == "SL" || vm.Leave.Type == "SL-H") {
             vm.MaxDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate())).slice(-2);
 
             vm.MinDate = 0;
@@ -54,9 +54,7 @@
             vm.MaxDate = (currentDate.getFullYear() + 1) + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
 
             vm.MinDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
-
         }
-
     }
 
     vm.MaxDate = (currentDate.getFullYear() + 1) + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
@@ -117,6 +115,8 @@
                     SuccessMessage("Successfully Saved");
 
                     vm.Leave = {};
+
+                    window.location.href = "/Leave/FiledForms";
                 }
                 else {
                     ErrorMessage(data.data.errorMessage);
