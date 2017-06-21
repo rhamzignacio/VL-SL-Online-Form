@@ -3450,6 +3450,7 @@
       <DependentUpon>SLVLOnlineEntities.edmx</DependentUpon>
     </Content>
     <Content Include="DatabaseBackup\SLVLOnline_LogBackup_2017-05-09_22-33-01.bak" />
+    <Content Include="DatabaseBackup\SLVLOnline_LogBackup_2017-06-15_10-04-09.bak" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

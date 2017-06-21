@@ -121,6 +121,37 @@ namespace VL_SL_Online_Form.Services
                 {
                     if(_leave.ID == Guid.Empty || _leave.ID == null)
                     {
+                        var leaveDays = _leave.EndDate.Subtract(_leave.StartDate).TotalDays + 1;
+
+                        if (_leave.Type == "SL")
+                        { 
+                            if(UniversalHelpers.CurrentUser.SickLeaveCount < leaveDays)
+                            {
+                                message = "Insufficient Sick Leave Credit";
+                            }
+                        }
+                        else if(_leave.Type == "VL" || _leave.Type == "EL")
+                        {
+                            if (UniversalHelpers.CurrentUser.VacationLeaveCount < leaveDays)
+                            {
+                                message = "Insufficient Vacation Leave Credit";
+                            }
+                        }
+                        else if(_leave.Type == "SL-H")
+                        {
+                            if (UniversalHelpers.CurrentUser.SickLeaveCount < (leaveDays/2))
+                            {
+                                message = "Insufficient Sick Leave Credit";
+                            }
+                        }
+                        else if (_leave.Type == "VL-H" || _leave.Type == "EL-H")
+                        {
+                            if (UniversalHelpers.CurrentUser.VacationLeaveCount < (leaveDays/2))
+                            {
+                                message = "Insufficient Vacation Leave Credit";
+                            }
+                        }
+
                         LeaveForm newLeave = new LeaveForm
                         {
                             ID = Guid.NewGuid(),
@@ -144,6 +175,8 @@ namespace VL_SL_Online_Form.Services
                         //========SECOND APPROVER EMAIL=============
                         EmailService.SendEmail("Leave For Approval", UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName + " filed " +
                             _leave.ShowType + " and waiting for your approval", UniversalHelpers.CurrentUser.SecondApproverEmail);
+
+           
                     }
                     else
                     {
@@ -152,8 +185,6 @@ namespace VL_SL_Online_Form.Services
                         if(leave != null)
                         {
                             var user = db.UserAccount.FirstOrDefault(r => r.ID == leave.CreatedBy);
-
-                            leave.Status = _leave.Status;
 
                             if (_leave.Status == "D")
                             {
@@ -164,6 +195,15 @@ namespace VL_SL_Online_Form.Services
                             {
                                 EmailService.SendEmail("Filed Leave Approved", "Your filed Leave has been approved by " + UniversalHelpers.CurrentUser.FirstName + " "
                                     + UniversalHelpers.CurrentUser.LastName, user.Email);
+
+                                if (leave.Type == "SL")
+                                    user.SickLeaveCount = user.SickLeaveCount - 1;
+                                else if (leave.Type == "SL-H")
+                                    user.SickLeaveCount = user.SickLeaveCount -0.5;
+                                else if (leave.Type == "VL" || leave.Type == "EL")
+                                    user.VacationLeavCount = user.VacationLeavCount - 1;
+                                else if (leave.Type == "VL-H" || leave.Type == "EL-H")
+                                    user.VacationLeavCount = user.VacationLeavCount - 0.5;
                             }
                             else if (_leave.Status == "X")
                             {
@@ -172,7 +212,21 @@ namespace VL_SL_Online_Form.Services
 
                                 EmailService.SendEmail("Filed Leave of " + UniversalHelpers.CurrentUser.FirstName + " has been canceled", "Filed Leave of " +
                                    UniversalHelpers.CurrentUser.FirstName + " " + UniversalHelpers.CurrentUser.LastName + " has been canceled for some reasons", UniversalHelpers.CurrentUser.SecondApproverEmail);
+
+                                if(leave.Status == "A")
+                                {
+                                    if (leave.Type == "SL")
+                                        user.SickLeaveCount = user.SickLeaveCount + 1;
+                                    else if (leave.Type == "SL-H")
+                                        user.SickLeaveCount = user.SickLeaveCount + 0.5;
+                                    else if (leave.Type == "VL" || leave.Type == "EL")
+                                        user.VacationLeavCount = user.VacationLeavCount + 1;
+                                    else if (leave.Type == "VL-H" || leave.Type == "EL-H")
+                                        user.VacationLeavCount = user.VacationLeavCount + 0.5;
+                                }
                             }
+
+                            leave.Status = _leave.Status;
 
                             db.Entry(leave).State = EntityState.Modified;
 

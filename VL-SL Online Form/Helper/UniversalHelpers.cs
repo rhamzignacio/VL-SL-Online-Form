@@ -71,7 +71,9 @@ namespace VL_SL_Online_Form
                                         Email = a.Email,
                                         FirstApproverEmail = first.Email,
                                         SecondApproverEmail = second.Email,
-                                        Type = a.Type
+                                        Type = a.Type,
+                                        SickLeaveCount = a.SickLeaveCount,
+                                        VacationLeaveCount = a.VacationLeavCount
                                     };
 
                         user = query.FirstOrDefault();

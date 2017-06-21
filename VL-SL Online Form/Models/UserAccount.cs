@@ -41,5 +41,7 @@ namespace VL_SL_Online_Form.Models
         public string TimeOut { get; set; }
         public string Email { get; set; }
         public string Type { get; set; }
+        public double SickLeaveCount { get; set; }
+        public double VacationLeavCount { get; set; }
     }
 }
