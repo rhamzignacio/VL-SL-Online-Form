@@ -27,6 +27,26 @@ namespace VL_SL_Online_Form.Controllers
         }
 
         [HttpPost]
+        public JsonResult LeaveCreditPerEmployee(Guid ID, int VL, int SL)
+        {
+            string serverResponse = "";
+
+            UserService.AddCreditPerEmployee(ID, VL, SL, out serverResponse);
+
+            return Json(serverResponse);
+        }
+
+        [HttpPost]
+        public JsonResult LeaveCreditPerGroup (Guid ID, int VL, int SL)
+        {
+            string serverResponse = "";
+
+            UserService.AddCreditPerGroup(ID, VL, SL, out serverResponse);
+
+            return Json(serverResponse);
+        }
+
+        [HttpPost]
         public JsonResult GetGroupMember(Guid ID)
         {
             string serverResponse = "";
