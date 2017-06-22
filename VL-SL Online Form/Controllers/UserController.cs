@@ -21,6 +21,53 @@ namespace VL_SL_Online_Form.Controllers
             return View();
         }
 
+        public ActionResult LeaveCredit()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult GetGroupMember(Guid ID)
+        {
+            string serverResponse = "";
+
+            var users = UniversalService.GetSelectedGroup(ID, out serverResponse);
+
+            return Json(new { errorMessage = serverResponse, users = users });
+        }
+
+        [HttpPost]
+        public JsonResult GetSingleUser(Guid ID)
+        {
+            string serverResponse = "";
+
+            var user = new UserModel();
+
+            if(ID != null || ID != Guid.Empty)
+                user = UniversalService.GetSelectedUser(ID, out serverResponse);
+
+            return Json(new { errorMessage = serverResponse, user = user });
+        }
+
+        [HttpPost]
+        public JsonResult GetUserDropdown()
+        {
+            string serverResponse = "";
+
+            var user = UniversalService.GetUserDropDown(out serverResponse);
+
+            return Json(new { errorMessage = serverResponse, user = user });
+        }
+
+        public JsonResult GetGroupDropdown()
+        {
+            string serverResponse = "";
+
+            var group = UniversalService.GetGroupDropDown(out serverResponse);
+
+            return Json(new { errorMessage = serverResponse, group = group });
+        }
+
         [HttpPost]
         public JsonResult Init()
         {

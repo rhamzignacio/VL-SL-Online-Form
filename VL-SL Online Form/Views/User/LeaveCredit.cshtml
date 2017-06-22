@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "LeaveCredit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div role="main" ng-controller="hrModuleController as vm" ng-init="InitLeaveCredit()">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Leave Credit Per Employee</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <div class="form-group">
+                    <label>Employee Name</label>
+                    <select class="form-control select2_single" style="width:100%" ng-model="vm.Emp.ID" 
+                            ng-options="item.ID as item.Name for item in vm.UserDropDown" ng-change="SelectUser()"></select>
+                </div>
+                <div ng-show="!(vm.Emp.ID == null || vm.Emp.ID == '')">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Leave Type</th>
+                                <th>Current Leave</th>
+                                <th>Leave Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Vacation</td>
+                                <td>{{vm.SelectedUser.VacationLeaveCount}}</td>
+                                <td><input type="number" style="width:60px;" /></td>
+                            </tr>
+                            <tr>
+                                <td>Sick</td>
+                                <td>{{vm.SelectedUser.SickLeaveCount}}</td>
+                                <td><input type="number" style="width:60px;" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Leave Credit Per Group</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <div class="form-group">
+                    <label>Group Name</label>
+                    <select class="form-control select2_single" style="width:100%" ng-model="vm.Group.ID"
+                            ng-options="item.ID as item.Name for item in vm.GroupDropDown" ng-change="SelectGroup()"></select>
+                </div>
+
+                <div ng-show="!(vm.Group.ID == null || vm.Group.ID == '')">
+                    <div class="form-group">
+                        <label>Credit Vacation Leave</label>
+                        <input type="number" class="form-control" style="width:60px;" maxlength="2" />
+                        <label>Credit Sick Leave</label>
+                        <input type="number" class="form-control" style="width:60px;" maxlength="2" />
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>Vacation Leave</th>
+                                <th>Sick Leave</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="member in vm.GroupMembers">
+                                <td>{{member.FirstName}} {{member.LastName}}</td>
+                                <td>{{member.VacationLeaveCount}}</td>
+                                <td>{{member.SickLeaveCount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

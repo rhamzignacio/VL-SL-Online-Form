@@ -14,4 +14,10 @@ namespace VL_SL_Online_Form.Models
         public Guid ID { get; set; }
         public string Name { get; set; }
     }
+
+    public class GroupDropDownModel
+    {
+        public Guid ID { get; set; }
+        public string Name { get; set; }
+    }
 }
