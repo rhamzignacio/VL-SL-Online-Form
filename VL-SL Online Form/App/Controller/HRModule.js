@@ -26,7 +26,53 @@
     ];
 
     //=======LEAVE CREDIT==========
+    $scope.CreditLeavePerGroup = function (value) {
+        $http({
+            method: "POST",
+            url: "/User/LeaveCreditPerGroup",
+            data: {
+                ID: value.ID,
+                VL: value.VL,
+                SL: value.SL
+            }
+        }).then(function (data) {
+            if (data.data === "") {
+                SuccessMessage("Successfully Credited Leave");
+
+                $scope.SelectGroup();
+            }
+            else {
+                ErrorMessage(data.data);
+            }
+        });
+    }
+
+    $scope.CreditLeavePerEmp = function (value) {
+        $http({
+            method: "POST",
+            url: "/User/LeaveCreditPerEmployee",
+            data: {
+                ID: value.ID,
+                VL: value.VL,
+                SL: value.SL
+            }
+        }).then(function (data) {
+            if (data.data === "") {
+                SuccessMessage("Successfully Credited Leave");
+
+                $scope.SelectUser();
+            }
+            else {
+                ErrorMessage(data.data);
+            }
+        });
+    }
+
     $scope.SelectGroup = function () {
+        vm.Group.SL = '';
+
+        vm.Group.VL = '';
+
         if (!(vm.Group.ID == null || vm.Group.ID == '')) {
             $http({
                 method: "POST",
@@ -43,6 +89,9 @@
         }
     }
     $scope.SelectUser = function () {
+        vm.Emp.SL = '';
+
+        vm.Emp.VL = '';
         if (!(vm.Emp.ID == null || vm.Emp.ID == '')) {
             $http({
                 method: "POST",
@@ -90,6 +139,7 @@
         });
     }
 
+    //==========HR MODULE===============
     $scope.Init = function () {
         $http({
             method: "POST",

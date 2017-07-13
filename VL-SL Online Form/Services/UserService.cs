@@ -9,6 +9,70 @@ namespace VL_SL_Online_Form.Services
 {
     public class UserService
     {
+        public static void AddCreditPerGroup(Guid _groupID, int VL, int SL, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var users = db.ApproverGroupMember.Where(r => r.GroupID == _groupID);
+
+                    if(users != null)
+                    {
+                        users.ToList().ForEach(item =>
+                        {
+                            var user = db.UserAccount.FirstOrDefault(r => r.ID == item.UserID);
+
+                            if(user != null)
+                            {
+                                user.VacationLeavCount += VL;
+
+                                user.SickLeaveCount += SL;
+
+                                db.Entry(user).State = EntityState.Modified;
+                            }
+                        });
+
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+            }
+        }
+
+        public static void AddCreditPerEmployee(Guid _userID, int VL, int SL, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var user = db.UserAccount.FirstOrDefault(r => r.ID == _userID);
+
+                    if(user != null)
+                    {
+                        user.VacationLeavCount += VL;
+
+                        user.SickLeaveCount += SL;
+
+                        db.Entry(user).State = EntityState.Modified;
+
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+            }
+        }
+
         public static EmailAccountModel GetEmail(out string message)
         {
             try
