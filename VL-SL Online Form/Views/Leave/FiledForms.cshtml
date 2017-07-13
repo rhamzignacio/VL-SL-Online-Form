@@ -49,9 +49,9 @@
                     <tbody>
                         <tr ng-repeat="leave in vm.FiledLeave | filter: { Status: '!X'}">
                             <td><button class="btn btn-danger" data-target="#deleteLeaveModal"
-                                        data-toggle="modal" ng-click="LeaveToDelete(leave)">Cancel</button></td>
+                                        data-toggle="modal" ng-click="LeaveToDelete(leave)" ng-show="leave.Status != 'D'">Cancel</button></td>
                             <td>{{leave.ShowCreatedDate}}</td>
-                            <td>{{leave.ShowStatus}}</td>
+                            <td>{{leave.ShowStatus}} {{leave.DeclineReason}}</td>
                         </tr>
                     </tbody>
                 </table>

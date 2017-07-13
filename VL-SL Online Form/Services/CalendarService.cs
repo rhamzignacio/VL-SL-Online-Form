@@ -50,21 +50,40 @@ namespace VL_SL_Online_Form.Services
                 {
                     List<ScheduleModel> returnSchedule = new List<ScheduleModel>();
 
-                    var user = db.UserAccount.Where(r => r.FirstApprover == UniversalHelpers.CurrentUser.ID || r.SecondApprover == UniversalHelpers.CurrentUser.ID);
+                    var group = db.ApproverGroup.Where(r => r.FirstApprover == UniversalHelpers.CurrentUser.ID || r.SecondApprover == UniversalHelpers.CurrentUser.ID);
 
-                    user.ToList().ForEach(item =>
+                    group.ToList().ForEach(item =>
                     {
                         var query = from l in db.LeaveForm
-                                    where l.CreatedBy == item.ID && l.Status == "A"
+                                    join m in db.ApproverGroupMember on l.CreatedBy equals m.UserID
+                                    join u in db.UserAccount on m.UserID equals u.ID
+                                    where m.GroupID == item.ID
                                     select new ScheduleModel
                                     {
-                                        title = item.FirstName + " " + item.LastName + " " + "On leave",
+                                        title = u.FirstName + " " + u.LastName + " " + "On Leave",
                                         start = l.StartDate,
                                         end = l.EndDate
                                     };
 
+
                         returnSchedule.AddRange(query.ToList());
                     });
+
+                    //var user = db.UserAccount.Where(r => r.FirstApprover == UniversalHelpers.CurrentUser.ID || r.SecondApprover == UniversalHelpers.CurrentUser.ID);
+
+                    //user.ToList().ForEach(item =>
+                    //{
+                    //    var query = from l in db.LeaveForm
+                    //                where l.CreatedBy == item.ID && l.Status == "A"
+                    //                select new ScheduleModel
+                    //                {
+                    //                    title = item.FirstName + " " + item.LastName + " " + "On leave",
+                    //                    start = l.StartDate,
+                    //                    end = l.EndDate
+                    //                };
+
+                    //    returnSchedule.AddRange(query.ToList());
+                    //});
 
                     var holiday = from h in db.Holiday
                                   select new ScheduleModel

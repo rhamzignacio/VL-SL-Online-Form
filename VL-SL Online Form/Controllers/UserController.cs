@@ -89,5 +89,21 @@ namespace VL_SL_Online_Form.Controllers
 
             return Json(new { message = serverResponse });
         }
+
+        [HttpPost]
+        public JsonResult DeleteUser(UserModel user)
+        {
+            string serverResponse = "";
+
+            if(user != null)
+            {
+                user.Status = "X";
+
+                UserService.Save(user, out serverResponse);
+
+            }
+
+            return Json(new { message = serverResponse });
+        }
     }
 }

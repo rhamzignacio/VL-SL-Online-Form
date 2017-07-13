@@ -231,22 +231,29 @@
     }
 
     $scope.DeclineOvertime = function () {
-        $http({
-            method: "POST",
-            url: "/Leave/DeclineOvertime",
-            data: { overtime: vm.ModalOvertime }
-        }).then(function (data) {
-            if (data.data.errorMessage == "") {
-                SuccessMessage("Successfully declined overtime")
-                
-                vm.ModalOvertime.Status = "D";
+        if (vm.ModalOvertime.DeclineReason === null || vm.ModalOvertime.DeclineReason === "") {
+            ErrorMessage("Reason is required");
+        }
+        else {
 
-                $("#declineLeave").modal('hide');
-            }
-            else {
-                ErrorMessage(data.data.errorMessage);
-            }
-        })
+
+            $http({
+                method: "POST",
+                url: "/Leave/DeclineOvertime",
+                data: { overtime: vm.ModalOvertime }
+            }).then(function (data) {
+                if (data.data.errorMessage == "") {
+                    SuccessMessage("Successfully declined overtime")
+
+                    vm.ModalOvertime.Status = "D";
+
+                    $("#declineLeave").modal('hide');
+                }
+                else {
+                    ErrorMessage(data.data.errorMessage);
+                }
+            });
+        }
     }
 
     $scope.ApproveOvertime = function () {
@@ -296,21 +303,26 @@
     }
 
     $scope.DeclineLeave = function () {
-        $http({
-            method: "POST",
-            url: "/Leave/DeclineLeave",
-            data: { leave: vm.ModalLeave }
-        }).then(function (data) {
-            if (data.data.errorMessage == "") {
-                SuccessMessage("Successfully declined leave")
+        if (vm.ModalLeave.DeclineReason === null || vm.ModalLeave.DeclineReason === "") {
+            ErrorMessage("Reason is required");
+        }
+        else {
+            $http({
+                method: "POST",
+                url: "/Leave/DeclineLeave",
+                data: { leave: vm.ModalLeave }
+            }).then(function (data) {
+                if (data.data.errorMessage == "") {
+                    SuccessMessage("Successfully declined leave")
 
-                vm.ModalLeave.Status = "D";
+                    vm.ModalLeave.Status = "D";
 
-                $("#declineLeave").modal('hide');
-            }
-            else {
-                ErrorMessage(data.data.errorMessage);
-            }
-        })
+                    $("#declineLeave").modal('hide');
+                }
+                else {
+                    ErrorMessage(data.data.errorMessage);
+                }
+            });
+        }
     }
 });

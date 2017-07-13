@@ -61,7 +61,8 @@ namespace VL_SL_Online_Form.Services
                                     Reason = l.Reason,
                                     Status = l.Status,
                                     Type = l.Type,
-                                    ShowCreatedBy = u.FirstName + " " + u.LastName
+                                    ShowCreatedBy = u.FirstName + " " + u.LastName,
+                                    DeclineReason = l.DeclineReason
                                 };
 
                     return leave.ToList();
@@ -98,7 +99,8 @@ namespace VL_SL_Online_Form.Services
                                     Reason = l.Reason,
                                     Status = l.Status,
                                     Type = l.Type,
-                                    ShowCreatedBy = u.FirstName + " " + u.LastName
+                                    ShowCreatedBy = u.FirstName + " " + u.LastName,
+                                    DeclineReason = l.DeclineReason
                                 };
 
                     return leave.ToList();
@@ -227,6 +229,8 @@ namespace VL_SL_Online_Form.Services
                             }
 
                             leave.Status = _leave.Status;
+
+                            leave.DeclineReason = _leave.DeclineReason;
 
                             db.Entry(leave).State = EntityState.Modified;
 

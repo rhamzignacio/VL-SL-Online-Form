@@ -22,5 +22,6 @@ namespace VL_SL_Online_Form.Models
         public Nullable<System.Guid> CreatedBy { get; set; }
         public string Reason { get; set; }
         public string Status { get; set; }
+        public string DeclineReason { get; set; }
     }
 }

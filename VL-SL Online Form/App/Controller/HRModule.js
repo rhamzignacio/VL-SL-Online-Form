@@ -116,8 +116,21 @@
         vm.Modal = value;
     }
 
-    $scope.DeleteUser = function () {
-        vm.Modal.Status = "X";
+    $scope.DeleteUser = function (value) {
+        $http({
+            method: "POST",
+            url: "/User/DeleteUser",
+            data: { user: value }
+        }).then(function (data) {
+            if (data.data.message != "") {
+                ErrorMessage(data.data.message);
+            }
+            else {
+                SuccessMessage("Successfully deleted");
+
+                $("#deleteModal").modal('hide');
+            }
+        });
     }
 
     $scope.SaveUser = function (value) {
@@ -141,6 +154,8 @@
                     SuccessMessage("Saved");
 
                     $("#userModal").modal('hide');
+
+                    $scope.Init();
                 }
             });
         }

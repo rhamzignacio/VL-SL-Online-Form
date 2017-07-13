@@ -21,6 +21,7 @@ namespace VL_SL_Online_Form.Models
         public Guid? CreatedBy { get; set; }
         public string Reason { get; set; }
         public string Status { get; set; }
+        public string DeclineReason { get; set; }
 
         public string ShowType
         {
