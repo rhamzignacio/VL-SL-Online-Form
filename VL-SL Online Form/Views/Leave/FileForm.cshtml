@@ -43,6 +43,20 @@
                             Leave Form is an application to be absent for the given date range.
                             Without this form you will be marked as Absent without Leave (AWOL)
                         </span>
+
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Vacation Leave</td>
+                                    <td>{{main.CurrentUser.VacationLeaveCount}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Sick Leave</td>
+                                    <td>{{main.CurrentUser.SickLeaveCount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     
                     <div class="form-group">

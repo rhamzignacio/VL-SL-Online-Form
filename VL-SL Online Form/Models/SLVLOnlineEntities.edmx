@@ -55,6 +55,17 @@
           <Property Name="Status" Type="varchar" MaxLength="1" />
           <Property Name="DeclineReason" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="LeaveType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="400" />
+          <Property Name="DaysBeforeFilling" Type="int" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Type" Type="varchar" MaxLength="2" />
+        </EntityType>
         <EntityType Name="OvertimeForm">
           <Key>
             <PropertyRef Name="ID" />
@@ -117,6 +128,7 @@
           <EntitySet Name="EmailCredential" EntityType="Self.EmailCredential" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Holiday" EntityType="Self.Holiday" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LeaveForm" EntityType="Self.LeaveForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LeaveType" EntityType="Self.LeaveType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OvertimeForm" EntityType="Self.OvertimeForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfLeave" EntityType="Self.TypeOfLeave" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
@@ -134,6 +146,7 @@
           <EntitySet Name="OvertimeForm" EntityType="SLVLOnlineModel.OvertimeForm" />
           <EntitySet Name="TypeOfLeave" EntityType="SLVLOnlineModel.TypeOfLeave" />
           <EntitySet Name="UserAccount" EntityType="SLVLOnlineModel.UserAccount" />
+          <EntitySet Name="LeaveType" EntityType="SLVLOnlineModel.LeaveType" />
         </EntityContainer>
         <EntityType Name="ApproverGroup">
           <Key>
@@ -240,6 +253,17 @@
           <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="SickLeaveCount" Type="Double" Nullable="false" />
           <Property Name="VacationLeavCount" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LeaveType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="DaysBeforeFilling" Type="Int32" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Type" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -357,6 +381,18 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LeaveType">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.LeaveType">
+              <MappingFragment StoreEntitySet="LeaveType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DaysBeforeFilling" ColumnName="DaysBeforeFilling" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

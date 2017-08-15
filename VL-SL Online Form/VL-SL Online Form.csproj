@@ -225,6 +225,10 @@
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LeaveFormModel.cs" />
+    <Compile Include="Models\LeaveType.cs">
+      <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LeaveTypeModel.cs" />
     <Compile Include="Models\OvertimeForm.cs">
       <DependentUpon>SLVLOnlineEntities.tt</DependentUpon>
     </Compile>
@@ -258,6 +262,7 @@
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\GroupApproverService.cs" />
     <Compile Include="Services\LeaveService.cs" />
+    <Compile Include="Services\LeaveTypeService.cs" />
     <Compile Include="Services\OvertimeService.cs" />
     <Compile Include="Services\UniversalService.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -3450,6 +3455,7 @@
       <DependentUpon>SLVLOnlineEntities.edmx</DependentUpon>
     </Content>
     <Content Include="DatabaseBackup\SLVLOnline_LogBackup_2017-06-15_10-04-09.bak" />
+    <Content Include="DatabaseBackup\SLVLOnline_LogBackup_8_15_2017.bak" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
