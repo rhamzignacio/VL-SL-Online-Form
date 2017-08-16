@@ -9,7 +9,7 @@ namespace VL_SL_Online_Form.Services
 {
     public class LeaveTypeService
     {
-        public List<LeaveTypeModel> GetAll(out string message)
+        public static List<LeaveTypeModel> GetAll(out string message)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace VL_SL_Online_Form.Services
             }
         }
 
-        public void Save(LeaveTypeModel _leaveType, out string message)
+        public static void Save(LeaveTypeModel _leaveType, out string message)
         {
             try
             {

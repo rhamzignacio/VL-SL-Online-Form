@@ -62,7 +62,8 @@ namespace VL_SL_Online_Form
                 "~/App/Controller/HRModule.js",
                 "~/App/Controller/Calendar.js",
                 "~/App/Controller/LeaveForm.js",
-                "~/App/Controller/GroupApprover.js"
+                "~/App/Controller/GroupApprover.js",
+                "~/App/Controller/LeaveType.js"
             ));
 
         }

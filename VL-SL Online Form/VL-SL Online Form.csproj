@@ -202,6 +202,7 @@
     <Compile Include="Controllers\GroupApproverController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
+    <Compile Include="Controllers\LeaveTypeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -274,6 +275,7 @@
     <Content Include="App\Controller\GroupApprover.js" />
     <Content Include="App\Controller\HRModule.js" />
     <Content Include="App\Controller\LeaveForm.js" />
+    <Content Include="App\Controller\LeaveType.js" />
     <Content Include="App\Controller\Login.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -3491,6 +3493,7 @@
     <Content Include="Views\User\EmailNotificationAccount.cshtml" />
     <Content Include="Views\GroupApprover\Index.cshtml" />
     <Content Include="Views\User\LeaveCredit.cshtml" />
+    <Content Include="Views\LeaveType\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
