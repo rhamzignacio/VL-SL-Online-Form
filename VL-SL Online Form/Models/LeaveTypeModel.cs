@@ -13,5 +13,6 @@ namespace VL_SL_Online_Form.Models
         public Guid? CreatedBy { get; set; }
         public DateTime? CreateDate { get; set; }
         public string Type { get; set; }
+        public string Status { get; set; }
     }
 }

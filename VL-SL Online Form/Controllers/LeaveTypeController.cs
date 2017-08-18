@@ -25,5 +25,27 @@ namespace VL_SL_Online_Form.Controllers
 
             return Json(new { errorMessage = serverResponse, leaveType = type });
         }
+
+        [HttpPost]
+        public ActionResult SaveLeaveType(LeaveTypeModel leaveType)
+        {
+            string serverResponse = "";
+
+            LeaveTypeService.Save(leaveType, out serverResponse);
+
+            return Json(serverResponse);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteLeaveType(LeaveTypeModel leaveType)
+        {
+            string serverResponse = "";
+
+            leaveType.Status = "X";
+
+            LeaveTypeService.Save(leaveType, out serverResponse);
+
+            return Json(serverResponse);
+        }
     }
 }

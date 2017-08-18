@@ -49,6 +49,7 @@
                               <li><a href="/Calendar/Schedule"><i class="fa fa-calendar"></i>Calendar</a></li>
                               <li ng-show="main.CurrentUser.Type == 'ADM' || main.CurrentUser.Type == 'HR' "><a href="/User/HRModule"><i class="fa fa-user"></i> HR Module</a></li>
                               <li ng-show="main.CurrentUser.Type == 'HR' || main.CurrentUser.Type == 'ADM'"><a href="/User/LeaveCredit"><i class="fa fa-plus-circle"></i>Leave Credit</a></li>
+                              <li ng-show="main.CurrentUser.Type == 'HR' || main.CurrentUser.Type == 'ADM'"><a href="/LeaveType/Index"><i class="fa fa-stack-overflow"></i>Leave Type</a></li>
                               <li ng-show="main.CurrentUser.Type == 'ADM'"><a href="/User/EmailNotificationAccount"><i class="fa fa-envelope"></i>Email Account</a></li>
                               <li><a href="#" ng-click="Logout()"><i class="fa fa-sign-out"></i>Log out</a></li>
                           </ul>

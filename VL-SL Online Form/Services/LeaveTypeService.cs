@@ -25,7 +25,8 @@ namespace VL_SL_Online_Form.Services
                                     CreatedBy = l.CreatedBy,
                                     DaysBeforeFilling = l.DaysBeforeFilling,
                                     Description = l.Description,
-                                    Type = l.Type
+                                    Type = l.Type,
+                                    Status = "Y"
                                 };
 
                     return query.ToList();
@@ -67,13 +68,21 @@ namespace VL_SL_Online_Form.Services
 
                         if(leave != null)
                         {
-                            leave.Description = _leaveType.Description;
-                            leave.CreatedBy = UniversalHelpers.CurrentUser.ID;
-                            leave.CreatedDate = DateTime.Now;
-                            leave.DaysBeforeFilling = _leaveType.DaysBeforeFilling;
-                            leave.Type = _leaveType.Type;
+                            if(_leaveType.Status == "X")
+                            {
+                                db.Entry(leave).State = EntityState.Deleted;
+                            }
+                            else
+                            {
+                                leave.Description = _leaveType.Description;
+                                leave.CreatedBy = UniversalHelpers.CurrentUser.ID;
+                                leave.CreatedDate = DateTime.Now;
+                                leave.DaysBeforeFilling = _leaveType.DaysBeforeFilling;
+                                leave.Type = _leaveType.Type;
 
-                            db.Entry(leave).State = EntityState.Modified;
+                                db.Entry(leave).State = EntityState.Modified;
+                            }
+
                         }
                     }
 
