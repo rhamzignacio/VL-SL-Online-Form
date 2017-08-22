@@ -10,10 +10,10 @@
         <EntityTypeShape EntityType="SLVLOnlineModel.EmailCredential" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="SLVLOnlineModel.Holiday" Width="1.5" PointX="2.75" PointY="3.75" />
         <EntityTypeShape EntityType="SLVLOnlineModel.LeaveForm" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SLVLOnlineModel.OvertimeForm" Width="1.5" PointX="4.75" PointY="4.75" />
-        <EntityTypeShape EntityType="SLVLOnlineModel.TypeOfLeave" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SLVLOnlineModel.UserAccount" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="SLVLOnlineModel.LeaveType" Width="1.5" PointX="7.375" PointY="3.75" />
+        <EntityTypeShape EntityType="SLVLOnlineModel.LeaveType" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="SLVLOnlineModel.OvertimeForm" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SLVLOnlineModel.TypeOfLeave" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="SLVLOnlineModel.UserAccount" Width="1.5" PointX="6.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

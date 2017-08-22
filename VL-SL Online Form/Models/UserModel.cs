@@ -47,4 +47,5 @@ namespace VL_SL_Online_Form.Models
         public string Email { get; set; }
         public string Password { get; set; }
     }
+
 }

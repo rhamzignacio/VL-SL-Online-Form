@@ -16,9 +16,10 @@ namespace VL_SL_Online_Form.Models
     {
         public System.Guid ID { get; set; }
         public string Description { get; set; }
-        public Nullable<int> DaysBeforeFilling { get; set; }
+        public int DaysBeforeFilling { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string Type { get; set; }
+        public decimal LeaveDeduction { get; set; }
     }
 }

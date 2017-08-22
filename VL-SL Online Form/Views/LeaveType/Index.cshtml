@@ -20,6 +20,7 @@
                         <th>Type</th>
                         <th>Description</th>
                         <th>Days Before Filling</th>
+                        <th>Leave Deduction</th>
                     </tr>
                 </thead>
 
@@ -31,9 +32,10 @@
                                     data-toggle="modal">
                                 <i class="fa fa-trash"></i></button>
                         </td>
-                        <td>{{type.Type}}</td>
+                        <td>{{type.ShowType}}</td>
                         <td>{{type.Description}}</td>
                         <td>{{type.DaysBeforeFilling}}</td>
+                        <td>{{type.LeaveDeduction}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -63,6 +65,11 @@
                     <div class="form-group">
                         <label>Days Befor Filling</label>
                         <input type="number" class="form-control" ng-model="vm.Modal.DaysBeforeFilling" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Leave Deduction</label>
+                        <input type="number" class="form-control" ng-model="vm.Modal.LeaveDeduction" />
                     </div>
 
                     <div class="form-group">

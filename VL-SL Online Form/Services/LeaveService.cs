@@ -17,12 +17,12 @@ namespace VL_SL_Online_Form.Services
 
                 using (var db = new SLVLOnlineEntities())
                 {
-                    var query = from l in db.TypeOfLeave
-                                orderby l.Arrangement ascending
+                    var query = from l in db.LeaveType 
+                                orderby l.Description ascending
                                 select new LeaveTypeDropdownModel
                                 {
-                                    Label = l.Label,
-                                    Value = l.Value
+                                    Label = l.Description,
+                                    Value = l.ID
                                 };
 
                     return query.ToList();
@@ -119,36 +119,25 @@ namespace VL_SL_Online_Form.Services
             {
                 message = "";
 
+                var leaveDays = _leave.EndDate.Subtract(_leave.StartDate).TotalDays + 1;
+
+
                 using (var db = new SLVLOnlineEntities())
                 {
                     if(_leave.ID == Guid.Empty || _leave.ID == null)
-                    {
-                        var leaveDays = _leave.EndDate.Subtract(_leave.StartDate).TotalDays + 1;
+                    {          
+                        var leaveType = db.LeaveType.FirstOrDefault(r => r.ID == _leave.Type);
 
-                        if (_leave.Type == "SL")
+                        if (leaveType.Type == "SL")
                         { 
-                            if(UniversalHelpers.CurrentUser.SickLeaveCount < leaveDays)
+                            if(UniversalHelpers.CurrentUser.SickLeaveCount < (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString())))
                             {
                                 message = "Insufficient Sick Leave Credit";
                             }
                         }
-                        else if(_leave.Type == "VL" || _leave.Type == "EL")
+                        else if(leaveType.Type == "VL" || leaveType.Type == "EL")
                         {
-                            if (UniversalHelpers.CurrentUser.VacationLeaveCount < leaveDays)
-                            {
-                                message = "Insufficient Vacation Leave Credit";
-                            }
-                        }
-                        else if(_leave.Type == "SL-H")
-                        {
-                            if (UniversalHelpers.CurrentUser.SickLeaveCount < (leaveDays/2))
-                            {
-                                message = "Insufficient Sick Leave Credit";
-                            }
-                        }
-                        else if (_leave.Type == "VL-H" || _leave.Type == "EL-H")
-                        {
-                            if (UniversalHelpers.CurrentUser.VacationLeaveCount < (leaveDays/2))
+                            if (UniversalHelpers.CurrentUser.VacationLeaveCount < (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString())))
                             {
                                 message = "Insufficient Vacation Leave Credit";
                             }
@@ -184,7 +173,9 @@ namespace VL_SL_Online_Form.Services
                     {
                         var leave = db.LeaveForm.FirstOrDefault(r => r.ID == _leave.ID);
 
-                        if(leave != null)
+                        var leaveType = db.LeaveType.FirstOrDefault(r => r.ID == _leave.Type);
+
+                        if (leave != null)
                         {
                             var user = db.UserAccount.FirstOrDefault(r => r.ID == leave.CreatedBy);
 
@@ -198,14 +189,10 @@ namespace VL_SL_Online_Form.Services
                                 EmailService.SendEmail("Filed Leave Approved", "Your filed Leave has been approved by " + UniversalHelpers.CurrentUser.FirstName + " "
                                     + UniversalHelpers.CurrentUser.LastName, user.Email);
 
-                                if (leave.Type == "SL")
-                                    user.SickLeaveCount = user.SickLeaveCount - 1;
-                                else if (leave.Type == "SL-H")
-                                    user.SickLeaveCount = user.SickLeaveCount -0.5;
-                                else if (leave.Type == "VL" || leave.Type == "EL")
-                                    user.VacationLeavCount = user.VacationLeavCount - 1;
-                                else if (leave.Type == "VL-H" || leave.Type == "EL-H")
-                                    user.VacationLeavCount = user.VacationLeavCount - 0.5;
+                                if (leaveType.Type == "SL")
+                                    user.SickLeaveCount = user.SickLeaveCount - (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
+                                else if (leaveType.Type == "VL" || leaveType.Type == "EL")
+                                    user.VacationLeavCount = user.VacationLeavCount - (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
                             }
                             else if (_leave.Status == "X")
                             {
@@ -217,14 +204,10 @@ namespace VL_SL_Online_Form.Services
 
                                 if(leave.Status == "A")
                                 {
-                                    if (leave.Type == "SL")
-                                        user.SickLeaveCount = user.SickLeaveCount + 1;
-                                    else if (leave.Type == "SL-H")
-                                        user.SickLeaveCount = user.SickLeaveCount + 0.5;
-                                    else if (leave.Type == "VL" || leave.Type == "EL")
-                                        user.VacationLeavCount = user.VacationLeavCount + 1;
-                                    else if (leave.Type == "VL-H" || leave.Type == "EL-H")
-                                        user.VacationLeavCount = user.VacationLeavCount + 0.5;
+                                    if (leaveType.Type == "SL")
+                                        user.SickLeaveCount = user.SickLeaveCount + (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
+                                    else if (leaveType.Type == "VL" || leaveType.Type == "EL")
+                                        user.VacationLeavCount = user.VacationLeavCount + (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
                                 }
                             }
 

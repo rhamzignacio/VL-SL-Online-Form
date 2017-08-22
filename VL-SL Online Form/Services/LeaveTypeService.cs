@@ -26,7 +26,8 @@ namespace VL_SL_Online_Form.Services
                                     DaysBeforeFilling = l.DaysBeforeFilling,
                                     Description = l.Description,
                                     Type = l.Type,
-                                    Status = "Y"
+                                    Status = "Y",
+                                    LeaveDeduction = l.LeaveDeduction
                                 };
 
                     return query.ToList();
@@ -57,7 +58,8 @@ namespace VL_SL_Online_Form.Services
                             CreatedBy = UniversalHelpers.CurrentUser.ID,
                             CreatedDate = DateTime.Now,
                             DaysBeforeFilling = _leaveType.DaysBeforeFilling,
-                            Type = _leaveType.Type
+                            Type = _leaveType.Type,
+                            LeaveDeduction = _leaveType.LeaveDeduction
                         };
 
                         db.Entry(newLeaveType).State = EntityState.Added;
@@ -75,10 +77,16 @@ namespace VL_SL_Online_Form.Services
                             else
                             {
                                 leave.Description = _leaveType.Description;
+
                                 leave.CreatedBy = UniversalHelpers.CurrentUser.ID;
+
                                 leave.CreatedDate = DateTime.Now;
+
                                 leave.DaysBeforeFilling = _leaveType.DaysBeforeFilling;
+
                                 leave.Type = _leaveType.Type;
+
+                                leave.LeaveDeduction = _leaveType.LeaveDeduction;
 
                                 db.Entry(leave).State = EntityState.Modified;
                             }

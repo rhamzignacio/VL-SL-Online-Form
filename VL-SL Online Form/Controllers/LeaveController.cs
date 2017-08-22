@@ -167,6 +167,16 @@ namespace VL_SL_Online_Form.Controllers
 
             return Json(new { errorMessage = serverResponse });
         }
+
+        [HttpPost]
+        public JsonResult GetUserDropDown()
+        {
+            string serverResponse = "";
+
+            var users = UniversalService.GetUserDropDown(out serverResponse);
+
+            return Json(new { users = users, errorMessage = serverResponse });
+        }
         #endregion
 
     }

@@ -15,7 +15,7 @@ namespace VL_SL_Online_Form.Models
     public partial class LeaveForm
     {
         public System.Guid ID { get; set; }
-        public string Type { get; set; }
+        public System.Guid Type { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
