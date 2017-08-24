@@ -16,10 +16,10 @@
             <div class="x_content">
                 <div class="col-md-6">
                     
-                    <div class="form-group">
+                    <div class="form-group" ng-show="main.CurrentUser.Type == 'ADM' || main.CurrentUser.Type == 'HR' ">
                         <label>Employee Name</label>
                         <select class="form-control select2_single" style="width:100%" ng-model="vm.Leave.FileForUser"
-                                ng-options="item.Value as item.Label for item in vm.UserDropDown"></select>
+                                ng-options="item.ID as item.Name for item in vm.UserDropDown"></select>
                     </div>
 
                     <div class="form-group">

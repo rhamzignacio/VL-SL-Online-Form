@@ -85,8 +85,8 @@ namespace VL_SL_Online_Form.Services
                 using (var db = new SLVLOnlineEntities())
                 {
                     var leave = from l in db.LeaveForm
-                                join u in db.UserAccount
-                                on l.CreatedBy equals u.ID
+                                join u in db.UserAccount on l.CreatedBy equals u.ID
+                                join t in db.LeaveType on l.Type equals t.ID
                                 where l.CreatedBy == UniversalHelpers.CurrentUser.ID && l.Status != "X"
                                 orderby l.StartDate descending
                                 select new LeaveFormModel
@@ -100,7 +100,8 @@ namespace VL_SL_Online_Form.Services
                                     Status = l.Status,
                                     Type = l.Type,
                                     ShowCreatedBy = u.FirstName + " " + u.LastName,
-                                    DeclineReason = l.DeclineReason
+                                    DeclineReason = l.DeclineReason,
+                                    ShowType = t.Description
                                 };
 
                     return leave.ToList();
@@ -143,10 +144,17 @@ namespace VL_SL_Online_Form.Services
                             }
                         }
 
+                        Guid? CreatedBy = Guid.Empty;
+
+                        if (_leave.FileForUser == null || _leave.FileForUser == Guid.Empty)
+                            CreatedBy = UniversalHelpers.CurrentUser.ID;
+                        else
+                            CreatedBy = _leave.FileForUser;
+
                         LeaveForm newLeave = new LeaveForm
                         {
                             ID = Guid.NewGuid(),
-                            CreatedBy = UniversalHelpers.CurrentUser.ID,
+                            CreatedBy = CreatedBy,
                             CreatedDate = DateTime.Now,
                             EndDate = _leave.EndDate,
                             Reason = _leave.Reason,

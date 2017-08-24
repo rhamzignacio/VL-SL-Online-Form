@@ -42,6 +42,8 @@
                         <tr>
                             <th style="width:100px;"></th>
                             <th>Date</th>
+                            <th>Type</th>
+                            <th>Remarks</th>
                             <th >Status</th>
                         </tr>
                     </thead>
@@ -51,6 +53,8 @@
                             <td><button class="btn btn-danger" data-target="#deleteLeaveModal"
                                         data-toggle="modal" ng-click="LeaveToDelete(leave)" ng-show="leave.Status != 'D'">Cancel</button></td>
                             <td>{{leave.ShowCreatedDate}}</td>
+                            <td>{{leave.ShowType}}</td>
+                            <td>{{leave.Reason}}</td>
                             <td>{{leave.ShowStatus}} {{leave.DeclineReason}}</td>
                         </tr>
                     </tbody>

@@ -23,7 +23,6 @@ namespace VL_SL_Online_Form.Models
         public string Status { get; set; }
         public string DeclineReason { get; set; }
         public Guid? FileForUser { get; set; }
-
         public string ShowType { get; set; }
 
         public string ShowCreatedDate

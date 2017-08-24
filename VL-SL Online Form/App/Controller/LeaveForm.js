@@ -29,20 +29,7 @@
 
     var currentDate = new Date();
 
-    $scope.InitFileForms = function () {
-        $http({
-            method: "POST",
-            url: "/Leave/GetLeaveTypeDropdown",
-            arguments: { "Content-Type": "application/json" }
-        }).then(function (data) {
-            if (data.data.errorMessage != "") {
-                ErrorMessage(data.errorMessage);
-            }
-            else {
-                vm.TypeOfLeaveDropDown = data.data.leaveType;
-            }
-        });
-
+    GetUserDropDown = function () {
         $http({
             method: "POST",
             url: "/Leave/GetUserDropDown",
@@ -55,6 +42,28 @@
                 vm.UserDropDown = data.data.users;
             }
         });
+    }
+
+    GetLeaveTypeDropDown = function () {
+        $http({
+            method: "POST",
+            url: "/Leave/GetLeaveTypeDropdown",
+            arguments: { "Content-Type": "application/json" }
+        }).then(function (data) {
+            if (data.data.errorMessage != "") {
+                ErrorMessage(data.errorMessage);
+            }
+            else {
+                vm.TypeOfLeaveDropDown = data.data.leaveType;
+            }
+        });
+    }
+
+    $scope.InitFileForms = function () {
+
+        GetUserDropDown();
+
+        GetLeaveTypeDropDown();
     }
 
     $scope.LeaveEvent = function () {
