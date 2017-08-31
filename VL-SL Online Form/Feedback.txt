@@ -1,0 +1,5 @@
+﻿8/31/2017 - Joey Sison
+- Error on adding leave credit
+- Error on backdating filling of leave
+- Typo error on adding leave type
+- Remove Event Menu for normal user
