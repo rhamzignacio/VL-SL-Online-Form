@@ -9,6 +9,30 @@ namespace VL_SL_Online_Form.Services
 {
     public class LeaveService
     {
+        public static int GetMinDateForLeave(Guid _leaveID ,out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var leave = db.LeaveType.FirstOrDefault(r => r.ID == _leaveID);
+
+                    if (leave != null)
+                        return leave.DaysBeforeFilling;
+                    else
+                        return 0;
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return 0;
+            }
+        }
+
         public static List<LeaveTypeDropdownModel> GetLeaveType(out string message)
         {
             try

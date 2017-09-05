@@ -67,21 +67,16 @@
     }
 
     $scope.LeaveEvent = function () {
-        if (vm.Leave.Type == "EL" || vm.Leave.Type == "EL-H" || vm.Leave.Type == "SL" || vm.Leave.Type == "SL-H") {
-            vm.MaxDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate())).slice(-2);
-
-            vm.MinDate = 0;
-        }
-        else {
-            vm.MaxDate = (currentDate.getFullYear() + 1) + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
-
-            vm.MinDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
-        }
+        $http({
+            method: "POST",
+            url: "/Leave/GetLeaveTypeDetail",
+            data: { ID: vm.Leave.Type }
+        }).then(function (data) {
+            if (data.data.errorMessage == "") {
+                vm.MinDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + data.data.days)).slice(-2);
+            }
+        });
     }
-
-    vm.MaxDate = (currentDate.getFullYear() + 1) + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
-
-    vm.MinDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + 3)).slice(-2);
 
     $scope.InitFiledForms = function () {
         $http({

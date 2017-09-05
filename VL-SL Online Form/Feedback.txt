@@ -1,5 +1,6 @@
 ﻿8/31/2017 - Joey Sison
-- Error on adding leave credit
-- Error on backdating filling of leave
-- Typo error on adding leave type
-- Remove Event Menu for normal user
+- [DONE] Error on adding leave credit
+- [DONE] Error on backdating filling of leave
+- [DONE] Typo error on adding leave type
+- [DONE] Remove Event Menu for normal user
+- [DONE] Negative value for days before filling

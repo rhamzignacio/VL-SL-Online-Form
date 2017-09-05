@@ -177,6 +177,16 @@ namespace VL_SL_Online_Form.Controllers
 
             return Json(new { users = users, errorMessage = serverResponse });
         }
+
+        [HttpPost]
+        public JsonResult GetLeaveTypeDetail(Guid ID)
+        {
+            string serverResponse = "";
+
+            var days = LeaveService.GetMinDateForLeave(ID, out serverResponse);
+
+            return Json(new { days = days, errorMessage = serverResponse });
+        }
         #endregion
 
     }

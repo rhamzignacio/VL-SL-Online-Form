@@ -48,6 +48,15 @@
     }
 
     $scope.CreditLeavePerEmp = function (value) {
+
+        if (value.VL === "") {
+            value.VL = 0;
+        }
+
+        if (value.SL === "") {
+            value.SL = 0;
+        }
+
         $http({
             method: "POST",
             url: "/User/LeaveCreditPerEmployee",
