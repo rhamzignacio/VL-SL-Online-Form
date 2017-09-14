@@ -59,5 +59,6 @@ namespace VL_SL_Online_Form.Models
         public string title { get; set; }
         public DateTime? start { get; set; }
         public DateTime? end { get; set; }
+        public string color { get; set; }
     }
 }

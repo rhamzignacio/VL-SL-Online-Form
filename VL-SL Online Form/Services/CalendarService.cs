@@ -62,7 +62,8 @@ namespace VL_SL_Online_Form.Services
                                     {
                                         title = u.FirstName + " " + u.LastName + " " + "On Leave",
                                         start = l.StartDate,
-                                        end = l.EndDate
+                                        end = l.EndDate,
+                                        color = "#a3c6c4"
                                     };
 
 
@@ -90,7 +91,8 @@ namespace VL_SL_Online_Form.Services
                                   {
                                       title = h.Description,
                                       start = h.StartDate,
-                                      end = h.EndDate
+                                      end = h.EndDate,
+                                      color = "#b394c8"
                                   };
 
                     returnSchedule.AddRange(holiday.ToList());

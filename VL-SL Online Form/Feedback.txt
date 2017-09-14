@@ -4,3 +4,5 @@
 - [DONE] Typo error on adding leave type
 - [DONE] Remove Event Menu for normal user
 - [DONE] Negative value for days before filling
+
+- Add leave table filter

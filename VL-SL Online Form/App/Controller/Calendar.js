@@ -69,23 +69,8 @@
                     return false;
                 });
             },
-            eventClick: function (calEvent, jsEvent, view) {
-                $('#fc_edit').click();
-                $('#title2').val(calEvent.title);
-
-                categoryClass = $("#event_type").val();
-
-                $(".antosubmit2").on("click", function () {
-                    calEvent.title = $("#title2").val();
-
-                    calendar.fullCalendar('updateEvent', calEvent);
-                    $('.antoclose2').click();
-                });
-
-                calendar.fullCalendar('unselect');
-            },
             editable: true,
-            events: vm.Schedule
+            events: vm.Schedule,
         });
     }
 
