@@ -49,7 +49,7 @@ namespace VL_SL_Online_Form
                                         ID = a.ID,
                                         Username = a.Username,
                                         AssignedIDNo = a.AssignedIdNo,
-                                        BirthDate = a.Birthdate,
+                                        BirthDate = a.Birthdate,ret
                                         BirthPlace = a.BirthPlace,
                                         CivilStatus = a.CivilStatus,
                                         ContactNo = a.ContactNo,

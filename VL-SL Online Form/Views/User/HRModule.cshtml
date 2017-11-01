@@ -111,17 +111,6 @@
                         <input type="text" class="form-control" ng-model="vm.Modal.Position"/>
                     </div>
 
-                    <div class="form-group">
-                        <label>1st Approver</label>
-                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.FirstApprover"
-                                ng-options="item.ID as item.Name for item in vm.UserDropdown"></select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>2nd Approver</label>
-                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.SecondApprover"
-                                ng-options="item.ID as item.Name for item in vm.UserDropdown"></select>
-                    </div>
 
                     <div class="form-group">
                         <button class="btn btn-success" ng-click="SaveUser(vm.Modal)">Save</button>
