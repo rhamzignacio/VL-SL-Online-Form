@@ -10,21 +10,10 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>Group Approver</h2>
-                <button type="button" class="btn btn-default" style="margin-left:20px;"
-                        data-target="#SelectGroupModal" data-toggle="modal">{{vm.SelectedGroupName}}</button>
-
-                <button type="button" class="btn btn-danger" ng-show="vm.SelectedGroupName !='Select Group Approver'"
-                        data-toggle="modal" data-target="#DeleteGroupModal"><i class="fa fa-trash"></i></button>
-
-                <button type="button" class="btn btn-primary" ng-show="vm.SelectedGroupName !='Select Group Approver'"
-                        data-toggle="modal" data-target="#GroupModal" ng-click="AssignModal()">
-                    <i class="fa fa-pencil"></i></button>
                 
-                <button type="button" class="btn btn-success alignright" data-target="#GroupModal"
+                <button type="button" class="btn btn-success alignright" data-target="#GroupModal" ng-click="ClearModal()"
                         data-toggle="modal">New Group</button>
-                
-                <button ng-show="vm.SelectedGroupName !='Select Group Approver'" type="button" class="btn btn-primary alignright"
-                        data-toggle="modal" data-target="#GroupMemberModal">New Member</button>
+
                 <div class="clearfix"></div>
             </div>
 
@@ -32,18 +21,28 @@
                 <table id="GroupMemberTable" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th style="width:50px;"></th>
+                            <th style="width:80px;"></th>
                             <th>Name</th>
+                            <th>First Approver</th>
+                            <th>Second Approver</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr ng-repeat="member in vm.GroupMember | filter: {Status: '!X'}">
-                            <td><button type="button" class="btn btn-danger btn-xs" ng-click="AssignMemberToDelete(member)" data-toggle="modal"
-                                   data-target="#DeleteMemberModal">
-                                <i class="fa fa-trash"></i>
-                                </button></td>
-                            <td>{{member.UserName}}</td>
+                        <tr ng-repeat="grp in vm.Group | filter: {Status: '!X'}">
+                            <td>
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="AssignModal(grp)" data-toggle="modal"
+                                        data-target="#GroupModal">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="AssignGroupToDelete(grp)" data-toggle="modal"
+                                        data-target="#DeleteGroupModal"><i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                            <td>{{grp.Name}}</td>
+                            <td>{{grp.FirstApproverName}}</td>
+                            <td>{{grp.SecondApproverName}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -51,28 +50,6 @@
         </div>
     </div>
 
-    <!--Select Group Modal-->
-    <div class="modal fade" id="SelectGroupModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Select Group Approver</h4>
-                </div>
-
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <select class="select2_single form-control" ng-model="vm.SelectedGroup" style="width:100%"
-                                ng-options="item.ID as item.Name for item in vm.GroupApproverDropDown"></select>
-                    </div>
-                    <button class="btn btn-primary" ng-click="SelectGroup()">Ok</button>
-                    <button class="btn btn-default">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/Select Group Modal-->
 
     <!--Add Group Modal-->
     <div class="modal fade" id="GroupModal" role="dialog">
@@ -110,50 +87,6 @@
         </div>
     </div>
     <!--/Add Group Modal-->
-
-    <!--Group Member Modal-->
-    <div class="modal fade" id="GroupMemberModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Group Member</h4>
-                </div>
-
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <select class="select2_single form-control" ng-model="vm.MemberModal.UserID" style="width:100%"
-                                ng-options="item.ID as item.Name for item in vm.UserDropdown"></select>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary" ng-click="SaveMember(vm.MemberModal)">Save</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="GroupMemberModalClear()">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/Group Member Modal-->
-
-    <!--Delete Member Modal-->
-    <div class="modal fade" id="DeleteMemberModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Are you sure you want to delete this member?</h4>
-                </div>
-
-                <div class="modal-body">
-                    <button class="btn btn-danger" ng-click="DeleteMember()">Yes</button>
-                    <button class="btn btn-default" data-dismiss="modal">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/Delete Member Modal-->
 
     <!--Delete Group Modal-->
     <div class="modal fade" id="DeleteGroupModal" role="dialog">

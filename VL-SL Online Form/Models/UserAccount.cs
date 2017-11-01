@@ -20,28 +20,18 @@ namespace VL_SL_Online_Form.Models
         public string FirstName { get; set; }
         public string MiddleInitial { get; set; }
         public string LastName { get; set; }
-        public string Department { get; set; }
         public string Status { get; set; }
         public Nullable<System.DateTime> Birthdate { get; set; }
         public string Gender { get; set; }
         public string CivilStatus { get; set; }
         public string BirthPlace { get; set; }
-        public string Nationality { get; set; }
-        public string AssignedIdNo { get; set; }
         public string Position { get; set; }
         public Nullable<System.DateTime> DateHired { get; set; }
-        public string TIN { get; set; }
-        public string SSS { get; set; }
-        public string HDMF { get; set; }
-        public string PHIC { get; set; }
         public string ContactNo { get; set; }
-        public Nullable<System.Guid> FirstApprover { get; set; }
-        public Nullable<System.Guid> SecondApprover { get; set; }
-        public string TimeIn { get; set; }
-        public string TimeOut { get; set; }
         public string Email { get; set; }
         public string Type { get; set; }
         public double SickLeaveCount { get; set; }
         public double VacationLeavCount { get; set; }
+        public Nullable<System.Guid> DeptID { get; set; }
     }
 }

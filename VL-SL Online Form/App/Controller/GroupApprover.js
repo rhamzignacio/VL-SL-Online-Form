@@ -18,14 +18,14 @@
     GetGroupApprover = function () {
         $http({
             method: "POST",
-            url: "/GroupApprover/GetGroupApproverDropDown",
+            url: "/GroupApprover/GetAllGroup",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
             if (data.data.errorMessage != "") {
                 ErrorMessage(data.data.errorMessage);
             }
             else {
-                vm.GroupApproverDropDown = data.data.group;
+                vm.Group = data.data.group;
             }
         });
     }
@@ -51,6 +51,16 @@
         GetUserDropdown();
     }
 
+    $scope.ClearModal = function () {
+        vm.Modal = {};
+
+        vm.Modal.FirstApprover = {};
+
+        vm.Modal.SecondApprover = {};
+
+        vm.Modal.Name = "";
+    }
+
     $scope.GroupApproverModalClear = function () {
         vm.Modal = {};
     }
@@ -59,8 +69,8 @@
         vm.MemberModal = {};
     }
 
-    $scope.AssignModal = function () {
-        vm.Modal = vm.SelectGroup;
+    $scope.AssignModal = function (value) {
+        vm.Modal = value;
     }
 
     $scope.SelectGroup = function () {
@@ -103,27 +113,6 @@
         });
     }
 
-    $scope.SaveMember = function (value) {
-        value.GroupID = vm.SelectedGroup;
-
-        $http({
-            method: "POST",
-            url: "/GroupApprover/SaveGroupMember",
-            data: { member: value }
-        }).then(function (data) {
-            if (data.data === "") {
-                SuccessMessage("Successfully Saved");
-
-                $("#GroupModal").modal('hide');
-
-                $scope.SelectGroup();
-            }
-            else {
-                ErrorMessage(data.data);
-            }
-        });
-    }
-
     $scope.AssignGroupToDelete = function (value) {
         vm.ToBeDeleteGroup = value;
     }
@@ -132,43 +121,18 @@
         $http({
             method: "POST",
             url: "/GroupApprover/DeleteGroupApprover",
-            data: { group: vm.SelectGroup }
+            data: { group: vm.ToBeDeleteGroup }
         }).then(function (data) {
             if (data.data === "") {
                 SuccessMessage("Successfully Deleted");
 
-                vm.SelectedGroupName = "Select Group Approver";
-
-                vm.GroupMember = {};
-
                 $("#DeleteGroupModal").modal('hide');
+
+                GetGroupApprover();
             }
             else {
                 ErrorMessage(data.data);
             }
         });
-    }
-
-    $scope.AssignMemberToDelete = function (value) {
-        vm.ToBeDeleteMember = value;
-    }
-
-    $scope.DeleteMember = function () {
-        $http({
-            method: "POST",
-            url: "/GroupApprover/DeleteGroupMember",
-            data: { member: vm.ToBeDeleteMember}
-        }).then(function (data) {
-            if (data.data === "") {
-                SuccessMessage("Successfully Deleted");
-
-                $scope.SelectGroup();
-
-                $("#DeleteMemberModal").modal('hide');
-            }
-            else {
-                ErrorMessage(data.data);
-            }
-        })
     }
 });

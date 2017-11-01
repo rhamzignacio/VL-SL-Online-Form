@@ -35,22 +35,13 @@ namespace VL_SL_Online_Form.Services
                                     FirstName = user.FirstName,
                                     MiddleInitial = user.MiddleInitial,
                                     LastName = user.LastName,
-                                    Department = user.Department,
                                     BirthDate = user.Birthdate,
                                     Gender = user.Gender,
                                     CivilStatus = user.CivilStatus,
                                     BirthPlace = user.BirthPlace,
-                                    Nationality = user.Nationality,
-                                    AssignedIDNo = user.AssignedIdNo,
                                     Position = user.Position,
                                     DateHired = user.DateHired,
-                                    TIN = user.TIN,
-                                    SSS = user.SSS,
-                                    HDMF = user.HDMF,
-                                    PHIC = user.PHIC,
                                     ContactNo = user.ContactNo,
-                                    FirstApprover = user.FirstApprover,
-                                    SecondApprover = user.SecondApprover
                                 };
 
                                 return userModel;

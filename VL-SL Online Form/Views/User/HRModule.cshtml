@@ -10,7 +10,7 @@
         <table id="userTable" class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>
+                    <th style="width:80px;">
                         <button class="btn btn-success btn-xs" data-target="#userModal" data-toggle="modal"><i class="fa fa-plus"></i></button>
                     </th>
                     <th>Name</th>
@@ -24,7 +24,8 @@
                     <td>
                         <button class="btn btn-primary btn-xs" data-target="#userModal" data-toggle="modal"
                                 ng-click="OpenModal(user)"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-close"></i></button>
+                        <button class="btn btn-danger btn-xs" data-target="#deleteModal" data-toggle="modal"
+                                ng-click="AssignDeleteUser(user)"><i class="fa fa-trash"></i></button>
                     </td>
                     <td>{{user.FirstName}} {{user.LastName}}</td>
                     <td>{{user.Username}}</td>
@@ -34,6 +35,7 @@
         </table>
     </div>
 
+    <!--Delete Modal-->
     <div class="modal fade" id="deleteModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -43,7 +45,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <button class="btn btn-warning" ng-click="">Yes</button>
+                    <button class="btn btn-warning" ng-click="DeleteUser()">Yes</button>
                     <button class="btn btn-default" data-dismiss="modal">No</button>
                 </div>
             </div>
@@ -102,25 +104,13 @@
 
                     <div class="form-group">
                         <label>Department</label>
-                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.Department"
-                                ng-options="item.value as item.label for item in DepartmentDropdown"></select>
+                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.DeptID"
+                                ng-options="item.ID as item.Name for item in vm.GroupDropDown"></select>
                     </div>
 
                     <div class="form-group">
                         <label>Position</label>
                         <input type="text" class="form-control" ng-model="vm.Modal.Position"/>
-                    </div>
-
-                    <div class="form-group">
-                        <label>1st Approver</label>
-                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.FirstApprover"
-                                ng-options="item.ID as item.Name for item in vm.UserDropdown"></select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>2nd Approver</label>
-                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.SecondApprover"
-                                ng-options="item.ID as item.Name for item in vm.UserDropdown"></select>
                     </div>
 
                     <div class="form-group">

@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -3450,6 +3451,8 @@
     <Content Include="Content\vendors\validator\.bower.json" />
     <Content Include="Content\vendors\validator\README.md" />
     <Content Include="Content\vendors\validator\validator.jquery.json" />
+    <Content Include="DatabaseBackup\SLVLOnline_LogBackup_2017-06-15_10-04-09.bak" />
+    <Content Include="DatabaseBackup\SLVLOnline_LogBackup_8_15_2017.bak" />
     <EntityDeploy Include="Models\SLVLOnlineEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SLVLOnlineEntities.Designer.cs</LastGenOutput>
@@ -3457,8 +3460,6 @@
     <Content Include="Models\SLVLOnlineEntities.edmx.diagram">
       <DependentUpon>SLVLOnlineEntities.edmx</DependentUpon>
     </Content>
-    <Content Include="DatabaseBackup\SLVLOnline_LogBackup_2017-06-15_10-04-09.bak" />
-    <Content Include="DatabaseBackup\SLVLOnline_LogBackup_8_15_2017.bak" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -39,46 +39,41 @@ namespace VL_SL_Online_Form
                     using (var db = new SLVLOnlineEntities())
                     {
                         var query = from a in db.UserAccount
-                                    join f in db.UserAccount on a.FirstApprover equals f.ID into qF
-                                    from first in qF.DefaultIfEmpty()
-                                    join s in db.UserAccount on a.SecondApprover equals s.ID into qS
-                                    from second in qS.DefaultIfEmpty()
-                                    where a.Username == newUser.Username
+                                    //REMOVE COMMENT IF WILL ACTIVATE EMAIL NOTIFICATION
+                                    //
+                                    //join grp in db.ApproverGroup on a.DeptID equals grp.ID into qG
+                                    //from g in qG.DefaultIfEmpty()
+                                    //join first in db.UserAccount on g.FirstApprover equals first.ID into qF
+                                    //from f in qF.DefaultIfEmpty()
+                                    //join second in db.UserAccount on g.SecondApprover equals second.ID into qS
+                                    //from s in qS.DefaultIfEmpty()
+                                    where a.Username == newUser.Username 
                                     select new UserModel
                                     {
                                         ID = a.ID,
                                         Username = a.Username,
-                                        AssignedIDNo = a.AssignedIdNo,
                                         BirthDate = a.Birthdate,
                                         BirthPlace = a.BirthPlace,
                                         CivilStatus = a.CivilStatus,
                                         ContactNo = a.ContactNo,
                                         DateHired = a.DateHired,
-                                        Department = a.Department,
-                                        FirstApprover = a.FirstApprover,
                                         FirstName = a.FirstName,
                                         Gender = a.Gender,
-                                        HDMF = a.HDMF,
                                         LastName = a.LastName,
                                         MiddleInitial = a.MiddleInitial,
-                                        Nationality = a.Nationality,
-                                        PHIC = a.PHIC,
                                         Position = a.Position,
-                                        SecondApprover = a.SecondApprover,
-                                        SSS = a.SSS,
                                         Status = a.Status,
-                                        TIN = a.TIN,
                                         Email = a.Email,
-                                        FirstApproverEmail = first.Email,
-                                        SecondApproverEmail = second.Email,
                                         Type = a.Type,
                                         SickLeaveCount = a.SickLeaveCount,
-                                        VacationLeaveCount = a.VacationLeavCount
+                                        VacationLeaveCount = a.VacationLeavCount,
+                                        //FirstApproverEmail = f.Email,
+                                        //SecondApproverEmail = s.Email
                                     };
 
                         user = query.FirstOrDefault();
 
-                        var app = db.UserAccount.FirstOrDefault(r => r.FirstApprover == user.ID || r.SecondApprover == user.ID);
+                        var app = db.ApproverGroup.FirstOrDefault(r => r.FirstApprover == user.ID || r.SecondApprover == user.ID);
 
                         if (app != null)
                             user.IfApprover = "Y";

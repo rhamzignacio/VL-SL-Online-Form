@@ -136,7 +136,7 @@
 
         $http({
             method: "POST",
-            url: "/User/GetGroupDropdown",
+            url: "/GroupApprover/GetGroupApproverDropDown",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
             if (data.data.errorMessage == "") {
@@ -145,11 +145,11 @@
             else {
                 ErrorMessage(data.data.errorMessage);
             }
-        });
+            });
     }
 
     //==========HR MODULE===============
-    $scope.Init = function () {
+    GetAllUsers = function () {
         $http({
             method: "POST",
             url: "/User/Init",
@@ -166,6 +166,23 @@
         });
     }
 
+    $scope.Init = function () {
+        GetAllUsers();
+
+        $http({
+            method: "POST",
+            url: "/GroupApprover/GetGroupApproverDropDown",
+            arguments: { "Content-Type": "application/json" }
+        }).then(function (data) {
+            if (data.data.errorMessage == "") {
+                vm.GroupDropDown = data.data.group;
+            }
+            else {
+                ErrorMessage(data.data.errorMessage);
+            }
+        });
+    }
+
 
     $scope.ClearModal = function () {
         vm.Modal = {};
@@ -175,11 +192,15 @@
         vm.Modal = value;
     }
 
-    $scope.DeleteUser = function (value) {
+    $scope.AssignDeleteUser = function (value) {
+        vm.UserToDelete = value;
+    }
+
+    $scope.DeleteUser = function () {
         $http({
             method: "POST",
             url: "/User/DeleteUser",
-            data: { user: value }
+            data: { user: vm.UserToDelete }
         }).then(function (data) {
             if (data.data.message != "") {
                 ErrorMessage(data.data.message);
@@ -188,6 +209,8 @@
                 SuccessMessage("Successfully deleted");
 
                 $("#deleteModal").modal('hide');
+
+                GetAllUsers();
             }
         });
     }
@@ -214,7 +237,7 @@
 
                     $("#userModal").modal('hide');
 
-                    $scope.Init();
+                    GetAllUsers();
                 }
             });
         }
