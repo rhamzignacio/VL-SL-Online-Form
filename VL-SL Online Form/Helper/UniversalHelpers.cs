@@ -48,26 +48,18 @@ namespace VL_SL_Online_Form
                                     {
                                         ID = a.ID,
                                         Username = a.Username,
-                                        AssignedIDNo = a.AssignedIdNo,
-                                        BirthDate = a.Birthdate,ret
+                                        BirthDate = a.Birthdate
                                         BirthPlace = a.BirthPlace,
                                         CivilStatus = a.CivilStatus,
                                         ContactNo = a.ContactNo,
                                         DateHired = a.DateHired,
                                         Department = a.Department,
-                                        FirstApprover = a.FirstApprover,
                                         FirstName = a.FirstName,
                                         Gender = a.Gender,
-                                        HDMF = a.HDMF,
                                         LastName = a.LastName,
                                         MiddleInitial = a.MiddleInitial,
-                                        Nationality = a.Nationality,
-                                        PHIC = a.PHIC,
                                         Position = a.Position,
-                                        SecondApprover = a.SecondApprover,
-                                        SSS = a.SSS,
                                         Status = a.Status,
-                                        TIN = a.TIN,
                                         Email = a.Email,
                                         FirstApproverEmail = first.Email,
                                         SecondApproverEmail = second.Email,
@@ -78,7 +70,7 @@ namespace VL_SL_Online_Form
 
                         user = query.FirstOrDefault();
 
-                        var app = db.UserAccount.FirstOrDefault(r => r.FirstApprover == user.ID || r.SecondApprover == user.ID);
+                        var app = db.ApproverGroup.FirstOrDefault(r => r.FirstApprover == user.ID || r.SecondApprover == user.ID);
 
                         if (app != null)
                             user.IfApprover = "Y";
