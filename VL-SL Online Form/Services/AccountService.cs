@@ -18,11 +18,11 @@ namespace VL_SL_Online_Form.Services
             {
                 using (var db = new SLVLOnlineEntities())
                 {
-                    var user = db.UserAccount.FirstOrDefault(r => r.Username == username);
+                    var user = db.UserAccount.FirstOrDefault(r => r.Username.ToLower() == username.ToLower());
 
                     if (user != null)
                     {
-                        if (user.Password == password)
+                        if (user.Password.ToLower() == password.ToLower())
                         {
                             if (user.Status == "N")
                                 message = "User is deactivated";
@@ -42,6 +42,7 @@ namespace VL_SL_Online_Form.Services
                                     Position = user.Position,
                                     DateHired = user.DateHired,
                                     ContactNo = user.ContactNo,
+                                    DeptID = user.DeptID
                                 };
 
                                 return userModel;

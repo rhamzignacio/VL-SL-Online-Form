@@ -13,12 +13,6 @@
         growl.error(value, { title: "Error!", ttl: 3000 });
     }
 
-    $scope.DepartmentDropdown = [
-        { value: "Information Technology", label: "Information Technology (IT)" },
-        { value: "Accounting", label: "Accounting (ACCTG)" },
-        { value: "Human Resource", label: "Human Resource (HR)" },
-    ];
-
     $scope.UserTypeDropDown = [
         { value: "US", label: "User" },
         { value: "HR", label: "Human Resource" },

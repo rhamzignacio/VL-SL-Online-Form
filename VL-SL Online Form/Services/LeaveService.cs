@@ -71,6 +71,7 @@ namespace VL_SL_Online_Form.Services
                     var leave = from l in db.LeaveForm
                                 join u in db.UserAccount on l.CreatedBy equals u.ID
                                 join g in db.ApproverGroup on u.DeptID equals g.ID
+                                join t in db.LeaveType on l.Type equals t.ID
                                 where g.FirstApprover == UniversalHelpers.CurrentUser.ID ||
                                 g.SecondApprover == UniversalHelpers.CurrentUser.ID
                                 orderby l.StartDate descending
@@ -85,7 +86,8 @@ namespace VL_SL_Online_Form.Services
                                     Status = l.Status,
                                     Type = l.Type,
                                     ShowCreatedBy = u.FirstName + " " + u.LastName,
-                                    DeclineReason = l.DeclineReason
+                                    DeclineReason = l.DeclineReason,
+                                    ShowType = t.Description
                                 };
 
                     return leave.ToList();

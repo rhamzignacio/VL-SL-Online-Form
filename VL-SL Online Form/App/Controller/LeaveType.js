@@ -28,6 +28,16 @@
         });
     }
 
+    $scope.Clear = function () {
+        vm.Modal = {};
+
+        vm.Modal.Type = {};
+
+        vm.Modal.Description = "";
+
+        vm.Modal.LeaveDeduction = "";
+    }
+
     $scope.SaveLeaveType = function (value) {
         var ifHasError = "N";
 
