@@ -16,6 +16,16 @@ namespace VL_SL_Online_Form.Controllers
         }
 
         [HttpPost]
+        public JsonResult GetAllGroup()
+        {
+            string serverResponse = "";
+
+            var group = GroupApproverService.GetAllGroup(out serverResponse);
+
+            return Json(new { errorMessage = serverResponse, group = group });
+        }
+
+        [HttpPost]
         public JsonResult GetGroupApproverDropDown()
         {
             string serverResponse = "";
@@ -33,18 +43,6 @@ namespace VL_SL_Online_Form.Controllers
             var user = UniversalService.GetUserDropDown(out serverResponse);
 
             return Json(new { errorMessage = serverResponse, user = user });
-        }
-
-        [HttpPost]
-        public JsonResult GetGroupMember(Guid ID)
-        {
-            string serverResponse = "";
-
-            var member = GroupApproverService.GetMembers(ID, out serverResponse);
-
-            var group = GroupApproverService.GetGroup(ID, out serverResponse);
-
-            return Json(new { errorMessage = serverResponse, member = member, group = group });
         }
 
         [HttpPost]
@@ -68,32 +66,6 @@ namespace VL_SL_Online_Form.Controllers
                 group.Status = "X";
 
                 GroupApproverService.SaveGroup(group, out serverResponse);
-            }
-
-            return Json(serverResponse);
-        }
-
-        [HttpPost]
-        public JsonResult SaveGroupMember(GroupApproverMemberModel member)
-        {
-            string serverResponse = "";
-
-            if (member != null)
-                GroupApproverService.SaveMember(member, out serverResponse);
-
-            return Json(serverResponse);
-        }
-
-        [HttpPost]
-        public JsonResult DeleteGroupMember(GroupApproverMemberModel member)
-        {
-            string serverResponse = "";
-
-            if(member != null)
-            {
-                member.Status = "X";
-
-                GroupApproverService.SaveMember(member, out serverResponse);
             }
 
             return Json(serverResponse);

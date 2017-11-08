@@ -17,22 +17,17 @@ namespace VL_SL_Online_Form.Services
 
                 using (var db = new SLVLOnlineEntities())
                 {
-                    var users = db.ApproverGroupMember.Where(r => r.GroupID == _groupID);
+                    var users = db.UserAccount.Where(r => r.DeptID == _groupID).ToList();
 
                     if(users != null)
                     {
-                        users.ToList().ForEach(item =>
+                        users.ToList().ForEach(user =>
                         {
-                            var user = db.UserAccount.FirstOrDefault(r => r.ID == item.UserID);
+                            user.VacationLeavCount += VL;
 
-                            if(user != null)
-                            {
-                                user.VacationLeavCount += VL;
+                            user.SickLeaveCount += SL;
 
-                                user.SickLeaveCount += SL;
-
-                                db.Entry(user).State = EntityState.Modified;
-                            }
+                            db.Entry(user).State = EntityState.Modified;
                         });
 
                         db.SaveChanges();
@@ -148,6 +143,8 @@ namespace VL_SL_Online_Form.Services
                 using (var db = new SLVLOnlineEntities())
                 {
                     var query = from u in db.UserAccount
+                                join grp in db.ApproverGroup on u.DeptID equals grp.ID into qG
+                                from g in qG.DefaultIfEmpty()
                                 orderby u.FirstName
                                 select new UserModel
                                 {
@@ -156,22 +153,15 @@ namespace VL_SL_Online_Form.Services
                                     FirstName = u.FirstName,
                                     MiddleInitial = u.MiddleInitial,
                                     LastName = u.LastName,
-                                    Department = u.Department,
                                     Status = u.Status,
                                     BirthDate = u.Birthdate,
-                                    Nationality = u.Nationality,
-                                    AssignedIDNo = u.AssignedIdNo,
                                     Position = u.Position,
                                     DateHired = u.DateHired,
-                                    TIN = u.TIN,
-                                    SSS = u.SSS,
-                                    HDMF = u.HDMF,
-                                    PHIC = u.PHIC,
                                     ContactNo = u.ContactNo,
-                                    FirstApprover = u.FirstApprover,
-                                    SecondApprover = u.SecondApprover,
                                     Email = u.Email,
-                                    Type = u.Type
+                                    Type = u.Type,
+                                    DeptID = u.DeptID,
+                                    Department = g.Name
                                 };
 
                     return query.ToList();
@@ -203,24 +193,16 @@ namespace VL_SL_Online_Form.Services
                             FirstName = _user.FirstName,
                             MiddleInitial = _user.MiddleInitial,
                             LastName = _user.LastName,
-                            Department = _user.Department,
                             Birthdate = _user.BirthDate,
                             Gender = _user.Gender,
                             CivilStatus = _user.CivilStatus,
                             BirthPlace = _user.BirthPlace,
-                            Nationality = _user.Nationality,
-                            AssignedIdNo = _user.AssignedIDNo,
                             Position = _user.Position,
                             DateHired = _user.DateHired,
-                            TIN = _user.TIN,
-                            SSS = _user.SSS,
-                            HDMF = _user.HDMF,
-                            PHIC = _user.PHIC,
                             ContactNo = _user.ContactNo,
-                            FirstApprover = _user.FirstApprover,
-                            SecondApprover = _user.SecondApprover,
                             Email = _user.Email,
-                            Type = _user.Type
+                            Type = _user.Type,
+                            DeptID = _user.DeptID
                         };
 
                         db.Entry(newUser).State = EntityState.Added;
@@ -242,19 +224,12 @@ namespace VL_SL_Online_Form.Services
                             user.Gender = _user.Gender;
                             user.CivilStatus = _user.CivilStatus;
                             user.BirthPlace = _user.BirthPlace;
-                            user.Nationality = _user.Nationality;
-                            user.AssignedIdNo = _user.AssignedIDNo;
                             user.Position = _user.Position;
                             user.DateHired = _user.DateHired;
-                            user.TIN = _user.TIN;
-                            user.SSS = _user.SSS;
-                            user.HDMF = _user.HDMF;
-                            user.PHIC = _user.PHIC;
                             user.ContactNo = _user.ContactNo;
-                            user.FirstApprover = _user.FirstApprover;
-                            user.SecondApprover = _user.SecondApprover;
                             user.Email = _user.Email;
                             user.Type = _user.Type;
+                            user.DeptID = _user.DeptID;
 
                             if (_user.Password != null && _user.Password != "")
                                 user.Password = _user.Password;

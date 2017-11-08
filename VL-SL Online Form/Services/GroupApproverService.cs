@@ -9,6 +9,42 @@ namespace VL_SL_Online_Form.Services
 {
     public class GroupApproverService
     {
+        public static List<GroupApproverModel> GetAllGroup(out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var query = from g in db.ApproverGroup
+                                join first in db.UserAccount on g.FirstApprover equals first.ID into qF
+                                from f in qF.DefaultIfEmpty()
+                                join second in db.UserAccount on g.SecondApprover equals second.ID into qS
+                                from s in qS.DefaultIfEmpty()
+                                orderby g.Name ascending
+                                select new GroupApproverModel
+                                {
+                                    ID = g.ID,
+                                    FirstApprover = g.FirstApprover,
+                                    FirstApproverName = f.FirstName + " " + f.LastName,
+                                    SecondApprover = g.SecondApprover,
+                                    SecondApproverName = s.FirstName + " " + s.LastName,
+                                    Name = g.Name,
+                                    Status = "Y"
+                                };
+
+                    return query.ToList();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
         public static GroupApproverModel GetGroup(Guid _groupID, out string message)
         {
             try

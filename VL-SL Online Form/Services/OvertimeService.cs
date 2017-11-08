@@ -20,8 +20,6 @@ namespace VL_SL_Online_Form.Services
                     var ot = from o in db.OvertimeForm
                              join u in db.UserAccount
                              on o.CreatedBy equals u.ID
-                             where u.FirstApprover == UniversalHelpers.CurrentUser.ID ||
-                             u.SecondApprover == UniversalHelpers.CurrentUser.ID
                              orderby o.EffectiveDate descending
                              select new OvertimeFormModel
                              {

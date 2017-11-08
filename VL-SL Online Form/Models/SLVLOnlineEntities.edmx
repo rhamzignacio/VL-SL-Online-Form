@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SLVLOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SLVLOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ApproverGroup">
           <Key>
             <PropertyRef Name="ID" />
@@ -99,29 +99,19 @@
           <Property Name="FirstName" Type="varchar" MaxLength="150" />
           <Property Name="MiddleInitial" Type="varchar" MaxLength="10" />
           <Property Name="LastName" Type="varchar" MaxLength="150" />
-          <Property Name="Department" Type="varchar" MaxLength="100" />
           <Property Name="Status" Type="varchar" MaxLength="5" />
           <Property Name="Birthdate" Type="date" />
           <Property Name="Gender" Type="varchar" MaxLength="10" />
           <Property Name="CivilStatus" Type="varchar" MaxLength="50" />
           <Property Name="BirthPlace" Type="varchar" MaxLength="100" />
-          <Property Name="Nationality" Type="varchar" MaxLength="100" />
-          <Property Name="AssignedIdNo" Type="varchar" MaxLength="50" />
           <Property Name="Position" Type="varchar" MaxLength="200" />
           <Property Name="DateHired" Type="date" />
-          <Property Name="TIN" Type="varchar" MaxLength="100" />
-          <Property Name="SSS" Type="varchar" MaxLength="100" />
-          <Property Name="HDMF" Type="varchar" MaxLength="100" />
-          <Property Name="PHIC" Type="varchar" MaxLength="100" />
           <Property Name="ContactNo" Type="varchar" MaxLength="100" />
-          <Property Name="FirstApprover" Type="uniqueidentifier" />
-          <Property Name="SecondApprover" Type="uniqueidentifier" />
-          <Property Name="TimeIn" Type="varchar" MaxLength="10" />
-          <Property Name="TimeOut" Type="varchar" MaxLength="10" />
           <Property Name="Email" Type="varchar" MaxLength="200" />
           <Property Name="Type" Type="varchar" MaxLength="200" />
           <Property Name="SickLeaveCount" Type="float" Nullable="false" />
           <Property Name="VacationLeavCount" Type="float" Nullable="false" />
+          <Property Name="DeptID" Type="uniqueidentifier" />
         </EntityType>
         <EntityContainer Name="SLVLOnlineModelStoreContainer">
           <EntitySet Name="ApproverGroup" EntityType="Self.ApproverGroup" Schema="dbo" store:Type="Tables" />
@@ -134,21 +124,11 @@
           <EntitySet Name="TypeOfLeave" EntityType="Self.TypeOfLeave" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SLVLOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="SLVLOnlineEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ApproverGroup" EntityType="SLVLOnlineModel.ApproverGroup" />
-          <EntitySet Name="ApproverGroupMember" EntityType="SLVLOnlineModel.ApproverGroupMember" />
-          <EntitySet Name="EmailCredential" EntityType="SLVLOnlineModel.EmailCredential" />
-          <EntitySet Name="Holiday" EntityType="SLVLOnlineModel.Holiday" />
-          <EntitySet Name="LeaveForm" EntityType="SLVLOnlineModel.LeaveForm" />
-          <EntitySet Name="LeaveType" EntityType="SLVLOnlineModel.LeaveType" />
-          <EntitySet Name="OvertimeForm" EntityType="SLVLOnlineModel.OvertimeForm" />
-          <EntitySet Name="TypeOfLeave" EntityType="SLVLOnlineModel.TypeOfLeave" />
-          <EntitySet Name="UserAccount" EntityType="SLVLOnlineModel.UserAccount" />
-        </EntityContainer>
         <EntityType Name="ApproverGroup">
           <Key>
             <PropertyRef Name="ID" />
@@ -209,7 +189,7 @@
           <Property Name="CreatedBy" Type="Guid" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="Type" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="LeaveDeduction" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="LeaveDeduction" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
         </EntityType>
         <EntityType Name="OvertimeForm">
           <Key>
@@ -229,7 +209,7 @@
           <Key>
             <PropertyRef Name="Value" />
           </Key>
-          <Property Name="Value" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Label" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Arrangement" Type="Int32" />
         </EntityType>
@@ -243,31 +223,32 @@
           <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="MiddleInitial" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Department" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Birthdate" Type="DateTime" Precision="0" />
           <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CivilStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BirthPlace" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Nationality" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AssignedIdNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Position" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="DateHired" Type="DateTime" Precision="0" />
-          <Property Name="TIN" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="SSS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="HDMF" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PHIC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ContactNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FirstApprover" Type="Guid" />
-          <Property Name="SecondApprover" Type="Guid" />
-          <Property Name="TimeIn" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TimeOut" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="SickLeaveCount" Type="Double" Nullable="false" />
           <Property Name="VacationLeavCount" Type="Double" Nullable="false" />
+          <Property Name="DeptID" Type="Guid" />
         </EntityType>
-        </Schema>
+        <EntityContainer Name="SLVLOnlineEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ApproverGroup" EntityType="Self.ApproverGroup" />
+          <EntitySet Name="ApproverGroupMember" EntityType="Self.ApproverGroupMember" />
+          <EntitySet Name="EmailCredential" EntityType="Self.EmailCredential" />
+          <EntitySet Name="Holiday" EntityType="Self.Holiday" />
+          <EntitySet Name="LeaveForm" EntityType="Self.LeaveForm" />
+          <EntitySet Name="LeaveType" EntityType="Self.LeaveType" />
+          <EntitySet Name="OvertimeForm" EntityType="Self.OvertimeForm" />
+          <EntitySet Name="TypeOfLeave" EntityType="Self.TypeOfLeave" />
+          <EntitySet Name="UserAccount" EntityType="Self.UserAccount" />
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -276,127 +257,117 @@
           <EntitySetMapping Name="ApproverGroup">
             <EntityTypeMapping TypeName="SLVLOnlineModel.ApproverGroup">
               <MappingFragment StoreEntitySet="ApproverGroup">
-                <ScalarProperty Name="SecondApprover" ColumnName="SecondApprover" />
-                <ScalarProperty Name="FirstApprover" ColumnName="FirstApprover" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FirstApprover" ColumnName="FirstApprover" />
+                <ScalarProperty Name="SecondApprover" ColumnName="SecondApprover" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ApproverGroupMember">
             <EntityTypeMapping TypeName="SLVLOnlineModel.ApproverGroupMember">
               <MappingFragment StoreEntitySet="ApproverGroupMember">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmailCredential">
             <EntityTypeMapping TypeName="SLVLOnlineModel.EmailCredential">
               <MappingFragment StoreEntitySet="EmailCredential">
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Holiday">
             <EntityTypeMapping TypeName="SLVLOnlineModel.Holiday">
               <MappingFragment StoreEntitySet="Holiday">
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LeaveForm">
             <EntityTypeMapping TypeName="SLVLOnlineModel.LeaveForm">
               <MappingFragment StoreEntitySet="LeaveForm">
-                <ScalarProperty Name="DeclineReason" ColumnName="DeclineReason" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DeclineReason" ColumnName="DeclineReason" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LeaveType">
             <EntityTypeMapping TypeName="SLVLOnlineModel.LeaveType">
               <MappingFragment StoreEntitySet="LeaveType">
-                <ScalarProperty Name="LeaveDeduction" ColumnName="LeaveDeduction" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DaysBeforeFilling" ColumnName="DaysBeforeFilling" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DaysBeforeFilling" ColumnName="DaysBeforeFilling" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="LeaveDeduction" ColumnName="LeaveDeduction" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OvertimeForm">
             <EntityTypeMapping TypeName="SLVLOnlineModel.OvertimeForm">
               <MappingFragment StoreEntitySet="OvertimeForm">
-                <ScalarProperty Name="DeclineReason" ColumnName="DeclineReason" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DeclineReason" ColumnName="DeclineReason" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TypeOfLeave">
             <EntityTypeMapping TypeName="SLVLOnlineModel.TypeOfLeave">
               <MappingFragment StoreEntitySet="TypeOfLeave">
-                <ScalarProperty Name="Arrangement" ColumnName="Arrangement" />
-                <ScalarProperty Name="Label" ColumnName="Label" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Arrangement" ColumnName="Arrangement" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserAccount">
             <EntityTypeMapping TypeName="SLVLOnlineModel.UserAccount">
               <MappingFragment StoreEntitySet="UserAccount">
-                <ScalarProperty Name="VacationLeavCount" ColumnName="VacationLeavCount" />
-                <ScalarProperty Name="SickLeaveCount" ColumnName="SickLeaveCount" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="TimeOut" ColumnName="TimeOut" />
-                <ScalarProperty Name="TimeIn" ColumnName="TimeIn" />
-                <ScalarProperty Name="SecondApprover" ColumnName="SecondApprover" />
-                <ScalarProperty Name="FirstApprover" ColumnName="FirstApprover" />
-                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-                <ScalarProperty Name="PHIC" ColumnName="PHIC" />
-                <ScalarProperty Name="HDMF" ColumnName="HDMF" />
-                <ScalarProperty Name="SSS" ColumnName="SSS" />
-                <ScalarProperty Name="TIN" ColumnName="TIN" />
-                <ScalarProperty Name="DateHired" ColumnName="DateHired" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="AssignedIdNo" ColumnName="AssignedIdNo" />
-                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
-                <ScalarProperty Name="BirthPlace" ColumnName="BirthPlace" />
-                <ScalarProperty Name="CivilStatus" ColumnName="CivilStatus" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Department" ColumnName="Department" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CivilStatus" ColumnName="CivilStatus" />
+                <ScalarProperty Name="BirthPlace" ColumnName="BirthPlace" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="DateHired" ColumnName="DateHired" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="SickLeaveCount" ColumnName="SickLeaveCount" />
+                <ScalarProperty Name="VacationLeavCount" ColumnName="VacationLeavCount" />
+                <ScalarProperty Name="DeptID" ColumnName="DeptID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
