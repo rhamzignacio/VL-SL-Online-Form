@@ -87,7 +87,7 @@ namespace VL_SL_Online_Form.Services
 
                 PrincipalSerializeModel serializeModel = new PrincipalSerializeModel();
 
-                serializeModel.Username = user.Username;
+                serializeModel.Username = user.Username.ToLower();
 
                 serializeModel.Password = user.Password;
 
@@ -99,7 +99,7 @@ namespace VL_SL_Online_Form.Services
 
                 string userData = serializer.Serialize(serializeModel);
 
-                FormsAuthenticationTicket authenticationSLVL = new FormsAuthenticationTicket(1, user.Username, DateTime.Now, DateTime.Now.AddMinutes(30), true, userData);
+                FormsAuthenticationTicket authenticationSLVL = new FormsAuthenticationTicket(1, user.Username.ToLower(), DateTime.Now, DateTime.Now.AddMinutes(30), true, userData);
 
                 string encryptedTicket = FormsAuthentication.Encrypt(authenticationSLVL);
 

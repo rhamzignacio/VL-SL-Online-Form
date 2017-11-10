@@ -128,7 +128,6 @@ namespace VL_SL_Online_Form.Services
                                     DeclineReason = l.DeclineReason,
                                     ShowType = t.Description
                                 };
-
                     return leave.ToList();
                 }
             }

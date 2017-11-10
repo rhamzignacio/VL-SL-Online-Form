@@ -28,7 +28,7 @@ namespace VL_SL_Online_Form
 
                     Principal newUser = new Principal(authTicket_slvl.Name);
 
-                    newUser.Username = serializeModel.Username;
+                    newUser.Username = serializeModel.Username.ToLower();
 
                     newUser.SessionID = serializeModel.SessionID;
 
@@ -39,21 +39,18 @@ namespace VL_SL_Online_Form
                     using (var db = new SLVLOnlineEntities())
                     {
                         var query = from a in db.UserAccount
-                                    join f in db.UserAccount on a.FirstApprover equals f.ID into qF
-                                    from first in qF.DefaultIfEmpty()
-                                    join s in db.UserAccount on a.SecondApprover equals s.ID into qS
-                                    from second in qS.DefaultIfEmpty()
-                                    where a.Username == newUser.Username
+                                    join dept in db.ApproverGroup on a.DeptID equals dept.ID into qDept
+                                    from d in qDept.DefaultIfEmpty()
+                                    where a.Username.ToLower() == newUser.Username
                                     select new UserModel
                                     {
                                         ID = a.ID,
                                         Username = a.Username,
-                                        BirthDate = a.Birthdate
+                                        BirthDate = a.Birthdate,
                                         BirthPlace = a.BirthPlace,
                                         CivilStatus = a.CivilStatus,
                                         ContactNo = a.ContactNo,
                                         DateHired = a.DateHired,
-                                        Department = a.Department,
                                         FirstName = a.FirstName,
                                         Gender = a.Gender,
                                         LastName = a.LastName,
@@ -61,11 +58,11 @@ namespace VL_SL_Online_Form
                                         Position = a.Position,
                                         Status = a.Status,
                                         Email = a.Email,
-                                        FirstApproverEmail = first.Email,
-                                        SecondApproverEmail = second.Email,
                                         Type = a.Type,
                                         SickLeaveCount = a.SickLeaveCount,
-                                        VacationLeaveCount = a.VacationLeavCount
+                                        VacationLeaveCount = a.VacationLeavCount,
+                                        DeptID = a.DeptID,
+                                        Department = d.Name
                                     };
 
                         user = query.FirstOrDefault();
