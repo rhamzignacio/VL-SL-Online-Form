@@ -7,7 +7,7 @@
 <div role="main" ng-controller="leaveFormController as vm" ng-init="InitFiledForms()">
 
     <div class="col-md-12">
-        <div class="x_panel" style="width:300px;">
+        <div class="x_panel" style="width:300px;" ng-show="main.CurrentUser.Type == 'USR'">
             <div class="x_title">
                 <h2>Leave Credits</h2>
                 <div class="clearfix"></div>
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="x_panel">
+        <div class="x_panel" ng-show="main.CurrentUser.Type == 'USR'">
             <div class="x_title">
                 <h2>Filed Leave</h2>
                 <div class="clearfix"></div>
@@ -46,12 +46,14 @@
                             <th>Remarks</th>
                             <th >Status</th>
                         </tr>
+                        <a href="~/Models/UniversalModel.cs">~/Models/UniversalModel.cs</a>
                     </thead>
 
                     <tbody>
                         <tr ng-repeat="leave in vm.FiledLeave | filter: { Status: '!X'}">
                             <td><button class="btn btn-danger" data-target="#deleteLeaveModal"
-                                        data-toggle="modal" ng-click="LeaveToDelete(leave)" ng-show="leave.Status != 'D'">Cancel</button></td>
+                                        data-toggle="modal" ng-click="LeaveToDelete(leave)" ng-show="leave.Status != 'D'">Cancel</button>
+                            </td>
                             <td>{{leave.ShowCreatedDate}}</td>
                             <td>{{leave.ShowType}}</td>
                             <td>{{leave.Reason}}</td>
@@ -62,7 +64,94 @@
             </div>
         </div>
 
-        <div class="x_panel">
+        <div class="x_panel" ng-show="main.CurrentUser.Type != 'USR'">
+            <div class="x_title">
+                <h2>For Approval</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <table id="forApproval" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Employee</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="leave in vm.FiledLeave | filter: { Status: 'P'}">
+                            <td>{{leave.ShowCreatedDate}}</td>
+                            <td>{{leave.ShowType}}</td>
+                            <td>{{leave.ShowCreatedBy}}</td>
+                            <td>{{leave.Reason}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="x_panel" ng-show="main.CurrentUser.Type != 'USR'">
+            <div class="x_title">
+                <h2>Approved Leave</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <table id="approvedTable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Employee</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="leave in vm.FiledLeave | filter: { Status: 'A'}">
+                            <td>{{leave.ShowCreatedDate}}</td>
+                            <td>{{leave.ShowType}}</td>
+                            <td>{{leave.ShowCreatedBy}}</td>
+                            <td>{{leave.Reason}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="x_panel" ng-show="main.CurrentUser.Type != 'USR'">
+            <div class="x_title">
+                <h2>Declined Leave</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <table id="declinedLeave" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Employee</th>
+                            <th>Declined Reason</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="leave in vm.FiledLeave | filter: { Status: 'D'}">
+                            <td>{{leave.ShowCreatedDate}}</td>
+                            <td>{{leave.ShowType}}</td>
+                            <td>{{leave.ShowCreatedBy}}</td>
+                            <td>{{leave.DeclinedReason}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="x_panel" ng-show="main.CurrentUser.Type == 'USR'">
             <div class="x_title">
                 <h2>Filed Overtime</h2>
                 <div class="pull-right">

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SLVLOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SLVLOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ApproverGroup">
           <Key>
             <PropertyRef Name="ID" />
@@ -113,6 +113,27 @@
           <Property Name="VacationLeavCount" Type="float" Nullable="false" />
           <Property Name="DeptID" Type="uniqueidentifier" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_FiledForms">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Type" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="400" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="FirstName" Type="varchar" MaxLength="150" />
+          <Property Name="LastName" Type="varchar" MaxLength="150" />
+          <Property Name="Reason" Type="varchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="1" />
+          <Property Name="DeclineReason" Type="varchar(max)" />
+        </EntityType>
         <EntityContainer Name="SLVLOnlineModelStoreContainer">
           <EntitySet Name="ApproverGroup" EntityType="Self.ApproverGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApproverGroupMember" EntityType="Self.ApproverGroupMember" Schema="dbo" store:Type="Tables" />
@@ -123,9 +144,23 @@
           <EntitySet Name="OvertimeForm" EntityType="Self.OvertimeForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfLeave" EntityType="Self.TypeOfLeave" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_FiledForms" EntityType="Self.v_FiledForms" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_FiledForms].[ID] AS [ID], 
+    [v_FiledForms].[Type] AS [Type], 
+    [v_FiledForms].[Description] AS [Description], 
+    [v_FiledForms].[StartDate] AS [StartDate], 
+    [v_FiledForms].[EndDate] AS [EndDate], 
+    [v_FiledForms].[CreatedBy] AS [CreatedBy], 
+    [v_FiledForms].[FirstName] AS [FirstName], 
+    [v_FiledForms].[LastName] AS [LastName], 
+    [v_FiledForms].[Reason] AS [Reason], 
+    [v_FiledForms].[Status] AS [Status], 
+    [v_FiledForms].[DeclineReason] AS [DeclineReason]
+    FROM [dbo].[v_FiledForms] AS [v_FiledForms]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SLVLOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -247,7 +282,27 @@
           <EntitySet Name="OvertimeForm" EntityType="Self.OvertimeForm" />
           <EntitySet Name="TypeOfLeave" EntityType="Self.TypeOfLeave" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" />
+          <EntitySet Name="v_FiledForms" EntityType="SLVLOnlineModel.v_FiledForms" />
         </EntityContainer>
+        <EntityType Name="v_FiledForms">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Type" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeclineReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -368,6 +423,23 @@
                 <ScalarProperty Name="SickLeaveCount" ColumnName="SickLeaveCount" />
                 <ScalarProperty Name="VacationLeavCount" ColumnName="VacationLeavCount" />
                 <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_FiledForms">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.v_FiledForms">
+              <MappingFragment StoreEntitySet="v_FiledForms">
+                <ScalarProperty Name="DeclineReason" ColumnName="DeclineReason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

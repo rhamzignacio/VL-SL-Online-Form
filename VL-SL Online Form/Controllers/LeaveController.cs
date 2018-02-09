@@ -30,7 +30,12 @@ namespace VL_SL_Online_Form.Controllers
         {
             string serverResponse = "";
 
-            var filedLeave = LeaveService.GetLeavePerUser(out serverResponse);
+            var filedLeave = new List<LeaveFormModel>();
+
+            if (UniversalHelpers.CurrentUser.Type == "USR")
+                filedLeave = LeaveService.GetLeavePerUser(out serverResponse);
+            else
+                filedLeave = LeaveService.GetAllLeave(out serverResponse);
 
             var filedOvertime = OvertimeService.GetOverTimePerUser(out serverResponse);
 

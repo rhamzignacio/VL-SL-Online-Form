@@ -101,6 +101,43 @@ namespace VL_SL_Online_Form.Services
             }
         }
 
+        public static List<LeaveFormModel> GetAllLeave(out string message)
+        {
+            message = "";
+            try
+            {
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var leave = from l in db.LeaveForm
+                                join u in db.UserAccount on l.CreatedBy equals u.ID
+                                join t in db.LeaveType on l.Type equals t.ID
+                                orderby l.StartDate descending
+                                select new LeaveFormModel
+                                {
+                                    ID = l.ID,
+                                    StartDate = l.StartDate,
+                                    EndDate = l.EndDate,
+                                    CreatedBy = l.CreatedBy,
+                                    CreatedDate = l.CreatedDate,
+                                    Reason = l.Reason,
+                                    Status = l.Status,
+                                    Type = l.Type,
+                                    ShowCreatedBy = u.FirstName + " " + u.LastName,
+                                    DeclineReason = l.DeclineReason,
+                                    ShowType = t.Description
+                                };
+
+                    return leave.ToList();
+                }
+            }
+            catch(Exception error)
+            {
+                message = error.Message;
+
+                return null;
+            }
+        }
+
         public static List<LeaveFormModel> GetLeavePerUser(out string message)
         {
             try
@@ -128,6 +165,7 @@ namespace VL_SL_Online_Form.Services
                                     DeclineReason = l.DeclineReason,
                                     ShowType = t.Description
                                 };
+
                     return leave.ToList();
                 }
             }

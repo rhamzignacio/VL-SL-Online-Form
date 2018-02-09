@@ -1,4 +1,4 @@
-﻿
+﻿no
 @{
     ViewBag.Title = "HRModule";
 }
@@ -103,7 +103,7 @@
                     <div class="form-group">
                         <label>Department</label>
                         <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.Department"
-                                ng-options="item.value as item.label for item in DepartmentDropdown"></select>
+                                ng-options="item.ID as item.Name for item in vm.GroupDropDown"></select>
                     </div>
 
                     <div class="form-group">
