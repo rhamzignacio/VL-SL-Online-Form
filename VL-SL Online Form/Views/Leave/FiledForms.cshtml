@@ -46,7 +46,6 @@
                             <th>Remarks</th>
                             <th >Status</th>
                         </tr>
-                        <a href="~/Models/UniversalModel.cs">~/Models/UniversalModel.cs</a>
                     </thead>
 
                     <tbody>
@@ -122,7 +121,7 @@
             </div>
         </div>
 
-        <div class="x_panel" ng-show="main.CurrentUser.Type != 'USR'">
+        <div class="x_panel">
             <div class="x_title">
                 <h2>Declined Leave</h2>
                 <div class="clearfix"></div>
@@ -154,11 +153,11 @@
         <div class="x_panel" ng-show="main.CurrentUser.Type == 'USR'">
             <div class="x_title">
                 <h2>Filed Overtime</h2>
-                <div class="pull-right">
+                @*<div class="pull-right">
                     <button class="btn btn-default" data-toggle="tooltip" data-target="#panelBody" title="Toggle Table Filter" data-container="body">
                         <i class="glyphicon glyphicon-filter"></i>
                     </button>
-                </div>
+                </div>*@
                 <div class="clearfix"></div>
             </div>
 
