@@ -125,5 +125,20 @@ namespace VL_SL_Online_Form.Controllers
 
             return Json(new { message = serverResponse });
         }
+
+        [HttpPost]
+        public JsonResult ActivateUser(UserModel user)
+        {
+            string serverResponse = "";
+
+            if(user != null)
+            {
+                user.Status = "Y";
+
+                UserService.Save(user, out serverResponse);
+            }
+
+            return Json(new { message = serverResponse });
+        }
     }
 }

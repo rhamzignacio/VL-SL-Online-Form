@@ -190,6 +190,10 @@
         vm.UserToDelete = value;
     }
 
+    $scope.AssignActivateUser = function (value) {
+        vm.UserToActivate = value;
+    }
+
     $scope.DeleteUser = function () {
         $http({
             method: "POST",
@@ -206,6 +210,20 @@
 
                 GetAllUsers();
             }
+        });
+    }
+
+    $scope.ActivateUser = function () {
+        $http({
+            method: "POST",
+            url: "/User/ActivateUser",
+            data: { user: vm.UserToActivate }
+        }).then(function (data) {
+            SuccessMessage("Successfully activated");
+
+            $("#activateModal").modal('hide');
+
+            GetAllUsers();
         });
     }
 

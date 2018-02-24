@@ -24,7 +24,7 @@ namespace VL_SL_Online_Form.Services
                     {
                         if (user.Password.ToLower() == password.ToLower())
                         {
-                            if (user.Status == "N")
+                            if (user.Status == "X")
                                 message = "User is deactivated";
                             else
                             {

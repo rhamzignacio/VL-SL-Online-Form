@@ -63,6 +63,12 @@
             </div>
         </div>
 
+        <ul class="nav nav-tabs" ng-show="main.CurrentUser.Type != 'USR'">
+            <li class="active"><a data-toggle="tab" href="#forApproval">For Approval</a></li>
+            <li><a data-toggle="tab" href="#approvedLeave">Approved Leave</a></li>
+            <li><a data-toggle="tab" href="#declinedLeave">Declined Leave</a></li>
+        </ul>
+
         <div class="x_panel" ng-show="main.CurrentUser.Type != 'USR'">
             <div class="x_title">
                 <h2>For Approval</h2>
@@ -104,7 +110,7 @@
             <div class="x_title">
                 <h2>Approved Leave</h2>
                 <div class="clearfix"></div>
-            </div>
+            </div m>
 
             <div class="x_content">
                 <table id="approvedTable" class="table table-striped table-bordered">
@@ -258,7 +264,7 @@
                     <h4>Are you sure you want to decline this leave?</h4>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body">.
                     <div class="form-group">
                         <label>Reason</label>
                         <textarea rows="3" class="form-control" ng-model="vm.ModalLeave.DeclineReason"></textarea>

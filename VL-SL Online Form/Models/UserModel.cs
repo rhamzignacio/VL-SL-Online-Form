@@ -17,6 +17,18 @@ namespace VL_SL_Online_Form.Models
         public Guid? DeptID { get; set; }
         public string Department { get; set; }
         public string Status { get; set; }
+        public string ShowStatus
+        {
+            get
+            {
+                if (Status == "Y")
+                    return "Active";
+                else if (Status == "X")
+                    return "Deactivated";
+                else
+                    return "";
+            }
+        }
         public DateTime? BirthDate { get; set; }
         public string Gender { get; set; }
         public string CivilStatus { get; set; }

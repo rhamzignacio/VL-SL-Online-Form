@@ -16,23 +16,47 @@
                     <th>Name</th>
                     <th>Username</th>
                     <th>Department/Position</th>
+                    <th>Status</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr ng-repeat="user in vm.Users | filter: {Status: '!X'}">
+                <tr ng-repeat="user in vm.Users">
                     <td>
                         <button class="btn btn-primary btn-xs" data-target="#userModal" data-toggle="modal"
                                 ng-click="OpenModal(user)"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-close"></i></button>
-                    </td>
+                        <button class="btn btn-danger btn-xs" data-target="#deleteModal" data-toggle="modal"
+                                ng-click="AssignDeleteUser(user)" ng-show="user.Status == 'Y'">
+                            <i class="fa fa-close"></i></button>
+                        <button class="btn btn-success btn-xs" data-target="#activateModal" data-toggle="modal"
+                                ng-click="AssignActivateUser(user)" ng-show="user.Status == 'X'">
+                            <i class="fa fa-check"></i></button>
+                    </td> 
                     <td>{{user.FirstName}} {{user.LastName}}</td>
                     <td>{{user.Username}}</td>
                     <td>{{user.Department}} - {{user.Position}}</td>
+                    <td>{{user.ShowStatus}}</td>
+
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <div class="modal fade" id="activateModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure you want to activate this user?</h4>
+                </div>
+
+                <div class="modal-body">
+                    <button class="btn btn-warning" ng-click="ActivateUser()">Yes</button>
+                    <button class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div><!--Activate Modal-->
 
     <div class="modal fade" id="deleteModal" role="dialog">
         <div class="modal-dialog">
@@ -43,7 +67,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <button class="btn btn-warning" ng-click="">Yes</button>
+                    <button class="btn btn-warning" ng-click="DeleteUser()">Yes</button>
                     <button class="btn btn-default" data-dismiss="modal">No</button>
                 </div>
             </div>
@@ -102,7 +126,7 @@
 
                     <div class="form-group">
                         <label>Department</label>
-                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.Department"
+                        <select class="select2_single form-control" style="width:100%" ng-model="vm.Modal.DeptID"
                                 ng-options="item.ID as item.Name for item in vm.GroupDropDown"></select>
                     </div>
 

@@ -211,31 +211,26 @@ namespace VL_SL_Online_Form.Services
                     {
                         var user = db.UserAccount.FirstOrDefault(r => r.ID == _user.ID);
 
-                        if (_user.Status == "X")
-                            db.Entry(user).State = EntityState.Deleted;
-                        else
-                        {
-                            user.Username = _user.Username;
-                            user.FirstName = _user.FirstName;
-                            user.MiddleInitial = _user.MiddleInitial;
-                            user.LastName = _user.LastName;
-                            user.Status = _user.Status;
-                            user.Birthdate = _user.BirthDate;
-                            user.Gender = _user.Gender;
-                            user.CivilStatus = _user.CivilStatus;
-                            user.BirthPlace = _user.BirthPlace;
-                            user.Position = _user.Position;
-                            user.DateHired = _user.DateHired;
-                            user.ContactNo = _user.ContactNo;
-                            user.Email = _user.Email;
-                            user.Type = _user.Type;
-                            user.DeptID = _user.DeptID;
+                        user.Username = _user.Username;
+                        user.FirstName = _user.FirstName;
+                        user.MiddleInitial = _user.MiddleInitial;
+                        user.LastName = _user.LastName;
+                        user.Status = _user.Status;
+                        user.Birthdate = _user.BirthDate;
+                        user.Gender = _user.Gender;
+                        user.CivilStatus = _user.CivilStatus;
+                        user.BirthPlace = _user.BirthPlace;
+                        user.Position = _user.Position;
+                        user.DateHired = _user.DateHired;
+                        user.ContactNo = _user.ContactNo;
+                        user.Email = _user.Email;
+                        user.Type = _user.Type;
+                        user.DeptID = _user.DeptID;
 
-                            if (_user.Password != null && _user.Password != "")
-                                user.Password = _user.Password;
+                        if (_user.Password != null && _user.Password != "")
+                            user.Password = _user.Password;
 
-                            db.Entry(user).State = EntityState.Modified;
-                        }
+                        db.Entry(user).State = EntityState.Modified;
                     }
 
                     db.SaveChanges();
