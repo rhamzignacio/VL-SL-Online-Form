@@ -135,6 +135,17 @@ namespace VL_SL_Online_Form.Controllers
         }
 
         [HttpPost]
+        public JsonResult SaveLeaveForUser(LeaveFormModel leave, UserModel user)
+        {
+            string serverResponse = "";
+
+            if (leave != null)
+                LeaveService.SaveUpdateAdmin(leave, user, out serverResponse);
+
+            return Json(new { errorMessage = serverResponse });
+        }
+
+        [HttpPost]
        public JsonResult ApproveLeave(LeaveFormModel leave)
         {
             string serverResponse = "";

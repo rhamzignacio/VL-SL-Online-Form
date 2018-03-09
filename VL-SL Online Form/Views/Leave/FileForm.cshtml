@@ -19,7 +19,7 @@
                     <div class="form-group" ng-show="main.CurrentUser.Type == 'ADM' || main.CurrentUser.Type == 'HR' ">
                         <label>Employee Name</label>
                         <select class="form-control select2_single" style="width:100%" ng-model="vm.Leave.FileForUser"
-                                ng-options="item.ID as item.Name for item in vm.UserDropDown"></select>
+                                ng-options="item.ID as item.Name for item in vm.UserDropDown" ng-change="GetUser(vm.Leave.FileForUser)"></select>
                     </div>
 
                     <div class="form-group">
@@ -44,7 +44,7 @@
                     </div>
                 </div><!--/col-md-6-->
 
-                <div class="col-md-6">.
+                <div class="col-md-6">
                     <div class="form-group">
                         <span>
                             Leave Form is an application to be absent for the given date range.
@@ -55,19 +55,22 @@
                             <tbody>
                                 <tr>
                                     <td>Vacation Leave</td>
-                                    <td>{{main.CurrentUser.VacationLeaveCount}}</td>
+                                    <td ng-show="main.CurrentUser.Type == 'USR'">{{main.CurrentUser.VacationLeaveCount}}</td>
+                                    <td ng-show="main.CurrentUser.Type == 'ADM' || main.CurrentUser.Type == 'HR' ">{{vm.ForFileUser.VacationLeaveCount}}</td>
                                 </tr>
 
                                 <tr>
                                     <td>Sick Leave</td>
-                                    <td>{{main.CurrentUser.SickLeaveCount}}</td>
+                                    <td ng-show="main.CurrentUser.Type == 'USR'">{{main.CurrentUser.SickLeaveCount}}</td>
+                                    <td ng-show="main.CurrentUser.Type == 'ADM' || main.CurrentUser.Type == 'HR' ">{{vm.ForFileUser.SickLeaveCount}}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     
                     <div class="form-group">
-                        <button class="btn btn-primary" ng-click="SaveLeave(vm.Leave)">Submit</button>
+                        <button class="btn btn-primary" ng-click="SaveLeaveForUser(vm.Leave)"  ng-show="main.CurrentUser.Type == 'ADM' || main.CurrentUser.Type == 'HR' ">Submit</button>
+                        <button class="btn btn-primary" ng-click="SaveLeave(vm.Leave)" ng-show="main.CurrentUser.Type == 'USR'">Submit</button>
                         <button class="btn btn-default" ng-click="Clear(vm.Leave)">Clear</button>
                     </div>
                 </div><!--/col-md-6-->

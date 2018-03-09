@@ -5,11 +5,11 @@
 
     SuccessMessage = function (message) {
         growl.success(message, { ttl: 2000 });
-    }
+    };
 
     ErrorMessage = function (message) {
         growl.error(message, { title: "Error!", ttl: 3000 });
-    }
+    };
 
     $scope.LeaveTypeDropdown = [
         { value: "VL", label: "Vacation Leave" },
@@ -25,7 +25,7 @@
 
     $scope.Clear = function (value) {
         value = {};
-    }
+    };
 
     var currentDate = new Date();
 
@@ -35,14 +35,14 @@
             url: "/Leave/GetUserDropDown",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.errorMessage != "") {
+            if (data.data.errorMessage !== "") {
                 ErrorMessage(data.errorMessage);
             }
             else {
                 vm.UserDropDown = data.data.users;
             }
         });
-    }
+    };
 
     GetLeaveTypeDropDown = function () {
         $http({
@@ -50,21 +50,31 @@
             url: "/Leave/GetLeaveTypeDropdown",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.errorMessage != "") {
+            if (data.data.errorMessage !== "") {
                 ErrorMessage(data.errorMessage);
             }
             else {
                 vm.TypeOfLeaveDropDown = data.data.leaveType;
             }
         });
-    }
+    };
 
     $scope.InitFileForms = function () {
 
         GetUserDropDown();
 
         GetLeaveTypeDropDown();
-    }
+    };
+
+    $scope.GetUser = function (id) {
+        $http({
+            method: "POST",
+            url: "/User/GetSingleUser",
+            data: { ID: id }
+        }).then(function (data) {
+            vm.ForFileUser = data.data.user;
+        });
+    };
 
     $scope.LeaveEvent = function () {
         $http({
@@ -72,11 +82,11 @@
             url: "/Leave/GetLeaveTypeDetail",
             data: { ID: vm.Leave.Type }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
+            if (data.data.errorMessage === "") {
                 vm.MinDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + data.data.days)).slice(-2);
             }
         });
-    }
+    };
 
     $scope.InitFiledForms = function () {
         $http({
@@ -84,7 +94,7 @@
             url: "/Leave/GetFiledForms",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
+            if (data.data.errorMessage === "") {
                 vm.FiledLeave = data.data.leave;
 
                 vm.FiledOvertime = data.data.overtime;
@@ -93,42 +103,45 @@
                 ErrorMessage(data.data.errorMessage);
             }
         });
-    }
+    };
 
-    $scope.SaveLeave = function (value) {
+    $scope.SaveLeaveForUser = function (value) {
         var noError = "Y";
 
-        if (value.Type == "" || value.Type == null) {
+        if (value.Type === "" || value.Type === null) {
             noError = "N";
 
             ErrorMessage("Leave type is required");
         }
 
-        if (value.StartDate == "" || value.StartDate == null) {
+        if (value.StartDate === "" || value.StartDate === null) {
             noError = "N";
 
             ErrorMessage("Start date is required");
         }
 
-        if (value.EndDate == "" || value.EndDate == null) {
+        if (value.EndDate === "" || value.EndDate === null) {
             noError = "N";
 
             ErrorMessage("End date is required");
         }
 
-        if (value.Reason == "" || value.Reason == null) {
+        if (value.Reason === "" || value.Reason === null) {
             noError = "N";
 
             ErrorMessage("Reason is required");
         }
 
-        if (noError == "Y") {
+        if (noError === "Y") {
             $http({
                 method: "POST",
-                url: "/Leave/SaveLeave",
-                data: { leave: value }
+                url: "/Leave/SaveLeaveForUser",
+                data: {
+                    leave: value,
+                    user: vm.ForFileUser
+                }
             }).then(function (data) {
-                if (data.data.errorMessage == "") {
+                if (data.data.errorMessage === "") {
                     SuccessMessage("Successfully Saved");
 
                     vm.Leave = {};
@@ -140,50 +153,97 @@
                 }
             });
         }
-    }
+    };
+
+    $scope.SaveLeave = function (value) {
+        var noError = "Y";
+
+        if (value.Type === "" || value.Type === null) {
+            noError = "N";
+
+            ErrorMessage("Leave type is required");
+        }
+
+        if (value.StartDate === "" || value.StartDate === null) {
+            noError = "N";
+
+            ErrorMessage("Start date is required");
+        }
+
+        if (value.EndDate === "" || value.EndDate === null) {
+            noError = "N";
+
+            ErrorMessage("End date is required");
+        }
+
+        if (value.Reason === "" || value.Reason === null) {
+            noError = "N";
+
+            ErrorMessage("Reason is required");
+        }
+
+        if (noError === "Y") {
+            $http({
+                method: "POST",
+                url: "/Leave/SaveLeave",
+                data: { leave: value }
+            }).then(function (data) {
+                if (data.data.errorMessage === "") {
+                    SuccessMessage("Successfully Saved");
+
+                    vm.Leave = {};
+
+                    window.location.href = "/Leave/FiledForms";
+                }
+                else {
+                    ErrorMessage(data.data.errorMessage);
+                }
+            });
+        }
+    };
 
     $scope.LeaveToDelete = function (value) {
         vm.DeleteLeave = value;
-    }
+    };
 
     $scope.OvertimeToDelete = function (value) {
         vm.DeleteOvertime = value;
-    }
+    };
 
     $scope.SaveOvertime = function (value) {
         var noError = "Y";
 
-        if (value.EffectiveDate == "" || value.EffectiveDate == null) {
+        if (value.EffectiveDate === "" || value.EffectiveDate === null) {
             noError = "N";
 
             ErrorMessage("Date is required");
         }
 
-        if (value.StartTime == "" || value.StartTime == null) {
+        if (value.StartTime === "" || value.StartTime === null) {
             noError = "N";
 
             ErrorMessage("Start time is required");
         }
 
-        if (value.EndTime == "" || value.EndTime == null) {
+        if (value.EndTime === "" || value.EndTime === null) {
             noError = "N";
 
             ErrorMessage("End time is required");
         }
 
-        if (value.Reason == "" || value.Reason == null) {
+        if (value.Reason === "" || value.Reason === null) {
             noError = "N";
 
             ErrorMessage("Particulars is required");
         }
 
-        if (noError == "Y") {
+        if (noError === "Y") {
             $http({
                 method: "POST",
                 url: "/Leave/SaveOvertime",
                 data: { overtime: value }
             }).then(function (data) {
-                if (data.data.errorMessage == "") {
+                if (data.data.errorMessage === "") {
                     SuccessMessage("Successfully Saved");
 
                     vm.Overtime = {};
@@ -191,9 +251,9 @@
                 else {
                     ErrorMessage(data.data.errorMessage);
                 }
-            })
+            });
         }
-    }
+    };
 
     $scope.CancelOvertime = function () {
         $http({
@@ -201,7 +261,7 @@
             url: "/Leave/CancelOvertime",
             data: { overtime: vm.DeleteOvertime }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
+            if (data.data.errorMessage === "") {
                 SuccessMessage("Successfully cancelled overtime");
 
                 vm.DeleteOvertime.Status = "X";
@@ -210,7 +270,7 @@
                 ErrorMessage(data.data.errorMessage);
             }
         });
-    }
+    };
 
     $scope.CancelLeave = function () {
         $http({
@@ -218,7 +278,7 @@
             url: "/Leave/CancelLeave",
             data: { leave: vm.DeleteLeave }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
+            if (data.data.errorMessage === "") {
                 SuccessMessage("Successfully cancelled leave");
 
                 vm.DeleteLeave.Status = "X";
@@ -227,7 +287,7 @@
                 ErrorMessage(data.data.errorMessage);
             }
         });
-    }
+    };
 
     //=====================FOR APPROVAL=====================
     $scope.InitForApproval = function () {
@@ -236,7 +296,7 @@
             url: "/Leave/GetForApproval",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
+            if (data.data.errorMessage === "") {
                 vm.FiledLeave = data.data.leave;
 
                 vm.FiledOvertime = data.data.ot;
@@ -245,7 +305,7 @@
                 ErrorMessage(data.data.errorMessage);
             }
         });
-    }
+    };
 
     $scope.DeclineOvertime = function () {
         if (vm.ModalOvertime.DeclineReason === null || vm.ModalOvertime.DeclineReason === "") {
@@ -259,8 +319,8 @@
                 url: "/Leave/DeclineOvertime",
                 data: { overtime: vm.ModalOvertime }
             }).then(function (data) {
-                if (data.data.errorMessage == "") {
-                    SuccessMessage("Successfully declined overtime")
+                if (data.data.errorMessage === "") {
+                    SuccessMessage("Successfully declined overtime");
 
                     vm.ModalOvertime.Status = "D";
 
@@ -271,7 +331,7 @@
                 }
             });
         }
-    }
+    };
 
     $scope.ApproveOvertime = function () {
         $http({
@@ -279,8 +339,8 @@
             url: "/Leave/ApproveOvertime",
             data: { overtime: vm.ModalOvertime }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
-                SuccessMessage("Successfully approved overtime")
+            if (data.data.errorMessage === "") {
+                SuccessMessage("Successfully approved overtime");
 
                 vm.ModalOvertime.Status = "A";
 
@@ -289,16 +349,16 @@
             else {
                 ErrorMessage(data.data.errorMessage);
             }
-        })
-    }
+        });
+    };
 
     $scope.AssignOvertime = function (value) {
         vm.ModalOvertime = value;
-    }
+    };
 
     $scope.AssignLeave = function (value) {
         vm.ModalLeave = value;
-    }
+    };
 
     $scope.ApproveLeave = function () {
         $http({
@@ -306,8 +366,8 @@
             url: "/Leave/ApproveLeave",
             data: { leave: vm.ModalLeave }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
-                SuccessMessage("Successfully approved leave")
+            if (data.data.errorMessage === "") {
+                SuccessMessage("Successfully approved leave");
 
                 vm.ModalLeave.Status = "A";
 
@@ -316,8 +376,8 @@
             else {
                 ErrorMessage(data.data.errorMessage);
             }
-        })
-    }
+        });
+    };
 
     $scope.DeclineLeave = function () {
         if (vm.ModalLeave.DeclineReason === null || vm.ModalLeave.DeclineReason === "") {
@@ -329,8 +389,8 @@
                 url: "/Leave/DeclineLeave",
                 data: { leave: vm.ModalLeave }
             }).then(function (data) {
-                if (data.data.errorMessage == "") {
-                    SuccessMessage("Successfully declined leave")
+                if (data.data.errorMessage === "") {
+                    SuccessMessage("Successfully declined leave");
 
                     vm.ModalLeave.Status = "D";
 
@@ -341,5 +401,5 @@
                 }
             });
         }
-    }
+    };
 });

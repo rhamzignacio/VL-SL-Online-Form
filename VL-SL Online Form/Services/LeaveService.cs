@@ -9,6 +9,7 @@ namespace VL_SL_Online_Form.Services
 {
     public class LeaveService
     {
+
         public static int GetMinDateForLeave(Guid _leaveID ,out string message)
         {
             try
@@ -176,6 +177,77 @@ namespace VL_SL_Online_Form.Services
                 return null;
             }
         }
+
+        public static void SaveUpdateAdmin(LeaveFormModel _leave, UserModel _user, out string message)
+        {
+            try
+            {
+                message = "";
+
+                var leaveDays = _leave.EndDate.Subtract(_leave.StartDate).TotalDays + 1;
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    if (_leave.ID == Guid.Empty || _leave.ID == null)
+                    {
+                        var leaveType = db.LeaveType.FirstOrDefault(r => r.ID == _leave.Type);
+
+                        if (leaveType.Type == "SL")
+                        {
+                            if (_user.SickLeaveCount < (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString())))
+                            {
+                                message = "Insufficient Sick Leave Credit";
+                            }
+                        }
+                        else if (leaveType.Type == "VL" || leaveType.Type == "EL")
+                        {
+                            if (_user.VacationLeaveCount < (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString())))
+                            {
+                                message = "Insufficient Vacation Leave Credit";
+                            }
+                        }
+
+                        Guid? CreatedBy = Guid.Empty;
+
+                        if (_leave.FileForUser == null || _leave.FileForUser == Guid.Empty)
+                            CreatedBy = UniversalHelpers.CurrentUser.ID;
+                        else
+                            CreatedBy = _leave.FileForUser;
+
+
+                        LeaveForm newLeave = new LeaveForm
+                        {
+                            ID = Guid.NewGuid(),
+                            CreatedBy = CreatedBy,
+                            CreatedDate = DateTime.Now,
+                            EndDate = _leave.EndDate,
+                            Reason = _leave.Reason,
+                            StartDate = _leave.StartDate,
+                            Status = "P",
+                            Type = _leave.Type
+                        };
+
+                        db.Entry(newLeave).State = EntityState.Added;
+
+                        db.SaveChanges();
+
+                        //========FIRST APPROVER EMAIL==============
+                        EmailService.SendEmail("Leave For Approval", _user.FirstName + " " + _user.LastName + " filed " +
+                            _leave.ShowType + " and waiting for your approval", _user.FirstApproverEmail);
+
+                        //========SECOND APPROVER EMAIL=============
+                        EmailService.SendEmail("Leave For Approval", _user.FirstName + " " + _user.LastName + " filed " +
+                            _leave.ShowType + " and waiting for your approval", _user.SecondApproverEmail);
+
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                message = error.Message;
+            }
+        }
+
         public static void SaveUpdate(LeaveFormModel _leave, out string message)
         {
             try
@@ -206,17 +278,10 @@ namespace VL_SL_Online_Form.Services
                             }
                         }
 
-                        Guid? CreatedBy = Guid.Empty;
-
-                        if (_leave.FileForUser == null || _leave.FileForUser == Guid.Empty)
-                            CreatedBy = UniversalHelpers.CurrentUser.ID;
-                        else
-                            CreatedBy = _leave.FileForUser;
-
                         LeaveForm newLeave = new LeaveForm
                         {
                             ID = Guid.NewGuid(),
-                            CreatedBy = CreatedBy,
+                            CreatedBy = UniversalHelpers.CurrentUser.ID,
                             CreatedDate = DateTime.Now,
                             EndDate = _leave.EndDate,
                             Reason = _leave.Reason,

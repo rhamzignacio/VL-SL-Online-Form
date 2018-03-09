@@ -66,7 +66,7 @@ namespace VL_SL_Online_Form.Controllers
             if(ID != null || ID != Guid.Empty)
                 user = UniversalService.GetSelectedUser(ID, out serverResponse);
 
-            return Json(new { errorMessage = serverResponse, user = user });
+            return Json(new { errorMessage = serverResponse, user });
         }
 
         [HttpPost]
@@ -76,7 +76,7 @@ namespace VL_SL_Online_Form.Controllers
 
             var user = UniversalService.GetUserDropDown(out serverResponse);
 
-            return Json(new { errorMessage = serverResponse, user = user });
+            return Json(new { errorMessage = serverResponse, user });
         }
 
         public JsonResult GetGroupDropdown()
@@ -85,7 +85,7 @@ namespace VL_SL_Online_Form.Controllers
 
             var group = UniversalService.GetGroupDropDown(out serverResponse);
 
-            return Json(new { errorMessage = serverResponse, group = group });
+            return Json(new { errorMessage = serverResponse, group });
         }
 
         [HttpPost]
@@ -97,7 +97,7 @@ namespace VL_SL_Online_Form.Controllers
 
             var userDropdown = UniversalService.GetUserDropDown(out serverResponse);
 
-            return Json(new { message = serverResponse, users = users, userDropdown = userDropdown });
+            return Json(new { message = serverResponse, users, userDropdown });
         }
 
         [HttpPost]
