@@ -22,7 +22,7 @@ namespace VL_SL_Online_Form.Services
                 {
                     var email = db.EmailCredential.FirstOrDefault(r => r.ID != null);
 
-                    if(email != null)
+                    if(email != null) 
                     {
                         using(MailMessage mm = new MailMessage(email.Email, _toMail))
                         {
@@ -34,7 +34,11 @@ namespace VL_SL_Online_Form.Services
 
                             SmtpClient smtp = new SmtpClient();
 
-                            smtp.Host = "smtp.gmail.com";
+                            smtp.Host = "mail.casto.com.ph";
+
+                            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                            smtp.UseDefaultCredentials = false;
 
                             smtp.EnableSsl = true;
 

@@ -45,7 +45,7 @@ namespace VL_SL_Online_Form
                 "~/Content/build/js/custom.min.js",
                 "~/Content/vendors/jquery.tagsinput/src/jquery.tagsinput.js",
                 "~/Content/vendors/switchery/dist/switchery.min.js",
-                "~/Scripts/angular.js",
+                "~/Scripts/angular.min.js",
                 "~/Scripts/respond.js",
                 "~/Scripts/angular-growl.min.js",
                 "~/Content/vendors/autosize/dist/autosize.min.js",

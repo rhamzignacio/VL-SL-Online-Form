@@ -125,7 +125,7 @@ namespace VL_SL_Online_Form.Services
                                     Type = l.Type,
                                     ShowCreatedBy = u.FirstName + " " + u.LastName,
                                     DeclineReason = l.DeclineReason,
-                                    ShowType = t.Description
+                                    ShowType = t.Description                                
                                 };
 
                     return leave.ToList();
@@ -206,6 +206,13 @@ namespace VL_SL_Online_Form.Services
                                 message = "Insufficient Vacation Leave Credit";
                             }
                         }
+                        else if (leaveType.Type == "PL")
+                        {
+                            if (_user.SoloParentLeaveCount < (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString())))
+                            {
+                                message = "Insufficient Solo Parent Leave Credit";
+                            }
+                        }
 
                         Guid? CreatedBy = Guid.Empty;
 
@@ -264,17 +271,24 @@ namespace VL_SL_Online_Form.Services
                         var leaveType = db.LeaveType.FirstOrDefault(r => r.ID == _leave.Type);
 
                         if (leaveType.Type == "SL")
-                        { 
-                            if(UniversalHelpers.CurrentUser.SickLeaveCount < (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString())))
+                        {
+                            if (UniversalHelpers.CurrentUser.SickLeaveCount < (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString())))
                             {
                                 message = "Insufficient Sick Leave Credit";
                             }
                         }
-                        else if(leaveType.Type == "VL" || leaveType.Type == "EL")
+                        else if (leaveType.Type == "VL" || leaveType.Type == "EL")
                         {
                             if (UniversalHelpers.CurrentUser.VacationLeaveCount < (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString())))
                             {
                                 message = "Insufficient Vacation Leave Credit";
+                            }
+                        }
+                        else if (leaveType.Type == "PL")
+                        {
+                            if (UniversalHelpers.CurrentUser.SoloParentLeaveCount < (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString())))
+                            {
+                                message = "Insufficient Solo Parent Leave Credit";
                             }
                         }
 
@@ -328,6 +342,8 @@ namespace VL_SL_Online_Form.Services
                                     user.SickLeaveCount = user.SickLeaveCount - (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
                                 else if (leaveType.Type == "VL" || leaveType.Type == "EL")
                                     user.VacationLeavCount = user.VacationLeavCount - (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
+                                else if (leaveType.Type == "PL")
+                                    user.SoloParentLeaveCount = user.SoloParentLeaveCount - (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
                             }
                             else if (_leave.Status == "X")
                             {
@@ -343,6 +359,8 @@ namespace VL_SL_Online_Form.Services
                                         user.SickLeaveCount = user.SickLeaveCount + (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
                                     else if (leaveType.Type == "VL" || leaveType.Type == "EL")
                                         user.VacationLeavCount = user.VacationLeavCount + (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
+                                    else if (leaveType.Type == "PL")
+                                        user.SoloParentLeaveCount = user.SoloParentLeaveCount + (leaveDays * double.Parse(leaveType.LeaveDeduction.ToString()));
                                 }
                             }
 

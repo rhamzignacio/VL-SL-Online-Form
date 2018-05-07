@@ -33,5 +33,6 @@ namespace VL_SL_Online_Form.Models
         public double SickLeaveCount { get; set; }
         public double VacationLeavCount { get; set; }
         public Nullable<System.Guid> DeptID { get; set; }
+        public double SoloParentLeaveCount { get; set; }
     }
 }

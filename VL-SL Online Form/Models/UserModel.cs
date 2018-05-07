@@ -41,6 +41,7 @@ namespace VL_SL_Online_Form.Models
         public string Type { get; set; }
         public double VacationLeaveCount { get; set; }
         public double SickLeaveCount { get; set; }
+        public double SoloParentLeaveCount { get; set; }
 
         public string FirstApproverEmail { get; set; }
         public string SecondApproverEmail { get; set; }

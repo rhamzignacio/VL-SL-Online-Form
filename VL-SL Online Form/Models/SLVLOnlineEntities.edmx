@@ -112,6 +112,7 @@
           <Property Name="SickLeaveCount" Type="float" Nullable="false" />
           <Property Name="VacationLeavCount" Type="float" Nullable="false" />
           <Property Name="DeptID" Type="uniqueidentifier" />
+          <Property Name="SoloParentLeaveCount" Type="float" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -248,6 +249,37 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
           <Property Name="Label" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Arrangement" Type="Int32" />
         </EntityType>
+        <EntityContainer Name="SLVLOnlineEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ApproverGroup" EntityType="Self.ApproverGroup" />
+          <EntitySet Name="ApproverGroupMember" EntityType="Self.ApproverGroupMember" />
+          <EntitySet Name="EmailCredential" EntityType="Self.EmailCredential" />
+          <EntitySet Name="Holiday" EntityType="Self.Holiday" />
+          <EntitySet Name="LeaveForm" EntityType="Self.LeaveForm" />
+          <EntitySet Name="LeaveType" EntityType="Self.LeaveType" />
+          <EntitySet Name="OvertimeForm" EntityType="Self.OvertimeForm" />
+          <EntitySet Name="TypeOfLeave" EntityType="Self.TypeOfLeave" />
+          <EntitySet Name="v_FiledForms" EntityType="SLVLOnlineModel.v_FiledForms" />
+          <EntitySet Name="UserAccount" EntityType="SLVLOnlineModel.UserAccount" />
+        </EntityContainer>
+        <EntityType Name="v_FiledForms">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="EndDate" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Type" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DeclineReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="UserAccount">
           <Key>
             <PropertyRef Name="ID" />
@@ -271,37 +303,7 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
           <Property Name="SickLeaveCount" Type="Double" Nullable="false" />
           <Property Name="VacationLeavCount" Type="Double" Nullable="false" />
           <Property Name="DeptID" Type="Guid" />
-        </EntityType>
-        <EntityContainer Name="SLVLOnlineEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ApproverGroup" EntityType="Self.ApproverGroup" />
-          <EntitySet Name="ApproverGroupMember" EntityType="Self.ApproverGroupMember" />
-          <EntitySet Name="EmailCredential" EntityType="Self.EmailCredential" />
-          <EntitySet Name="Holiday" EntityType="Self.Holiday" />
-          <EntitySet Name="LeaveForm" EntityType="Self.LeaveForm" />
-          <EntitySet Name="LeaveType" EntityType="Self.LeaveType" />
-          <EntitySet Name="OvertimeForm" EntityType="Self.OvertimeForm" />
-          <EntitySet Name="TypeOfLeave" EntityType="Self.TypeOfLeave" />
-          <EntitySet Name="UserAccount" EntityType="Self.UserAccount" />
-          <EntitySet Name="v_FiledForms" EntityType="SLVLOnlineModel.v_FiledForms" />
-        </EntityContainer>
-        <EntityType Name="v_FiledForms">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="Type" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="EndDate" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="Type" Type="Guid" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CreatedBy" Type="Guid" />
-          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="DeclineReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SoloParentLeaveCount" Type="Double" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -401,31 +403,6 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserAccount">
-            <EntityTypeMapping TypeName="SLVLOnlineModel.UserAccount">
-              <MappingFragment StoreEntitySet="UserAccount">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="CivilStatus" ColumnName="CivilStatus" />
-                <ScalarProperty Name="BirthPlace" ColumnName="BirthPlace" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="DateHired" ColumnName="DateHired" />
-                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="SickLeaveCount" ColumnName="SickLeaveCount" />
-                <ScalarProperty Name="VacationLeavCount" ColumnName="VacationLeavCount" />
-                <ScalarProperty Name="DeptID" ColumnName="DeptID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="v_FiledForms">
             <EntityTypeMapping TypeName="SLVLOnlineModel.v_FiledForms">
               <MappingFragment StoreEntitySet="v_FiledForms">
@@ -439,6 +416,32 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccount">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.UserAccount">
+              <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="SoloParentLeaveCount" ColumnName="SoloParentLeaveCount" />
+                <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+                <ScalarProperty Name="VacationLeavCount" ColumnName="VacationLeavCount" />
+                <ScalarProperty Name="SickLeaveCount" ColumnName="SickLeaveCount" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="DateHired" ColumnName="DateHired" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="BirthPlace" ColumnName="BirthPlace" />
+                <ScalarProperty Name="CivilStatus" ColumnName="CivilStatus" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleInitial" ColumnName="MiddleInitial" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

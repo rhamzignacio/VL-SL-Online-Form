@@ -50,6 +50,10 @@
         if (value.SL === "") {
             value.SL = 0;
         }
+        
+        if(value.Solo === ""){
+            value.Solo = 0;
+        }
 
         $http({
             method: "POST",
@@ -57,7 +61,8 @@
             data: {
                 ID: value.ID,
                 VL: value.VL,
-                SL: value.SL
+                SL: value.SL,
+                Solo: value.Solo
             }
         }).then(function (data) {
             if (data.data === "") {
@@ -69,20 +74,20 @@
                 ErrorMessage(data.data);
             }
         });
-    }
+    };
 
     $scope.SelectGroup = function () {
         vm.Group.SL = '';
 
         vm.Group.VL = '';
 
-        if (!(vm.Group.ID == null || vm.Group.ID == '')) {
+        if (!(vm.Group.ID === null || vm.Group.ID === '')) {
             $http({
                 method: "POST",
                 url: "/User/GetGroupMember",
                 data: { ID: vm.Group.ID }
             }).then(function (data) {
-                if (data.data.errorMessage == "") {
+                if (data.data.errorMessage === "") {
                     vm.GroupMembers = data.data.users;
                 }
                 else {
@@ -95,13 +100,13 @@
         vm.Emp.SL = '';
 
         vm.Emp.VL = '';
-        if (!(vm.Emp.ID == null || vm.Emp.ID == '')) {
+        if (!(vm.Emp.ID === null || vm.Emp.ID === '')) {
             $http({
                 method: "POST",
                 url: "/User/GetSingleUser",
                 data: { ID: vm.Emp.ID }
             }).then(function (data) {
-                if (data.data.errorMessage == "") {
+                if (data.data.errorMessage === "") {
                     vm.SelectedUser = data.data.user;
                 }
                 else {
@@ -120,7 +125,7 @@
             url: "/User/GetUserDropdown",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
+            if (data.data.errorMessage === "") {
                 vm.UserDropDown = data.data.user;
             }
             else {
@@ -133,7 +138,7 @@
             url: "/GroupApprover/GetGroupApproverDropDown",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
+            if (data.data.errorMessage === "") {
                 vm.GroupDropDown = data.data.group;
             }
             else {
@@ -149,7 +154,7 @@
             url: "/User/Init",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.message == "") {
+            if (data.data.message === "") {
                 vm.Users = data.data.users;
 
                 vm.UserDropdown = data.data.userDropdown;
@@ -168,7 +173,7 @@
             url: "/GroupApprover/GetGroupApproverDropDown",
             arguments: { "Content-Type": "application/json" }
         }).then(function (data) {
-            if (data.data.errorMessage == "") {
+            if (data.data.errorMessage === "") {
                 vm.GroupDropDown = data.data.group;
             }
             else {
@@ -180,7 +185,7 @@
 
     $scope.ClearModal = function () {
         vm.Modal = {};
-    }
+    } 
 
     $scope.OpenModal = function (value) {
         vm.Modal = value;
@@ -200,7 +205,7 @@
             url: "/User/DeleteUser",
             data: { user: vm.UserToDelete }
         }).then(function (data) {
-            if (data.data.message != "") {
+            if (data.data.message !== "") {
                 ErrorMessage(data.data.message);
             }
             else {
@@ -228,7 +233,7 @@
     }
 
     $scope.SaveUser = function (value) {
-        if (value.Password != value.ConfirmPassword) {
+        if (value.Password !== value.ConfirmPassword) {
             ErrorMessage("Password Not Match");
 
             value.Password = "";
@@ -241,7 +246,7 @@
                 url: "/User/SaveUser",
                 data: { user: value }
             }).then(function (data) {
-                if (data.data.message != "") {
+                if (data.data.message !== "") {
                     ErrorMessage(data.data.message);
                 }
                 else {

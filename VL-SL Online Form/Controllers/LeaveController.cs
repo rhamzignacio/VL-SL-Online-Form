@@ -32,12 +32,17 @@ namespace VL_SL_Online_Form.Controllers
 
             var filedLeave = new List<LeaveFormModel>();
 
+            var filedOvertime = new List<OvertimeFormModel>();
+
             if (UniversalHelpers.CurrentUser.Type == "USR")
                 filedLeave = LeaveService.GetLeavePerUser(out serverResponse);
             else
                 filedLeave = LeaveService.GetAllLeave(out serverResponse);
 
-            var filedOvertime = OvertimeService.GetOverTimePerUser(out serverResponse);
+            if (UniversalHelpers.CurrentUser.Type == "USR")
+                filedOvertime = OvertimeService.GetOverTimePerUser(out serverResponse);
+            else
+                filedOvertime = OvertimeService.GetOverTimeAll(out serverResponse);
 
             return Json(new { leave = filedLeave, overtime = filedOvertime, errorMessage = serverResponse });
         }
@@ -51,7 +56,7 @@ namespace VL_SL_Online_Form.Controllers
 
             var ot = OvertimeService.GetForApproval(out serverResponse);
 
-            return Json(new { errorMessage = serverResponse, leave = leave, ot = ot });
+            return Json(new { errorMessage = serverResponse, leave, ot });
         }
 
         #region Overtime

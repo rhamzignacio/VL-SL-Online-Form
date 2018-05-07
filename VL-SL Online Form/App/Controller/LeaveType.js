@@ -7,15 +7,16 @@
 
     SuccessMessage = function (message) {
         growl.success(message, { ttl: 2000 });
-    }
+    };
 
     ErrorMessage = function (message) {
         growl.error(message, { title: "Error!", ttl: 3000 });
-    }
+    };
 
     $scope.LeaveTypeDropDown = [
         { value: "VL", label: "Vacation Leave" },
-        { value: "SL", label: "Sick Leave" }
+        { value: "SL", label: "Sick Leave" },
+        { value: "PL", label: "Solo Parent Leave" }
     ];
 
     $scope.Init = function () {
@@ -26,7 +27,7 @@
         }).then(function (data) {
             vm.LeaveTypes = data.data.leaveType;
         });
-    }
+    };
 
     $scope.Clear = function () {
         vm.Modal = {};
@@ -36,7 +37,7 @@
         vm.Modal.Description = "";
 
         vm.Modal.LeaveDeduction = "";
-    }
+    };
 
     $scope.SaveLeaveType = function (value) {
         var ifHasError = "N";
@@ -65,7 +66,7 @@
                 url: "/LeaveType/SaveLeaveType",
                 data: { leaveType: value }
             }).then(function(data){
-                if (data.data == "") {
+                if (data.data === "") {
                     SuccessMessage("Succesfully Saved");
 
                     $scope.Init();
@@ -85,7 +86,7 @@
             url: "/LeaveType/DeleteLeaveType",
             data: { leaveType: vm.LeaveTypeToBeDeleted }
         }).then(function (data) {
-            if (data.data == "") {
+            if (data.data === "") {
                 SuccessMessage("Succesfully Deleted");
 
                 $scope.Init();

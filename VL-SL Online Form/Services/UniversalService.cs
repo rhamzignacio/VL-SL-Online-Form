@@ -38,7 +38,8 @@ namespace VL_SL_Online_Form.Services
                                     SickLeaveCount = u.SickLeaveCount,
                                     Status = u.Status,
                                     Username = u.Username,
-                                    VacationLeaveCount = u.VacationLeavCount
+                                    VacationLeaveCount = u.VacationLeavCount,
+                                    SoloParentLeaveCount = u.SoloParentLeaveCount
                                 };
 
                     return query.ToList();
@@ -79,7 +80,8 @@ namespace VL_SL_Online_Form.Services
                                     SickLeaveCount = u.SickLeaveCount,
                                     Status = u.Status,
                                     Username = u.Username,
-                                    VacationLeaveCount = u.VacationLeavCount
+                                    VacationLeaveCount = u.VacationLeavCount,
+                                    SoloParentLeaveCount = u.SoloParentLeaveCount
                                 };
 
                     return query.FirstOrDefault();

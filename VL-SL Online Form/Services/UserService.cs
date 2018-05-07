@@ -9,7 +9,7 @@ namespace VL_SL_Online_Form.Services
 {
     public class UserService
     {
-        public static void AddCreditPerGroup(Guid _groupID, int VL, int SL, out string message)
+        public static void AddCreditPerGroup(Guid _groupID, int VL, int SL, int soloLeave, out string message)
         {
             try
             {
@@ -27,6 +27,8 @@ namespace VL_SL_Online_Form.Services
 
                             user.SickLeaveCount += SL;
 
+                            user.SoloParentLeaveCount += soloLeave;
+
                             db.Entry(user).State = EntityState.Modified;
                         });
 
@@ -40,7 +42,7 @@ namespace VL_SL_Online_Form.Services
             }
         }
 
-        public static void AddCreditPerEmployee(Guid _userID, int VL, int SL, out string message)
+        public static void AddCreditPerEmployee(Guid _userID, int VL, int SL, int soloLeave, out string message)
         {
             try
             {
@@ -55,6 +57,8 @@ namespace VL_SL_Online_Form.Services
                         user.VacationLeavCount += VL;
 
                         user.SickLeaveCount += SL;
+
+                        user.SoloParentLeaveCount += soloLeave;
 
                         db.Entry(user).State = EntityState.Modified;
 
@@ -161,7 +165,10 @@ namespace VL_SL_Online_Form.Services
                                     Email = u.Email,
                                     Type = u.Type,
                                     DeptID = u.DeptID,
-                                    Department = g.Name
+                                    Department = g.Name,
+                                    SickLeaveCount = u.SickLeaveCount,
+                                    VacationLeaveCount = u.VacationLeavCount,
+                                    SoloParentLeaveCount = u.SoloParentLeaveCount
                                 };
 
                     return query.ToList();
@@ -202,7 +209,10 @@ namespace VL_SL_Online_Form.Services
                             ContactNo = _user.ContactNo,
                             Email = _user.Email,
                             Type = _user.Type,
-                            DeptID = _user.DeptID
+                            DeptID = _user.DeptID,
+                            SoloParentLeaveCount = _user.SoloParentLeaveCount,
+                            SickLeaveCount = _user.SickLeaveCount,
+                            VacationLeavCount = _user.VacationLeaveCount
                         };
 
                         db.Entry(newUser).State = EntityState.Added;
@@ -226,6 +236,9 @@ namespace VL_SL_Online_Form.Services
                         user.Email = _user.Email;
                         user.Type = _user.Type;
                         user.DeptID = _user.DeptID;
+                        user.VacationLeavCount = _user.VacationLeaveCount;
+                        user.SickLeaveCount = _user.SickLeaveCount;
+                        user.SoloParentLeaveCount = user.SoloParentLeaveCount;
 
                         if (_user.Password != null && _user.Password != "")
                             user.Password = _user.Password;
