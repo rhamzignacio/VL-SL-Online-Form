@@ -7,11 +7,11 @@
 
     SuccessMessage = function (value) {
         growl.success("Successfully" + value, { ttl: 2000 });
-    }
+    };
 
     ErrorMessage = function (value) {
         growl.error(value, { title: "Error!", ttl: 3000 });
-    }
+    };
 
     $scope.UserTypeDropDown = [
         { value: "US", label: "Employee" },

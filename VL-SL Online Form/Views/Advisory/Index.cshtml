@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div role="main" ng-controller="AdvisoryController as vm" ng-init="Init()">
+    <div class="x_content">
+        <h3>Advisory Module</h3>
+
+        <table id="advisoryTable" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        <button class="btn btn-success btn-xs" ng-click="ClearModal()"
+                                data-toggle="modal" data-target="#AdvisoryModal"><i class="fa fa-plus"></i></button>
+                    </th>
+                    <th>Date</th>
+                    <th>Content</th>
+                    <th>Added By</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="adv in vm.Advisory">
+                    <td>
+                        <button class="btn btn-primary btn-xs" ng-click="AssignModal(adv)"
+                                data-target="#AdvisoryModal" data-toggle="modal"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-danger btn-xs" ng-click="AssignDelete(adv)"
+                                data-target="#DeleteAdvisoryModal" data-toggle="modal"><i class="fa fa-trash"></i></button>
+                    </td>
+                    <td>{{adv.ShowModifiedDate}}</td>
+                    <td>{{adv.Description}}</td>
+                    <td>{{adv.ShowModifiedBy}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="DeleteAdvisoryModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure you want to Delete this advisory?</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <button class="btn btn-danger" ng-click="DeleteAdvisory()">Yes</button>
+                        <button class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AdvisoryModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Advisory</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea class="form-control" ng-model="vm.Modal.Description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" ng-click="SaveAdvisory(vm.Modal)">Save</button>
+                        <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

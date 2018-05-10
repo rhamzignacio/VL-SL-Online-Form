@@ -357,10 +357,15 @@
     };
 
     $scope.AssignLeave = function (value) {
+
         vm.ModalLeave = value;
     };
 
     $scope.ApproveLeave = function () {
+        vm.ModalLeave.StartDate = vm.ModalLeave.ShowStartDate;
+
+        vm.ModalLeave.EndDate = vm.ModalLeave.ShowEndDate;
+
         $http({
             method: "POST",
             url: "/Leave/ApproveLeave",
@@ -401,5 +406,20 @@
                 }
             });
         }
+    };
+
+    $scope.InitAdvisory = function () {
+        $http({
+            method: "POST",
+            url: "/Advisory/GetAll",
+            arguments: { "Content-Type": "application/json" }
+        }).then(function (data) {
+            if (data.data.message !== "") {
+                ErrorMessage(data.data.message);
+            }
+            else {
+                vm.Advisory = data.data.advisory;
+            }
+        });
     };
 });

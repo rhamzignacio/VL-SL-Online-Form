@@ -35,5 +35,6 @@ namespace VL_SL_Online_Form.Models
         public virtual DbSet<TypeOfLeave> TypeOfLeave { get; set; }
         public virtual DbSet<v_FiledForms> v_FiledForms { get; set; }
         public virtual DbSet<UserAccount> UserAccount { get; set; }
+        public virtual DbSet<Advisory> Advisory { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿var app = angular.module("app", ["angular-growl", "login", "HRModule", "calendar", "leave", "groupApprover", "calendar", "leaveType"])
+﻿var app = angular.module("app", ["angular-growl", "login", "HRModule", "calendar", "leave", "groupApprover", "calendar", "leaveType",
+"AdvisoryModule"])
 
 .controller("mainController", ['$scope', '$location', '$http', 'growl', function ($scope, $location, $http, growl) {
     var main = this;
@@ -11,7 +12,7 @@
         }).then(function (data) {
             main.CurrentUser = data.data.currentUser;
         });
-    }
+    };
 
     $scope.Logout = function () {
         $http({
@@ -26,7 +27,7 @@
                 window.location.href = "/Home/Login";
             }
         });
-    }
+    };
 
     $scope.SaveEmail = function (value) {
         var ifError = "N";
@@ -57,7 +58,7 @@
                 }
             });
         }
-    }
+    };
 
     $scope.GetEmail = function () {
         $http({
@@ -72,5 +73,38 @@
                 main.Account = data.data.email;
             }
         });
+    };
+
+    $scope.ClearPassModal = function(){
+        vm.Pass = "";
     }
+
+    $scope.ChangePassword = function(value){
+        if(value.ConfirmPassword !== value.NewPassword){
+            growl.error("Password Not Match", { title: "Error", ttl: 3000 });
+
+            value.OldPassword = "";
+
+            value.NewPassword = "";
+
+            value.ConfirmPassword = "";
+        }        
+
+        $http({
+            method: "POST",
+            url: "/Home/ChangePassword",
+            data: {
+                oldPassword: value.OldPassword,
+                newPassword: value.NewPassword}
+            }).then(function(data){
+            if(data.data !== ""){
+                growl.error(data.data, { title: data.data, ttl: 3000 });
+            }
+            else{
+                growl.success("Password successfully changed", { ttl: 2000 });
+
+                $("#ChangePasswordModal").modal('hide');
+            }
+        });
+    };
 }]);

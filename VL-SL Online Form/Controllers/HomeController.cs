@@ -72,5 +72,13 @@ namespace VL_SL_Online_Form.Controllers
 
             return Json(serverResponse);
         }
+
+        [HttpPost]
+        public JsonResult ChangePassword(string oldPassword, string newPassword)
+        {
+            UserService.ChangePassword(oldPassword, newPassword, out string message);
+
+            return Json(message);
+        }
     }
 }

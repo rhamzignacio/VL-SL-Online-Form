@@ -319,7 +319,9 @@ namespace VL_SL_Online_Form.Services
            
                     }
                     else
-                    {
+                    { 
+                        leaveDays = DateTime.Parse(_leave.ShowEndDate).Subtract(DateTime.Parse(_leave.ShowStartDate)).TotalDays + 1;
+
                         var leave = db.LeaveForm.FirstOrDefault(r => r.ID == _leave.ID);
 
                         var leaveType = db.LeaveType.FirstOrDefault(r => r.ID == _leave.Type);

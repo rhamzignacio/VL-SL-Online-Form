@@ -9,6 +9,34 @@ namespace VL_SL_Online_Form.Services
 {
     public class UserService
     {
+        public static void ChangePassword(string _oldPassword, string _newPassword, out string message)
+        {
+            try
+            {
+                message = "";
+
+                using (var db = new SLVLOnlineEntities())
+                {
+                    var user = db.UserAccount.FirstOrDefault(r => r.ID == UniversalHelpers.CurrentUser.ID && r.Password == _oldPassword);
+
+                    if (user != null)
+                    {
+                        user.Password = _newPassword;
+
+                        db.Entry(user).State = EntityState.Modified;
+
+                        db.SaveChanges();
+                    }
+                    else
+                        message = "Invalid Password. . .";
+                }
+            }
+            catch (Exception error)
+            {
+                message = error.Message;
+            }
+        }
+
         public static void AddCreditPerGroup(Guid _groupID, int VL, int SL, int soloLeave, out string message)
         {
             try

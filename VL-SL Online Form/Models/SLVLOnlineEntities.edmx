@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SLVLOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Advisory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="ApproverGroup">
           <Key>
             <PropertyRef Name="ID" />
@@ -65,7 +74,7 @@
           <Property Name="CreatedBy" Type="uniqueidentifier" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="Type" Type="varchar" MaxLength="2" />
-          <Property Name="LeaveDeduction" Type="decimal" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="LeaveDeduction" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="OvertimeForm">
           <Key>
@@ -136,6 +145,7 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
           <Property Name="DeclineReason" Type="varchar(max)" />
         </EntityType>
         <EntityContainer Name="SLVLOnlineModelStoreContainer">
+          <EntitySet Name="Advisory" EntityType="Self.Advisory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApproverGroup" EntityType="Self.ApproverGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApproverGroupMember" EntityType="Self.ApproverGroupMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailCredential" EntityType="Self.EmailCredential" Schema="dbo" store:Type="Tables" />
@@ -225,7 +235,7 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
           <Property Name="CreatedBy" Type="Guid" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="Type" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="LeaveDeduction" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="LeaveDeduction" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="OvertimeForm">
           <Key>
@@ -260,6 +270,7 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
           <EntitySet Name="TypeOfLeave" EntityType="Self.TypeOfLeave" />
           <EntitySet Name="v_FiledForms" EntityType="SLVLOnlineModel.v_FiledForms" />
           <EntitySet Name="UserAccount" EntityType="SLVLOnlineModel.UserAccount" />
+          <EntitySet Name="Advisory" EntityType="SLVLOnlineModel.Advisory" />
         </EntityContainer>
         <EntityType Name="v_FiledForms">
           <Key>
@@ -304,6 +315,15 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
           <Property Name="VacationLeavCount" Type="Double" Nullable="false" />
           <Property Name="DeptID" Type="Guid" />
           <Property Name="SoloParentLeaveCount" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Advisory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -442,6 +462,16 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Advisory">
+            <EntityTypeMapping TypeName="SLVLOnlineModel.Advisory">
+              <MappingFragment StoreEntitySet="Advisory">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

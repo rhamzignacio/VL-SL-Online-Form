@@ -6,6 +6,24 @@
 
 <div role="main" ng-controller="leaveFormController as vm" ng-init="InitFiledForms()">
 
+    <div ng-show="main.CurrentUser.Type == 'USR'" ng-init="InitAdvisory()">
+        <h2>Advisory</h2>
+        <div ng-repeat="ad in vm.Advisory">
+            <div class="x_panel" style="width:100%">
+                <div class="x_title">
+                    <h6>{{ad.ShowModifiedDate}} - {{ad.ShowModifiedBy}}</h6>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div class="form-group">
+                        <pre>{{ad.Description}}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="x_panel" style="width:300px;" ng-show="main.CurrentUser.Type == 'USR'">
         <div class="x_title">
             <h2>Leave Credits</h2>
@@ -98,7 +116,7 @@
                                         Decline
                                     </button>
                                 </td>
-                                <td>{{leave.ShowCreatedDate}}</td>
+                                <td>{{leave.ShowStartDate}} - {{leave.ShowEndDate}}</td>
                                 <td>{{leave.ShowType}}</td>
                                 <td>{{leave.ShowCreatedBy}}</td>
                                 <td>{{leave.Reason}}</td>
