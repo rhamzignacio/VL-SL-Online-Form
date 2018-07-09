@@ -63,6 +63,7 @@
           <Property Name="Reason" Type="varchar(max)" />
           <Property Name="Status" Type="varchar" MaxLength="1" />
           <Property Name="DeclineReason" Type="varchar(max)" />
+          <Property Name="FirstApproved" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="LeaveType">
           <Key>
@@ -224,6 +225,7 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
           <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="DeclineReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FirstApproved" Type="Guid" />
         </EntityType>
         <EntityType Name="LeaveType">
           <Key>
@@ -374,6 +376,7 @@ warning 6002: The table/view 'SLVLOnline.dbo.v_FiledForms' does not have a prima
           <EntitySetMapping Name="LeaveForm">
             <EntityTypeMapping TypeName="SLVLOnlineModel.LeaveForm">
               <MappingFragment StoreEntitySet="LeaveForm">
+                <ScalarProperty Name="FirstApproved" ColumnName="FirstApproved" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />

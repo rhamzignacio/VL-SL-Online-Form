@@ -23,5 +23,6 @@ namespace VL_SL_Online_Form.Models
         public string Reason { get; set; }
         public string Status { get; set; }
         public string DeclineReason { get; set; }
+        public Nullable<System.Guid> FirstApproved { get; set; }
     }
 }
