@@ -84,6 +84,12 @@
         }).then(function (data) {
             if (data.data.errorMessage === "") {
                 vm.MinDate = currentDate.getFullYear() + "-" + ("0" + (currentDate.getMonth() + 1)).slice(-2) + "-" + ("0" + (currentDate.getDate() + data.data.days)).slice(-2);
+
+                if (vm.Leave.StartDate < vm.MinDate) {
+                    Error("Please re-enter start date");
+
+                    vm.Leave.StartDate = {};
+                }
             }
         });
     };

@@ -50,14 +50,36 @@ namespace VL_SL_Online_Form.Services
                 {
                     List<ScheduleModel> returnSchedule = new List<ScheduleModel>();
 
-                    var group = db.ApproverGroup.Where(r => r.FirstApprover == UniversalHelpers.CurrentUser.ID || r.SecondApprover == UniversalHelpers.CurrentUser.ID);
-
-                    group.ToList().ForEach(item =>
+                    if (UniversalHelpers.CurrentUser.Type != "ADM")
                     {
+                        var group = db.ApproverGroup.Where(r => r.FirstApprover == UniversalHelpers.CurrentUser.ID || r.SecondApprover == UniversalHelpers.CurrentUser.ID);
+
+                        group.ToList().ForEach(item =>
+                        {
+                            var query = from l in db.LeaveForm
+                                        join u in db.UserAccount on l.CreatedBy equals u.ID
+                                        where u.DeptID == item.ID
+                                        select new ScheduleModel
+                                        {
+                                            title = u.FirstName + " " + u.LastName + " " + "On Leave",
+                                            start = l.StartDate,
+                                            end = l.EndDate,
+                                            color = "#a3c6c4"
+                                        };
+
+
+                            returnSchedule.AddRange(query.ToList());
+                        });
+                    }
+                    else
+                    {
+                        DateTime startDate = DateTime.Now.AddMonths(-6);
+
+                        DateTime endDate = DateTime.Now.AddMonths(6);
+
                         var query = from l in db.LeaveForm
-                                    join m in db.ApproverGroupMember on l.CreatedBy equals m.UserID
-                                    join u in db.UserAccount on m.UserID equals u.ID
-                                    where m.GroupID == item.ID
+                                    join u in db.UserAccount on l.CreatedBy equals u.ID
+                                    where l.StartDate >= startDate && l.StartDate <= endDate
                                     select new ScheduleModel
                                     {
                                         title = u.FirstName + " " + u.LastName + " " + "On Leave",
@@ -66,25 +88,8 @@ namespace VL_SL_Online_Form.Services
                                         color = "#a3c6c4"
                                     };
 
-
                         returnSchedule.AddRange(query.ToList());
-                    });
-
-                    //var user = db.UserAccount.Where(r => r.FirstApprover == UniversalHelpers.CurrentUser.ID || r.SecondApprover == UniversalHelpers.CurrentUser.ID);
-
-                    //user.ToList().ForEach(item =>
-                    //{
-                    //    var query = from l in db.LeaveForm
-                    //                where l.CreatedBy == item.ID && l.Status == "A"
-                    //                select new ScheduleModel
-                    //                {
-                    //                    title = item.FirstName + " " + item.LastName + " " + "On leave",
-                    //                    start = l.StartDate,
-                    //                    end = l.EndDate
-                    //                };
-
-                    //    returnSchedule.AddRange(query.ToList());
-                    //});
+                    }
 
                     var holiday = from h in db.Holiday
                                   select new ScheduleModel
